@@ -1,0 +1,6 @@
+integral_integral_wood.png  https://upload.wikimedia.org/wikipedia/commons/9/9e/Gatunki_drewna_-_Brockhaus_1937.jpg
+vmg_glowing_fungal.png  https://commons.wikimedia.org/wiki/File:Pulcherricium_caeruleum,_Cobalt_Crust_fungus.JPG
+vmg_glowing_fungus.png  VanessaE (https://forum.minetest.net/viewtopic.php?f=4&t=1583&hilit=hdx)
+vmg_moon_juice.png  VanessaE (https://forum.minetest.net/viewtopic.php?f=4&t=1583&hilit=hdx)
+ores_petrified_wood  VanessaE (http://commons.wikimedia.org/wiki/File:Petrified_wood_macro.jpg)
+integral_syrup.png  https://openclipart.org/detail/181113/pitcher
