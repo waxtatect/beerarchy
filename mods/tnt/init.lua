@@ -532,16 +532,16 @@ minetest.register_node("tnt:gunpowder_burning", {
 minetest.register_craft({
 	output = "tnt:gunpowder 5",
 	type = "shapeless",
-	recipe = {"default:coal_lump", "default:gravel"}
+	recipe = {"default:coal_lump", "default:gravel"},
 })
 
 if enable_tnt then
 	minetest.register_craft({
 		output = "tnt:tnt",
 		recipe = {
-			{"group:wood",    "tnt:gunpowder", "group:wood"},
-			{"tnt:gunpowder", "tnt:gunpowder", "tnt:gunpowder"},
-			{"group:wood",    "tnt:gunpowder", "group:wood"}
+			{"underworlds:hot_stone", "group:wood",    "underworlds:hot_stone"},
+			{"tnt:gunpowder",         "tnt:gunpowder", "tnt:gunpowder"},
+			{"underworlds:hot_stone", "group:wood",    "underworlds:hot_stone"}
 		}
 	})
 

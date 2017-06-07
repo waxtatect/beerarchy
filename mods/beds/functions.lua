@@ -180,7 +180,11 @@ if enable_respawn then
 		local name = player:get_player_name()
 		local pos = beds.spawn[name]
 		if pos then
-			player:setpos(pos)
+			if minetest.get_node(pos).name == "air" then
+				player:setpos(pos)
+			else
+				player:setpos( {x = pos.x, y = pos.y - 0.5, z = pos.z } )
+			end
 			return true
 		end
 	end)
@@ -218,3 +222,11 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		end
 	end
 end)
+
+minetest.register_chatcommand("clearbed", {
+	params = "",
+	description = "Clear the bed respawn, in case you get stuck when respawning in bed. You can then use /killme to respawn near spawn",
+	func = function(name, param)
+		beds.spawn[name] = nil
+	end,
+})

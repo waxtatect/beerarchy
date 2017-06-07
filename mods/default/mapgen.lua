@@ -1196,7 +1196,7 @@ function default.register_floatland_biomes(floatland_level, shadow_limit)
 		--node_riverbed = "",
 		--depth_riverbed = ,
 		y_min = floatland_level + 2,
-		y_max = 31000,
+		y_max = 5000,
 		heat_point = 50,
 		humidity_point = 70,
 	})
@@ -1218,7 +1218,7 @@ function default.register_floatland_biomes(floatland_level, shadow_limit)
 		--node_riverbed = "",
 		--depth_riverbed = ,
 		y_min = floatland_level + 2,
-		y_max = 31000,
+		y_max = 5000,
 		heat_point = 50,
 		humidity_point = 35,
 	})
@@ -1240,7 +1240,7 @@ function default.register_floatland_biomes(floatland_level, shadow_limit)
 		--node_riverbed = "",
 		--depth_riverbed = ,
 		y_min = floatland_level + 2,
-		y_max = 31000,
+		y_max = 5000,
 		heat_point = 50,
 		humidity_point = 0,
 	})
@@ -1262,10 +1262,77 @@ function default.register_floatland_biomes(floatland_level, shadow_limit)
 		--node_riverbed = "",
 		--depth_riverbed = ,
 		y_min = shadow_limit,
-		y_max = floatland_level + 1,
+		y_max = 5000,
 		heat_point = 50,
 		humidity_point = 50,
 	})
+
+	-- Lower atmosphere ice
+
+	minetest.register_biome({
+		name = "lower_orbit_ice",
+		--node_dust = "default:snowblock",
+		node_top = "default:snowblock",
+		depth_top = 1,
+		node_filler = "default:snowblock",
+		depth_filler = 3,
+		node_stone = "default:ice",
+		--node_water_top = "default:ice",
+		--depth_water_top = 10,
+		--node_water = "",
+		--node_river_water = "default:ice",
+		--node_riverbed = "default:gravel",
+		--depth_riverbed = 2,
+		y_min = 5001,
+		y_max = 10000,
+		heat_point = 0,
+		humidity_point = 73,
+	})
+
+	-- Lower atmosphere tundra
+
+	minetest.register_biome({
+		name = "lower_orbit_icetundra",
+		node_dust = "default:snowblock",
+		--node_top = ,
+		--depth_top = ,
+		--node_filler = ,
+		--depth_filler = ,
+		--node_stone = "",
+		--node_water_top = "",
+		--depth_water_top = ,
+		--node_water = "",
+		--node_river_water = "",
+		--node_riverbed = "default:gravel",
+		--depth_riverbed = 2,
+		y_min = 5001,
+		y_max = 10000,
+		heat_point = 0,
+		humidity_point = 40,
+	})
+
+	-- Lower atmosphere alpine
+
+	minetest.register_biome({
+		name = "lower_orbit_alpine",
+		node_dust = "default:snow",
+		--node_top = ,
+		--depth_top = ,
+		--node_filler = ,
+		--depth_filler = ,
+		node_stone = "default:stone",
+		--node_water_top = "",
+		--depth_water_top = ,
+		--node_water = "",
+		--node_river_water = "",
+		--node_riverbed = "default:gravel",
+		--depth_riverbed = 2,
+		y_min = 5001,
+		y_max = 10000,
+		heat_point = 50,
+		humidity_point = 35,
+	})
+
 end
 
 
@@ -1611,7 +1678,7 @@ function default.register_decorations()
 		place_on = {"default:desert_sand"},
 		sidelen = 16,
 		noise_params = {
-			offset = -0.0003,
+			offset = -0.0005,
 			scale = 0.0009,
 			spread = {x = 200, y = 200, z = 200},
 			seed = 230,
@@ -1633,7 +1700,7 @@ function default.register_decorations()
 		place_on = {"default:desert_sand"},
 		sidelen = 16,
 		noise_params = {
-			offset = -0.0003,
+			offset = -0.0005,
 			scale = 0.0009,
 			spread = {x = 200, y = 200, z = 200},
 			seed = 230,
@@ -1713,19 +1780,19 @@ function default.register_decorations()
 
 	-- Grasses
 
-	register_grass_decoration(-0.03,  0.09,  5)
-	register_grass_decoration(-0.015, 0.075, 4)
-	register_grass_decoration(0,      0.06,  3)
-	register_grass_decoration(0.015,  0.045, 2)
-	register_grass_decoration(0.03,   0.03,  1)
+	register_grass_decoration(-0.085,  0.09,  5)
+	register_grass_decoration(-0.070, 0.075, 4)
+	register_grass_decoration(-0.055,      0.06,  3)
+	register_grass_decoration(-0.040,  0.045, 2)
+	register_grass_decoration(-0.025,   0.03,  1)
 
 	-- Dry grasses
 
-	register_dry_grass_decoration(0.01, 0.05,  5)
-	register_dry_grass_decoration(0.03, 0.03,  4)
-	register_dry_grass_decoration(0.05, 0.01,  3)
-	register_dry_grass_decoration(0.07, -0.01, 2)
-	register_dry_grass_decoration(0.09, -0.03, 1)
+	register_dry_grass_decoration(-0.04, 0.05,  5)
+	register_dry_grass_decoration(-0.02, 0.03,  4)
+	register_dry_grass_decoration(0, 0.01,  3)
+	register_dry_grass_decoration(-0.02, -0.01, 2)
+	register_dry_grass_decoration(-0.04, -0.03, 1)
 
 	-- Junglegrass
 

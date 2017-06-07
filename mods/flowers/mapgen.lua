@@ -108,7 +108,7 @@ local function register_mushroom(name)
 		place_on = {"default:dirt_with_grass"},
 		sidelen = 16,
 		noise_params = {
-			offset = 0,
+			offset = -0.004,
 			scale = 0.006,
 			spread = {x = 250, y = 250, z = 250},
 			seed = 2,
