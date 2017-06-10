@@ -8,7 +8,7 @@ important_message.message =
 
 function important_message.display_message()
 	if important_message.message and important_message.message ~= "" then
-		local msg = string.char(0x1b).."(c@#00ff00)"..important_message.message
+		local msg = string.char(0x1b).."(c@#ff0000)"..important_message.message
 		minetest.chat_send_all(msg)
 	end
 end
