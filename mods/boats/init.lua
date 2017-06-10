@@ -25,7 +25,8 @@ end
 
 
 local function get_v(v)
-	return math.sqrt(v.x ^ 2 + v.z ^ 2)
+	--return math.sqrt(v.x ^ 2 + v.z ^ 2)
+	return math.sqrt(v.x * v.x + v.z * v.z)
 end
 
 --
@@ -85,7 +86,7 @@ end
 
 
 function boat.on_activate(self, staticdata, dtime_s)
-	self.object:set_armor_groups({immortal = 1})
+	self.object:set_armor_groups({fleshy = 100}) -- {immortal = 1})
 	if staticdata then
 		self.v = tonumber(staticdata)
 	end
@@ -110,8 +111,7 @@ function boat.on_punch(self, puncher)
 	if not self.driver then
 		self.removed = true
 		local inv = puncher:get_inventory()
-		if not (creative and creative.is_enabled_for
-				and creative.is_enabled_for(puncher:get_player_name()))
+		if not minetest.setting_getbool("creative_mode")
 				or not inv:contains_item("main", "boats:boat") then
 			local leftover = inv:add_item("main", "boats:boat")
 			-- if no room in inventory add a replacement boat to the world
@@ -128,8 +128,19 @@ end
 
 
 function boat.on_step(self, dtime)
+
+	-- after 10 seconds remove boat and drop as item if not boarded
+	self.count = (self.count or 0) + dtime
+
+	if self.count > 10 then
+		minetest.add_item(self.object:getpos(), "boats:boat")
+		self.object:remove()
+		return
+	end
+
 	self.v = get_v(self.object:getvelocity()) * get_sign(self.v)
 	if self.driver then
+self.count = 0
 		local ctrl = self.driver:get_player_control()
 		local yaw = self.object:getyaw()
 		if ctrl.up then
@@ -139,15 +150,15 @@ function boat.on_step(self, dtime)
 		end
 		if ctrl.left then
 			if self.v < 0 then
-				self.object:setyaw(yaw - (1 + dtime) * 0.03)
+				self.object:setyaw(yaw - (1 + dtime) * 0.08) -- 0.08's were 0.03's
 			else
-				self.object:setyaw(yaw + (1 + dtime) * 0.03)
+				self.object:setyaw(yaw + (1 + dtime) * 0.08)
 			end
 		elseif ctrl.right then
 			if self.v < 0 then
-				self.object:setyaw(yaw + (1 + dtime) * 0.03)
+				self.object:setyaw(yaw + (1 + dtime) * 0.08)
 			else
-				self.object:setyaw(yaw - (1 + dtime) * 0.03)
+				self.object:setyaw(yaw - (1 + dtime) * 0.08)
 			end
 		end
 	end
@@ -211,6 +222,27 @@ function boat.on_step(self, dtime)
 	end
 	self.object:setvelocity(new_velo)
 	self.object:setacceleration(new_acce)
+
+	-- if boat comes to sudden stop then it has crashed, destroy boat and drop 3x wood
+	if (self.v2 or 0) - self.v >= 3 then
+
+		if self.driver then
+--print ("Crash! with driver", self.v2 - self.v)
+			self.driver:set_detach()
+			default.player_attached[self.driver:get_player_name()] = false
+			default.player_set_animation(self.driver, "stand" , 30)
+		else
+--print ("Crash! no driver")
+		end
+		
+		minetest.add_item(self.object:getpos(), "default:wood 3")
+
+		self.object:remove()
+
+		return
+	end
+
+	self.v2 = self.v
 end
 
 
@@ -242,11 +274,10 @@ minetest.register_craftitem("boats:boat", {
 			return itemstack
 		end
 		pointed_thing.under.y = pointed_thing.under.y + 0.5
-		boat = minetest.add_entity(pointed_thing.under, "boats:boat")
+		local boat = minetest.add_entity(pointed_thing.under, "boats:boat")
 		if boat then
 			boat:setyaw(placer:get_look_horizontal())
-			if not (creative and creative.is_enabled_for
-					and creative.is_enabled_for(placer:get_player_name())) then
+			if not minetest.setting_getbool("creative_mode") then
 				itemstack:take_item()
 			end
 		end
@@ -269,3 +300,7 @@ minetest.register_craft({
 	recipe = "boats:boat",
 	burntime = 20,
 })
+
+minetest.register_alias("ds_rowboat:ds_rowboat", "boats:boat")
+
+print ("[MOD] Boats loaded")
