@@ -223,6 +223,7 @@ self.count = 0
 	self.object:setvelocity(new_velo)
 	self.object:setacceleration(new_acce)
 
+--[[
 	-- if boat comes to sudden stop then it has crashed, destroy boat and drop 3x wood
 	if (self.v2 or 0) - self.v >= 3 then
 
@@ -234,13 +235,14 @@ self.count = 0
 		else
 --print ("Crash! no driver")
 		end
-		
+
 		minetest.add_item(self.object:getpos(), "default:wood 3")
 
 		self.object:remove()
 
 		return
 	end
+]]--
 
 	self.v2 = self.v
 end
