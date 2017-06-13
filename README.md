@@ -1,6 +1,6 @@
 ## Beerarchy
 ### Prologue
-Anarchy, chaos, griefing. All is allowed on this unmoderated server. Venture into the depths of hell or ascend the highest mountains, leaping from float land to float land all the way into space. You will be rewarded for your efforts, as endless riches can be found in the most inaccessible places. But be careful who you trust or you will lose everything and forced to start all over.
+Anarchy, chaos, griefing. All is allowed on this unmoderated server. Venture into the depths of hell or ascend the highest mountains, leaping from float land to float land all the way into space. You will be rewarded for your efforts, as endless riches can be found in the most inaccessible places. But be careful who you trust or you will lose everything and be forced to start all over.
 
 So keep your friends close and your enemies closer. Hide your base well, conquer the lands, climb the rankings, become the number one and God of this world.
 
