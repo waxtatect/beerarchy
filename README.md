@@ -13,16 +13,17 @@ A you awaken, you find yourself in a scorching desert. There is nothing but sand
 
 ## Game Information
 ### Server
-Hosted on the World of Illuna Minetest infrastructure provided by https://minetestserver.hosting/ and with the great and wonderful support of [Milan](https://tchncs.de).
+Hosted on the wonderful World of Illuna Minetest infrastructure provided by https://minetestserver.hosting/ and with the great and wonderful support of [Milan](https://tchncs.de).
 
-```Host:  beerarchy.tk
+```
+Host:  beerarchy.tk
 Port:  30024
 Site:  https://beerarchy.tk
 Admin: Beerholder a.k.a. Basilisk
 Code:  https://github.com/evrooije/beerarchy
 ```
 
-**NOTE:** This server is unmoderated. Admin is only there to keep the server up and running, fix server issues and feedback on the server. Requests for diamonds or mese, complaints about players, griefers, cursers, or anything else not related to the general well being of the server will not be answered.
+**NOTE:** This server is unmoderated. Admin is only there to keep the server up and running, fix server issues and feedback on the server. Requests for diamonds or mese, complaints about players, griefers, foulmouthed people cursing in chat, or anything else not related to the general technical well being of the server will not be answered.
 
 ### Promo Video
 [![Beerarchy](http://img.youtube.com/vi/uYF0xxI1fvY/0.jpg)](http://www.youtube.com/watch?v=uYF0xxI1fvY)
@@ -41,7 +42,7 @@ Code:  https://github.com/evrooije/beerarchy
 ![Beer11](https://beerarchy.tk/img/beer11.png)
 
 ### Game Principles
-* It's based on "vanilla Minetest": It looks and feels a lot like the out of the box default Minetest game, except when you mine very deep or climb really high
+* It's based on "vanilla Minetest": It looks and feels a lot like the out of the box default Minetest game, but it becomes more alien when you mine very deep or climb really high
 * Offer a difficult and more challenging game: Food is severely limited by tweaking the noise parameters, decreasing the chance of animals spawning and even the apple tree schematic has been modified to produce fewer apples in order to achieve this goal
 * Allow players to progress: This is done by means of a ranking system that gives players points for certain activities such as digging, building, traveling etc.
 * Provide a tech tree: The tech tree requires players to mine, climb and explore in order to unlock new technologies such as small electronics, travelnets, basic machines and digtrons, but also such things as better armor for more dangerous realms
