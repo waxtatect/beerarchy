@@ -47,13 +47,31 @@ Forum: TODO<br/>
 * Provide a tech tree: The tech tree requires players to mine, climb and explore in order to unlock new technologies such as small electronics, travelnets, basic machines and digtrons, but also such things as better armor for more dangerous realms
 * Full use of horizontal and vertical space: Keep mining interesting by providing goals in the form of underworlds. Huge mountains and plenty of float lands to hide your base and be safe from other players
 * Reward players but keep it hard: By mining deeper or climbing higher, players are rewarded by easier to get to minerals in larger and larger amounts but also face dangers such as death falls and more powerful mobs
-* Let Beerarchy be a dangerous place: The seed was specifically selected for the desert spawn, but the places that offer more riches are more dangerous too and not just because of the mobs, but also the terrain, caves and super high mountains
+* Let Beerarchy be a dangerous place: The seed was specifically selected for the desert spawn, but the places that offer more riches are more dangerous too and not just because of the mobs, but also because the terrain, caves and super high mountains are difficult to navigate safely
+* This game is not meant for mobile or tablet
 
 ### Mods
-TODO
+#### Mod Highlights
+* Nyancat!! Yes!!
+* More ores: More ores tin is aliased to the Minetest game tin, mithril the most difficult to find and therefore obviously the strongest mineral
+* Unified inventory, 3D armor, skins: Including of course mithril armor but also a spacesuit in order to travel in space without dying. Lots of skins, cleaned up to remove some of the nonsense, too small or invisible skins
+* TNT and fire enabled, explosives mod: Burn it all, blow up stuff or booby trap your base!
+* Mobs redo and various types of mobs, fishing: Animals, horses, monsters, horror, dmobs, dragons
+* Customized basic machines, 3 levels of tech, GPS and fun tools: Small electronics and travelnets, the standard basic machines for material duplication and the powerful digtron units for even faster mining
+* Treasurer: Including various TRMs and a custom one for this game's specific materials, minerals and items, a TSM to spawn chests in dungeons
+* HUD and sprint: HUD bars for armor, hunger and exhaustion when you sprint. Additionally, hunger drops quicker when you sprint, jump or swim
+* Bags: Very expensive but extremely important if you want to protect your items
+* Chat modes and mail: Various chat options, muting other players and option to send mail to offline (or online of course) players
+* Boost carts, updated boats and handholds for climbing: More lag friendly, build those roller coasters and endless railway systems and special climbing pick to work around the missing sneak jump and sneak ladder features (/glitches)
+* Snowdrift and customized under_sky with additional skybox fixes: Rain and snow and proper darkness underground or in space
+* Integral and underworlds: Explore huge trees or mine all the way to the deepest levels of hell, with one extra layer added to the underworlds, of which the depths have been tweaked as well
+* Various custom mods: Ranking system with points in various categories and overall XP, game music, coal block veins
+
+#### Full List of Mods
+vessels, killme, bucket, creative, sfinv, mob_horse, mobs_monster, dmobs, mobs_animal, mobs_redo, horror, fishing, nyancat, signs_lib, 00_bt_coalblocks, basic_machines, digtron, books, explosives, travelnet, farming, walls, trm_beerarchy, trm_vessels, trm_default, trm_boats, tsm_chests_dungeon, trm_doors, trm_farming, trm_bucket, trm_tnt, trm_xpanes, trm_dye, trm_screwdriver, treasurer, stairs, xpanes, wool, hbarmor, hbhunger, hudbars, carts, skins, unified_inventory, sethome, snowdrift, under_sky, screwdriver, dye, 3d_armor_stand, 3d_armor_ip, 3d_armor, technic_armor, throwing, 3d_armor_ui, shields, wieldview, hazmat_suit, 3d_armor_sfinv, moontest_spacesuit, doors, tnt, boats, fire, bones, give_initial_stuff, chat_modes, random_messages, 00_bt_important_messages, mail, 00_bt_welcome, death_messages, default, beds, intllib, armor_monoid, fun_tools, handholds, minimal_anticheat, player_monoids, sprint, 00_bt_ranking, boost_cart, 00_bt_music, gps, flowers, moreores, integral, underworlds, biome_lib, vines
 
 ### Compatibility
 The Beerarchy subgame requires a recent Minetest version and at least 0.4.16.
 
 ### Licensing
-See LICENSE.txt and TODO update the LICENSE.txt to reflect the licenses of the mods used and freesound.org soundcloud.com music of the game.
+See LICENSE.txt and the various licenses of some of the mods embedded into the game. TODO: Update the LICENSE.txt to reflect the licenses of the mods used and freesound.org soundcloud.com music of the game, add attributions.
