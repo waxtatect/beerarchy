@@ -41,7 +41,7 @@ Code:  https://github.com/evrooije/beerarchy
 ![Beer11](https://beerarchy.tk/img/beer11.png)
 
 ### Game Principles
-* The game is based on "vanilla Minetest": The game initially looks and feels like vanilla Minetest. When exploring at sea level, everything looks like the default game. This constraint is relaxed when you mine really deep or climb really high
+* It's based on "vanilla Minetest": It looks and feels a lot like the out of the box default Minetest game, except when you mine very deep or climb really high
 * Offer a difficult and more challenging game: Food is severely limited by tweaking the noise parameters, decreasing the chance of animals spawning and even the apple tree schematic has been modified to produce fewer apples in order to achieve this goal
 * Allow players to progress: This is done by means of a ranking system that gives players points for certain activities such as digging, building, traveling etc.
 * Provide a tech tree: The tech tree requires players to mine, climb and explore in order to unlock new technologies such as small electronics, travelnets, basic machines and digtrons, but also such things as better armor for more dangerous realms
