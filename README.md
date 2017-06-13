@@ -15,13 +15,12 @@ A you awaken, you find yourself in a scorching desert. There is nothing but sand
 ### Server
 Hosted on the wonderful World of Illuna Minetest infrastructure provided by https://minetestserver.hosting/ and with the great and wonderful support of [Milan](https://tchncs.de).
 
-```
-Host:  beerarchy.tk
-Port:  30024
-Site:  https://beerarchy.tk
-Admin: Beerholder a.k.a. Basilisk
-Code:  https://github.com/evrooije/beerarchy
-```
+Host:  beerarchy.tk<br/>
+Port:  30024<br/>
+Website:  https://beerarchy.tk<br/>
+Admin: Beerholder a.k.a. Basilisk<br/>
+Code:  https://github.com/evrooije/beerarchy<br/>
+Forum: TODO<br/>
 
 **NOTE:** This server is unmoderated. Admin is only there to keep the server up and running, fix server issues and feedback on the server. Requests for diamonds or mese, complaints about players, griefers, foulmouthed people cursing in chat, or anything else not related to the general technical well being of the server will not be answered.
 
