@@ -48,7 +48,7 @@ Forum: TODO<br/>
 * Full use of horizontal and vertical space: Keep mining interesting by providing goals in the form of underworlds. Huge mountains and plenty of float lands to hide your base and be safe from other players
 * Reward players but keep it hard: By mining deeper or climbing higher, players are rewarded by easier to get to minerals in larger and larger amounts but also face dangers such as death falls and more powerful mobs
 * Let Beerarchy be a dangerous place: The seed was specifically selected for the desert spawn, but the places that offer more riches are more dangerous too and not just because of the mobs, but also because the terrain, caves and super high mountains are difficult to navigate safely
-* This game is not meant for mobile or tablet
+* This game is not mobile or tablet friendly: Too many mods that do not play well on mobile, plus a very recent version is needed to run the game. Maybe it works well on Android, but this is not tested
 
 ### Mods
 #### Mod Highlights
