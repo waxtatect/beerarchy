@@ -32,10 +32,11 @@ local messages = {}
 messages.lava = {
 	" melted into a ball of fire.",
 	" thought lava was cool.",
-	" melted into a ball of fire.",
 	" couldn't resist that warm glow of lava.",
 	" dug straight down.",
-	" didn't know lava was hot."
+	" didn't know lava was hot.",
+	" lost playing the ground is lava.",
+	" is getting used to his new home in hell.",
 }
 
 -- Drowning death messages
@@ -45,7 +46,9 @@ messages.water = {
 	" failed at swimming lessons.",
 	" tried to impersonate an anchor.",
 	" forgot he wasn't a fish.",
-	" blew one too many bubbles."
+	" blew one too many bubbles.",
+	" thought water was breathable.",
+	"'s dead body washed ashore."
 }
 
 -- Burning death messages
@@ -54,16 +57,23 @@ messages.fire = {
 	" got a little too warm.",
 	" got too close to the camp fire.",
 	" just got roasted, hotdog style.",
-	" gout burned up. More light that way."
+	" got burned up. More light that way.",
+	" died smoking.",
+	" turned to ashes.",
 }
 
 -- Other death messages
 messages.other = {
-	" died.",
+	" died on the easiest Minetest server around.",
 	" did something fatal.",
 	" gave up on life.",
 	" is somewhat dead now.",
-	" passed out -permanently."
+	" passed out -permanently.",
+	" won the N00b world championship.",
+	" joined the ranks of Rushers -in hell.",
+	", did you just die? Again?",
+	" is dedder den ded ded ded.",
+	" might just leave this server pretty soon, any time now."
 }
 
 function get_message(mtype)

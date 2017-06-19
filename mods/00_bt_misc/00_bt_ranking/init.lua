@@ -370,8 +370,40 @@ ranking.score_experience = function(player)
 		end
 	end
 
-	ranking.set_rank_raw(player, "experience", math.floor(totalxp / 1000))
+	local newtotalxp = totalxp / 1000
+	local oldtotalxp = ranking.get_rank_raw(player, "experience")
+	ranking.set_rank_raw(player, "experience", math.floor(newtotalxp))
 
+	local xplevels = ranks["experience"].levels
+
+	for j = 1, #xplevels do
+		if oldtotalxp < xplevels[j].min and newtotalxp >= xplevels[j].min then
+			-- XP has increase, trigger on_xp_increase event!
+			ranking.on_xp_increase(player, j)
+			break
+		end
+	end
+
+end
+
+-- Give gift on reaching certain XP level
+ranking.on_xp_increase = function(player, xplevel)
+	if player:get_player_name() ~= "Beerholder" then
+		local stack = ItemStack("protector:protect2")
+		local inv = player:get_inventory()
+
+		if inv:room_for_item("main", stack) then
+			inv:add_item("main", stack)
+		else
+			minetest.add_item(player:getpos(), stack)
+		end
+
+		local msg = string.char(0x1b).."(c@#00ff00)"..player:get_player_name()..
+					" has reached the level of: "..ranks["experience"].levels[xplevel].name
+
+		minetest.sound_play("00_bt_ranking_level", { to_player = player:get_player_name(), gain = 2.0 })
+		minetest.chat_send_all(msg)
+	end
 end
 
 minetest.register_chatcommand("rank", {

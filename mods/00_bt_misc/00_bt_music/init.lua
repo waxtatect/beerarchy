@@ -92,7 +92,7 @@ minetest.register_on_leaveplayer(function(player)
 	players[playerName] = nil
 	mustStartNewMusic[playerName] = nil
 
-	collectgarbage()
+--	collectgarbage()
 end)
 
 minetest.register_globalstep(function(dtime)
