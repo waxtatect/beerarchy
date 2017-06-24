@@ -92,16 +92,16 @@ minetest.register_on_dieplayer(function(player)
 	end
 	-- Death by lava
 	if node.groups.lava ~= nil then
-		minetest.chat_send_all(player_name .. get_message("lava"))
+		minetest.chat_send_all(string.char(0x1b).."(c@#ff0000)"..player_name .. get_message("lava"))
 	-- Death by drowning
 	elseif player:get_breath() == 0 then
-		minetest.chat_send_all(player_name .. get_message("water"))
+		minetest.chat_send_all(string.char(0x1b).."(c@#ff0000)"..player_name .. get_message("water"))
 	-- Death by fire
 	elseif node.name == "fire:basic_flame" then
-		minetest.chat_send_all(player_name .. get_message("fire"))
+		minetest.chat_send_all(string.char(0x1b).."(c@#ff0000)"..player_name .. get_message("fire"))
 	-- Death by something else
 	else
-		minetest.chat_send_all(player_name .. get_message("other"))
+		minetest.chat_send_all(string.char(0x1b).."(c@#ff0000)"..player_name .. get_message("other"))
 	end
 
 end)

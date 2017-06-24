@@ -375,7 +375,7 @@ ranking.score_distance = function(player)
 		ranking.set_rank_raw(player, "mountaineer", math.floor(pos.y) + 1)
 	end
 
-	local lastDepth = ranking.get_rank_raw(player, "caving")
+	local lastDepth = ranking.get_rank_raw(player, "caving") * -1
 	if (pos.y < lastDepth) then
 		ranking.set_rank_raw(player, "caving", math.abs(math.floor(pos.y) + 1))
 	end
@@ -470,6 +470,8 @@ minetest.register_chatcommand("rank", {
 			specialPlayer = "SatanicBibleBot"
 		elseif param == "Beerholder" then
 			specialPlayer = "ADMIN"
+		elseif param == "Greif" then
+			specialPlayer = "Greif"
 		else
 			player = minetest.get_player_by_name(param)
 			if not player then
@@ -517,6 +519,8 @@ minetest.register_chatcommand("rank", {
 							xpName = "Lord administrator of this world"
 						elseif specialPlayer == "SatanicBibleBot" then
 							xpName = "Prince of Darkness, Lord or Evil, Almighty Ruler of Hell"
+						elseif specialPlayer == "Greif" then
+							xpName = "Grand Griefer, Destroyer of Worlds, Black Pest of Sanity"
 						end
 					else
 						xpName = "N.a."
