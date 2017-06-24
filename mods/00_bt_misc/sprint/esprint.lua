@@ -61,6 +61,11 @@ minetest.register_globalstep(function(dtime)
 				players[playerName]["shouldSprint"] = true
 			elseif player:getpos().y > -2430 and player:getpos().y < -2360 and player:get_player_control()["up"] then
 				players[playerName]["shouldSprint"] = true
+			elseif
+				minetest.get_node( { x = player:getpos().x, y = player:getpos().y - 1, z = player:getpos().z } ).name == "underworlds:hot_brass" and
+				minetest.get_node( { x = player:getpos().x, y = player:getpos().y - 2, z = player:getpos().z } ).name == "underworlds:hot_iron"
+			then
+				players[playerName]["shouldSprint"] = true
 			else
 				players[playerName]["shouldSprint"] = false
 			end
@@ -94,7 +99,14 @@ minetest.register_globalstep(function(dtime)
 			end
 
 			--Lower the player's stamina by dtime if he/she is sprinting and set his/her state to 0 if stamina is zero
-			if playerInfo["sprinting"] == true and not (player:getpos().y > -2430 and player:getpos().y < -2360) then
+			if playerInfo["sprinting"] == true and not (
+				(player:getpos().y > -2430 and player:getpos().y < -2360)
+				or (
+					minetest.get_node( { x = player:getpos().x, y = player:getpos().y - 1, z = player:getpos().z } ).name == "underworlds:hot_brass" and
+					minetest.get_node( { x = player:getpos().x, y = player:getpos().y - 2, z = player:getpos().z } ).name == "underworlds:hot_iron"
+				)
+			)
+			then
 				playerInfo["stamina"] = playerInfo["stamina"] - dtime
 				if playerInfo["stamina"] <= 0 then
 					playerInfo["stamina"] = 0

@@ -99,6 +99,36 @@ farmNodes = {}
 
 farmNodes["default:cactus"] = 1
 farmNodes["default:papyrus"] = 1
+farmNodes["dfarming:barley_5"] = 1
+farmNodes["farming:barley_6"] = 2
+farmNodes["farming:beanpole_5"] = 3
+farmNodes["farming:blueberry_4"] = 2
+farmNodes["farming:carrot_7"] = 1
+farmNodes["farming:carrot_8"] = 2
+farmNodes["farming:cocoa_2"] = 1
+farmNodes["farming:cocoa_3"] = 2
+farmNodes["farming:coffee_5"] = 1
+farmNodes["farming:corn_7"] = 1
+farmNodes["farming:corn_8"] = 2
+farmNodes["farming:cotton_6"] = 1
+farmNodes["farming:cotton_7"] = 2
+farmNodes["farming:cotton_8"] = 3
+farmNodes["farming:cucumber_4"] = 1
+farmNodes["farming:grapes_8"] = 3
+farmNodes["farming:hemp_6"] = 2
+farmNodes["farming:hemp_7"] = 5
+farmNodes["farming:hemp_8"] = 10
+farmNodes["farming:melon_8"] = 20
+farmNodes["farming:potato_3"] = 1
+farmNodes["farming:potato_4"] = 1
+farmNodes["farming:pumpkin_8"] = 2
+farmNodes["farming:raspberry_4"] = 2
+farmNodes["farming:rhubarb_3"] = 2
+farmNodes["farming:tomato_7"] = 1
+farmNodes["farming:tomato_8"] = 1
+farmNodes["farming:wheat_6"] = 1
+farmNodes["farming:wheat_7"] = 2
+farmNodes["farming:wheat_8"] = 3
 
 -- Mining and farming events using the above tables to determine the scores
 minetest.register_on_dignode(function(pos, oldnode, digger)
@@ -111,6 +141,22 @@ minetest.register_on_dignode(function(pos, oldnode, digger)
 		end
 		if not playerLastUsedPos[digger:get_player_name()][minetest.serialize(pos)] then
 			ranking.increase_rank(digger, "miner", minerNodes[oldnode.name])
+			playerLastUsedPos[digger:get_player_name()][minetest.serialize(pos)] = true
+			table.insert(playerLastUsedPosQueue[digger:get_player_name()], minetest.serialize(pos))
+			if #playerLastUsedPosQueue[digger:get_player_name()] > 500 then
+				local posstring = table.remove(playerLastUsedPosQueue[digger:get_player_name()], 1)
+				playerLastUsedPos[digger:get_player_name()][posstring] = nil
+			end
+		end
+	elseif pos and farmNodes[oldnode.name] then
+		if not playerLastUsedPos[digger:get_player_name()] then
+			playerLastUsedPos[digger:get_player_name()] = {}
+		end
+		if not playerLastUsedPosQueue[digger:get_player_name()] then
+			playerLastUsedPosQueue[digger:get_player_name()] = {}
+		end
+		if not playerLastUsedPos[digger:get_player_name()][minetest.serialize(pos)] then
+			ranking.increase_rank(digger, "farmer", minerNodes[oldnode.name])
 			playerLastUsedPos[digger:get_player_name()][minetest.serialize(pos)] = true
 			table.insert(playerLastUsedPosQueue[digger:get_player_name()], minetest.serialize(pos))
 			if #playerLastUsedPosQueue[digger:get_player_name()] > 500 then
@@ -331,7 +377,7 @@ ranking.score_distance = function(player)
 
 	local lastDepth = ranking.get_rank_raw(player, "caving")
 	if (pos.y < lastDepth) then
-		ranking.set_rank_raw(player, "caving", math.abs(math.floor(pos.y) - 1))
+		ranking.set_rank_raw(player, "caving", math.abs(math.floor(pos.y) + 1))
 	end
 end
 

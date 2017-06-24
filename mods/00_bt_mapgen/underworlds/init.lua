@@ -46,7 +46,7 @@ underworlds_mod.underzones = {
 		special_ceiling_nodes = { 'default:copperblock', 'default:bronzeblock' },
 		special_ceiling_nodes_chances = { 50, 200 },
 		special_floor_nodes = { 'default:copperblock', 'default:bronzeblock' },
-		special_floor_nodes_chances = { 200, 400 },
+		special_floor_nodes_chances = { 400, 800 },
 	},
 	Phlegethos = {
 		name = 'Phlegethos',
@@ -66,7 +66,7 @@ underworlds_mod.underzones = {
 		special_ceiling_nodes = { 'default:coalblock', 'default:obsidian' },
 		special_ceiling_nodes_chances = { 25, 50 },
 		special_floor_nodes = { 'default:obsidian', 'default:diamondblock' },
-		special_floor_nodes_chances = { 100, 400 },
+		special_floor_nodes_chances = { 200, 1200 },
 	},
 	Minauros = {
 		name = 'Minauros',
@@ -86,7 +86,7 @@ underworlds_mod.underzones = {
 		special_ceiling_nodes = { 'default:coalblock' },
 		special_ceiling_nodes_chances = { 15 },
 		special_floor_nodes = { 'default:goldblock', 'default:mese' },
-		special_floor_nodes_chances = { 300, 400 },
+		special_floor_nodes_chances = { 600, 1200 },
 	},
 	Styx = {
 		name = 'Styx',
@@ -120,7 +120,7 @@ underworlds_mod.underzones = {
                                 'default:goldblock', 'default:diamondblock',
                                 'default:mese', 'nyancat:nyancat_rainbow',
                                 'nyancat:nyancat' },
-		special_floor_nodes_chances = { 40, 20, 200, 200, 200, 4000, 12000 },
+		special_floor_nodes_chances = { 200, 20, 400, 800, 800, 4000, 12000 },
 	},
 }
 
