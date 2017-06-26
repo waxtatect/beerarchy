@@ -43,9 +43,6 @@ end
 
 ranking.increase_rank = function(player, rankName, value)
 	local curval = ranking.get_rank_raw(player, rankName)
-	if not curval then
-		curval = 0
-	end
 	ranking.set_rank_raw(player, rankName, curval + value)
 end
 
@@ -150,8 +147,7 @@ minetest.register_on_dignode(function(pos, oldnode, digger)
 				playerLastUsedPos[digger:get_player_name()][posstring] = nil
 			end
 		end
-	end
-	if pos and farmNodes[oldnode.name] then
+	elseif pos and farmNodes[oldnode.name] then
 		if not playerLastUsedPos[digger:get_player_name()] then
 			playerLastUsedPos[digger:get_player_name()] = {}
 		end
