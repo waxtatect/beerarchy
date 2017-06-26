@@ -43,6 +43,9 @@ end
 
 ranking.increase_rank = function(player, rankName, value)
 	local curval = ranking.get_rank_raw(player, rankName)
+	if not curval then
+		curval = 0
+	end
 	ranking.set_rank_raw(player, rankName, curval + value)
 end
 
