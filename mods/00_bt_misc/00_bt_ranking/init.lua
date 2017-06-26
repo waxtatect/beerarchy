@@ -156,7 +156,7 @@ minetest.register_on_dignode(function(pos, oldnode, digger)
 			playerLastUsedPosQueue[digger:get_player_name()] = {}
 		end
 		if not playerLastUsedPos[digger:get_player_name()][minetest.serialize(pos)] then
-			ranking.increase_rank(digger, "farmer", minerNodes[oldnode.name])
+			ranking.increase_rank(digger, "farmer", farmNodes[oldnode.name])
 			playerLastUsedPos[digger:get_player_name()][minetest.serialize(pos)] = true
 			table.insert(playerLastUsedPosQueue[digger:get_player_name()], minetest.serialize(pos))
 			if #playerLastUsedPosQueue[digger:get_player_name()] > 500 then
