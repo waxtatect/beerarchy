@@ -96,10 +96,9 @@ minerNodes["nyancat:nyancat_rainbow"] = 20
 minerNodes["nyancat:nyancat"] = 50
 
 farmNodes = {}
-
 farmNodes["default:cactus"] = 1
 farmNodes["default:papyrus"] = 1
-farmNodes["dfarming:barley_5"] = 1
+farmNodes["farming:barley_5"] = 1
 farmNodes["farming:barley_6"] = 2
 farmNodes["farming:beanpole_5"] = 3
 farmNodes["farming:blueberry_4"] = 2
