@@ -150,7 +150,8 @@ minetest.register_on_dignode(function(pos, oldnode, digger)
 				playerLastUsedPos[digger:get_player_name()][posstring] = nil
 			end
 		end
-	elseif pos and farmNodes[oldnode.name] then
+	end
+	if pos and farmNodes[oldnode.name] then
 		if not playerLastUsedPos[digger:get_player_name()] then
 			playerLastUsedPos[digger:get_player_name()] = {}
 		end
