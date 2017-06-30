@@ -10,25 +10,25 @@ local musicTableFirstRun = {
 }
 
 local musicTableGeneric = {
-	{ sound = "00_bt_music_anitra_s_dance", length = 211, gain = 1.0 },
+--	{ sound = "00_bt_music_anitra_s_dance", length = 211, gain = 1.0 },
 	{ sound = "00_bt_music_second_stand", length = 228, gain = 1.0 },
 	{ sound = "00_bt_music_wolf_blood", length = 186, gain = 1.0 },
 }
 
 local musicTableArctic = {
 	{ sound = "00_bt_music_viking_battle_song", length = 160, gain = 0.5 },
-	{ sound = "00_bt_music_solitude", length = 351, gain = 1.0 },
+--	{ sound = "00_bt_music_solitude", length = 351, gain = 1.0 },
 }
 
 local musicTableWater = {
-	{ sound = "00_bt_music_jeux_d_eau", length = 421, gain = 1.0 },
+--	{ sound = "00_bt_music_jeux_d_eau", length = 421, gain = 1.0 },
 	{ sound = "00_bt_music_alien_ruins", length = 54, gain = 1.0 },
 }
 
 local musicTableSpace = {
-	{ sound = "00_bt_music_random_gods", length = 333, gain = 1.0 },
+--	{ sound = "00_bt_music_random_gods", length = 333, gain = 1.0 },
 	{ sound = "00_bt_music_alien_ruins", length = 54, gain = 1.0 },
-	{ sound = "00_bt_music_space_organ", length = 470, gain = 1.0 },
+--	{ sound = "00_bt_music_space_organ", length = 470, gain = 1.0 },
 }
 
 local musicTableEpic = {
@@ -38,13 +38,13 @@ local musicTableEpic = {
 local musicTableCastle = {
 	{ sound = "00_bt_music_gregorian_chant", length = 192, gain = 1.0 },
 	{ sound = "00_bt_music_vox_vulgaris_rokatanc", length = 234, gain = 1.0 },
-	{ sound = "00_bt_music_vox_vulgaris_cantiga", length = 312, gain = 1.0 },
+--	{ sound = "00_bt_music_vox_vulgaris_cantiga", length = 312, gain = 1.0 },
 }
 
 local musicTableVillage = {
 	{ sound = "00_bt_music_vox_vulgaris_rokatanc", length = 234, gain = 1.0 },
 	{ sound = "00_bt_music_vox_vulgaris_cantiga", length = 312, gain = 1.0 },
-	{ sound = "00_bt_music_solitude", length = 351, gain = 1.0 },
+--	{ sound = "00_bt_music_solitude", length = 351, gain = 1.0 },
 }
 
 local musicTableDesert = {
