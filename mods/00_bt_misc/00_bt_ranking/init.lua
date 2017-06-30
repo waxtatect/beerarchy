@@ -434,7 +434,7 @@ end
 -- Give gift on reaching certain XP level
 ranking.on_xp_increase = function(player, xplevel)
 	if player:get_player_name() ~= "Beerholder" then
-		local stack = ItemStack("protector:protect2")
+		local stack = ItemStack("moreores:mithril_block")
 		local inv = player:get_inventory()
 
 		if inv:room_for_item("main", stack) then

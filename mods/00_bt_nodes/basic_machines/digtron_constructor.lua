@@ -6,7 +6,7 @@ basic_machines.digtron_craft_recipes = {
 
 -- Protectors
 
-["protection_logo"] = {
+--[[["protection_logo"] = {
 	item = "protector:protect2",
 	description = "Protector force field",
 	craft = { "basic_machines:control_logic_unit 4", "underworlds:hot_stone 4", "moreores:mithril_block 4" },
@@ -26,7 +26,7 @@ basic_machines.digtron_craft_recipes = {
 	craft = { "basic_machines:control_logic_unit", "underworlds:hot_stone", "moreores:mithril_block", "default:wood 6" },
 	tex = "doors_protected_wood"
 },
-
+]]--
 -- Digtron
 
 ["digtron_core"] = {
@@ -153,9 +153,9 @@ basic_machines.digtron_craft_recipes = {
 }
 
 basic_machines.digtron_craft_recipe_order = { -- order in which nodes appear
-	"protection_logo",
-	"protected_chest",
-	"protected_door_wood",
+--	"protection_logo",
+--	"protected_chest",
+--	"protected_door_wood",
 	"digtron_core",
 	"controller",
 	"auto_controller",
@@ -271,7 +271,7 @@ end
 
 
 minetest.register_node("basic_machines:digtron_constructor", {
-	description = "Advanced Constructor: used to make digtron construction and excavation vehicles, and protection force fields items",
+	description = "Advanced Constructor: used to make digtron construction and excavation vehicles",
 	tiles = {"grinder.png","default_furnace_top.png", "digtron_constructor.png","digtron_constructor.png","digtron_constructor.png","digtron_constructor.png"},
 	groups = {cracky=3, mesecon_effector_on = 1},
 	sounds = default.node_sound_wood_defaults(),
