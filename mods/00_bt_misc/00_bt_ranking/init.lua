@@ -300,7 +300,7 @@ buildNodes["stairs:stair_wood"] = 4
 
 -- Builder ranking based on place node event
 minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack, pointed_thing)
-	if minerNodes[newnode.name] then
+	if buildNodes[newnode.name] then
 		if not playerLastUsedPos[placer:get_player_name()] then
 			playerLastUsedPos[placer:get_player_name()] = {}
 		end
