@@ -98,6 +98,29 @@ minetest.register_craft({
 	}
 })
 
+minetest.register_tool("throwing:bow_mithril", {
+	description = "Mithril Bow",
+	inventory_image = "throwing_bow_mithril.png",
+    stack_max = 1,
+	on_use = function(itemstack, user, pointed_thing)
+		if throwing_shoot_arrow(item, user, pointed_thing) then
+			if not minetest.setting_getbool("creative_mode") then
+				itemstack:add_wear(65535/1000)
+			end
+		end
+		return itemstack
+	end,
+})
+
+minetest.register_craft({
+	output = 'throwing:bow_steel',
+	recipe = {
+		{'farming:string', 'moreores:mithril_ingot', ''},
+		{'farming:string', 'moreores:silver_ingot', 'moreores:mithril_ingot'},
+		{'farming:string', 'moreores:mithril_ingot', ''},
+	}
+})
+
 dofile(minetest.get_modpath("throwing").."/arrow.lua")
 dofile(minetest.get_modpath("throwing").."/fire_arrow.lua")
 dofile(minetest.get_modpath("throwing").."/teleport_arrow.lua")
