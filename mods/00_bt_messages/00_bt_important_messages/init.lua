@@ -5,16 +5,26 @@ important_message.message = ""
 
 function important_message.display_message()
 	if important_message.message and important_message.message ~= "" then
-		local msg = string.char(0x1b).."(c@#ff0000)"..important_message.message
+		local msg = string.char(0x1b).."(c@#00ff00)"..important_message.message
 		minetest.chat_send_all(msg)
 	end
 end
 
-function important_message.start_spamming()
-	important_message.display_message()
-	minetest.after(MESSAGE_INTERVAL, important_message.start_spamming)
-end
+minetest.register_on_joinplayer(function(player)
+	if important_message.message and important_message.message ~= "" then
+		local msg = string.char(0x1b).."(c@#00ff00)"..important_message.message
+		minetest.chat_send_player(player:get_player_name(), msg)
+	end
+end)
 
-if important_message.message and important_message.message ~= "" then
-	important_message.start_spamming()
-end
+local register_set_important_message = {
+	params = "<Message> what message to display",
+	privs = {server = true},
+	description = "Set the important message to show when players join",
+	func = function(name, param)
+		important_message.message = param
+		important_message.display_message()
+	end
+}
+
+minetest.register_chatcommand("important_message", register_set_important_message)
