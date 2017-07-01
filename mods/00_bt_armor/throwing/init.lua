@@ -114,7 +114,7 @@ minetest.register_tool("throwing:bow_mithril", {
 })
 
 minetest.register_craft({
-	output = 'throwing:bow_steel',
+	output = 'throwing:bow_mithril',
 	recipe = {
 		{'farming:string', 'moreores:mithril_ingot', ''},
 		{'farming:string', 'moreores:silver_ingot', 'moreores:mithril_ingot'},

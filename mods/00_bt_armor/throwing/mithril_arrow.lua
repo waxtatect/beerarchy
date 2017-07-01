@@ -82,6 +82,6 @@ minetest.register_entity("throwing:arrow_mithril_entity", THROWING_ARROW_ENTITY)
 minetest.register_craft({
 	output = 'throwing:arrow_mithril 4',
 	recipe = {
-		{'default:stick', 'default:stick', 'default:mithril_ingot'},
+		{'default:stick', 'default:stick', 'moreores:mithril_ingot'},
 	}
 })
