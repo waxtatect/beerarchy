@@ -164,8 +164,8 @@ ranks["caving"] = {
 		{ min = 201,  max = 500,   name = "Caveman"},
 		{ min = 501,  max = 1000,  name = "Spelunkologist"},
 		{ min = 1001, max = 2000,  name = "Returned from the dead"},
-		{ min = 2001, max = 5000,  name = "Satan's pall"},
-		{ min = 5001, max = 31000, name = "Hellraiser"},
+		{ min = 2001, max = 5900,  name = "Satan's pall"},
+		{ min = 5901, max = 31000, name = "Hellraiser"},
 	}
 }
 ranks[8] = ranks["caving"]

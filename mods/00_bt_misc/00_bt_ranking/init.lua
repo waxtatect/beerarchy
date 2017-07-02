@@ -316,7 +316,7 @@ minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack
 				playerLastUsedPos[placer:get_player_name()][posstring] = nil
 			end
 		else
-			print("Position was already used. Not scoring.")
+--			print("Position was already used. Not scoring.")
 		end
 	end
 end)
@@ -341,7 +341,7 @@ minetest.register_globalstep(function(dtime)
 				playerLastUsedPosQueue[player:get_player_name()] = {}
 			end
 			if #playerLastUsedPosQueue[player:get_player_name()] > 1 then
-				print("Removing element from last used positions array")
+--				print("Removing element from last used positions array")
 				local posstring = table.remove(playerLastUsedPosQueue[name], 1)
 				playerLastUsedPos[name][posstring] = nil
 			end
@@ -431,6 +431,23 @@ ranking.score_experience = function(player)
 
 end
 
+giftTable = {}
+giftTable[1] = "farming:joint"
+giftTable[2] = "wool:white"
+giftTable[3] = "default:sword_mese"
+giftTable[4] = "moreores:sword_mithril"
+giftTable[5] = "default:diamondblock"
+giftTable[6] = "default:mese"
+giftTable[7] = "unified_inventory:bag_medium"
+giftTable[8] = "integral:moon_juice"
+giftTable[9] = "throwing:bow_mithril"
+giftTable[10] = "throwing:bow_mithril"
+giftTable[11] = "throwing:bow_mithril"
+giftTable[12] = "throwing:bow_mithril"
+giftTable[13] = "throwing:bow_mithril"
+giftTable[14] = "throwing:bow_mithril"
+giftTable[15] = "protector:protect2"
+
 -- Give gift on reaching certain XP level
 ranking.on_xp_increase = function(player, xplevel)
 	if player:get_player_name() ~= "Beerholder" then
@@ -474,7 +491,7 @@ minetest.register_chatcommand("rank", {
 		else
 			player = minetest.get_player_by_name(param)
 			if not player then
-				return false, "ERROR: Player "..param.." not found."
+				return false, "ERROR: Player "..param.." not found or player not online."
 			end
 		end
 
