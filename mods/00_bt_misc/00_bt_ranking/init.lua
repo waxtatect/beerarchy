@@ -543,6 +543,9 @@ minetest.register_chatcommand("rank", {
 					end
 				end
 			end
+			if not nextLevel then
+				nextLevel = "ERROR (guard against crash)"
+			end
 			formspec = formspec..	"label[0,"..(i/2)..";"..ranks[i].name..":]"..
 									"label[2,"..(i/2)..";"..xpName.." ("..xp..")]"..
 									"label[7.5,"..(i/2)..";"..nextLevel.."]"
