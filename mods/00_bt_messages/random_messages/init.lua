@@ -65,7 +65,16 @@ end
 function random_messages.display_message(message_number)
 	local msg = random_messages.messages[message_number] or message_number
 	if msg then
-		minetest.chat_send_all(msg)
+--		minetest.chat_send_all(msg)
+		for _,player in ipairs(minetest.get_connected_players()) do
+			local target = player:get_player_name()
+			if playersChannels[target]["main"] then
+				if not minetest.get_player_by_name(target):get_attribute("00_bt_beerchat:muted:SatanicBibleBot") then
+					minetest.chat_send_player(target, string.char(0x1b).."(c@#00ff00)"..
+													  string.format("[#%s] %s", "main", msg))
+				end
+			end
+		end
 	end
 end
 
