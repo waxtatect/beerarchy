@@ -1,3 +1,13 @@
+local playerCooldown = {}
+
+minetest.register_on_joinplayer(function(player)
+	playerCooldown[player:get_player_name()] = 0.0
+end)
+
+minetest.register_on_leaveplayer(function(player)
+	playerCooldown[player:get_player_name()] = nil
+end)
+
 arrows = {
 	{"throwing:arrow", "throwing:arrow_entity"},
 	{"throwing:arrow_mithril", "throwing:arrow_mithril_entity"},
@@ -7,24 +17,59 @@ arrows = {
 	{"throwing:arrow_build", "throwing:arrow_build_entity"}
 }
 
+local cooldowns = {}
+cooldowns["throwing:bow_wood"] = 2.5
+cooldowns["throwing:bow_stone"] = 1.5
+cooldowns["throwing:bow_steel"] = 0.5
+cooldowns["throwing:bow_mithril"] = 0.2
+cooldowns["throwing:arrow"] = 0.5
+cooldowns["throwing:arrow_mithril"] = 0.2
+cooldowns["throwing:arrow_fire"] = 5.0
+cooldowns["throwing:arrow_teleport"] = 2.0
+cooldowns["throwing:arrow_dig"] = 0.5
+cooldowns["throwing:arrow_build"] = 1.0
+
 local throwing_shoot_arrow = function(itemstack, player)
-	for _,arrow in ipairs(arrows) do
-		if player:get_inventory():get_stack("main", player:get_wield_index()+1):get_name() == arrow[1] then
-			if not minetest.setting_getbool("creative_mode") then
-				player:get_inventory():remove_item("main", arrow[1])
+	if playerCooldown[player:get_player_name()] == 0.0 then
+		local playerpos = player:getpos()
+
+		if playerpos.x < -31000 or 31000 < playerpos.x or
+		   playerpos.y < -31000 or 31000 < playerpos.y or
+		   playerpos.x < -31000 or 31000 < playerpos.x
+		then
+			minetest.log("error", "[throwing] "..player:get_player_name().." position out of bounds "..minetest.pos_to_string(playerpos))
+			return false
+		end
+
+		for _,arrow in ipairs(arrows) do
+			if player:get_inventory():get_stack("main", player:get_wield_index()+1):get_name() == arrow[1] then
+				if not minetest.setting_getbool("creative_mode") then
+					player:get_inventory():remove_item("main", arrow[1])
+				end
+				local obj = minetest.env:add_entity({x=playerpos.x,y=playerpos.y+1.5,z=playerpos.z}, arrow[2])
+				local dir = player:get_look_dir()
+				obj:setvelocity({x=dir.x*19, y=dir.y*19, z=dir.z*19})
+				obj:setacceleration({x=dir.x*-3, y=-10, z=dir.z*-3})
+				obj:setyaw(player:get_look_yaw()+math.pi)
+				minetest.sound_play("throwing_sound", {pos=playerpos})
+				if obj:get_luaentity().player == "" then
+					obj:get_luaentity().player = player
+				end
+				obj:get_luaentity().node = player:get_inventory():get_stack("main", 1):get_name()
+				local bowCooldown = cooldowns[player:get_inventory():get_stack("main", player:get_wield_index()):get_name()]
+				local arrowCooldown = cooldowns[player:get_inventory():get_stack("main", player:get_wield_index()+1):get_name()]
+				local totalCooldown = bowCooldown + arrowCooldown
+
+				local playername = player:get_player_name()
+				playerCooldown[playername] = totalCooldown
+
+				minetest.after(totalCooldown, function(playername)
+					if playerCooldown[playername] then
+						playerCooldown[playername] = 0.0
+					end
+				end, playername)
+				return true
 			end
-			local playerpos = player:getpos()
-			local obj = minetest.env:add_entity({x=playerpos.x,y=playerpos.y+1.5,z=playerpos.z}, arrow[2])
-			local dir = player:get_look_dir()
-			obj:setvelocity({x=dir.x*19, y=dir.y*19, z=dir.z*19})
-			obj:setacceleration({x=dir.x*-3, y=-10, z=dir.z*-3})
-			obj:setyaw(player:get_look_yaw()+math.pi)
-			minetest.sound_play("throwing_sound", {pos=playerpos})
-			if obj:get_luaentity().player == "" then
-				obj:get_luaentity().player = player
-			end
-			obj:get_luaentity().node = player:get_inventory():get_stack("main", 1):get_name()
-			return true
 		end
 	end
 	return false
