@@ -249,12 +249,9 @@ minetest.register_chatcommand("ignore", mute_player)
 minetest.register_chatcommand("unmute", unmute_player)
 minetest.register_chatcommand("unignore", unmute_player)
 
--- @ chat a.k.a. atchat code, to PM players using @
---comments have not been removed
---[[ All code around the messaging system should be kept here. ]]--
+-- @ chat a.k.a. at chat/ PM chat code, to PM players using @player1 only you can read this player1!!
 atchat_lastrecv = {}
 
---now: new stuff: register_on_chat_message
 minetest.register_on_chat_message(function(name, message)
 	local players, msg = string.match(message, "^@([^%s:]*)[%s:](.*)")
 	if players and msg then
@@ -287,10 +284,9 @@ minetest.register_on_chat_message(function(name, message)
 	end
 end)
 
--- # chat a.k.a. hashchat code, to send messages in chat channels using #
+-- # chat a.k.a. hash chat/ channel chat code, to send messages in chat channels using # e.g. #my channel: hello everyone in my channel!
 hashchat_lastrecv = {}
 
---now: new stuff: register_on_chat_message
 minetest.register_on_chat_message(function(name, message)
 	local channel_name, msg = string.match(message, "^#(.-): (.*)")
 	if not channels[channel_name] then
@@ -331,6 +327,41 @@ minetest.register_on_chat_message(function(name, message)
 			end
 		end
 		return true
+	end
+end)
+
+-- $ chat a.k.a. dollar chat code, to whisper messages in chat to nearby players only using $, optionally supplying a radius e.g. $32 Hello
+minetest.register_on_chat_message(function(name, message)
+	local dollar, sradius, msg = string.match(message, "^($)(.*) (.*)")
+	if dollar == "$" then
+		local radius = tonumber(sradius)
+		if not radius then
+			radius = 16
+		end
+
+		if radius > 100 then
+			minetest.chat_send_player(name, "You cannot whisper outside of a radius of 100 blocks")
+		elseif msg == "" then
+			minetest.chat_send_player(name, "Please enter the message you would like to whisper to nearby players")
+		else
+			local pl = minetest.get_player_by_name(name)
+			local all_objects = minetest.get_objects_inside_radius({x=pl:getpos().x, y=pl:getpos().y, z=pl:getpos().z}, radius)
+
+			for _,player in ipairs(minetest.get_connected_players()) do
+				if player:is_player() then
+					local target = player:get_player_name()
+					-- Checking if the target is in this channel
+					if playersChannels[target]["main"] then
+						if not minetest.get_player_by_name(target):get_attribute("00_bt_beerchat:muted:"..name) then
+							minetest.chat_send_player(target, string.char(0x1b).."(c@"..channels["main"].color..")"..
+															  string.format("[#%s] <%s> whispers: %s", "main", name,
+															  msg))
+						end
+					end
+				end
+			end
+			return true
+		end
 	end
 end)
 
