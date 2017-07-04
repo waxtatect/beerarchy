@@ -131,6 +131,9 @@ farmNodes["farming:wheat_8"] = 3
 
 -- Mining and farming events using the above tables to determine the scores
 minetest.register_on_dignode(function(pos, oldnode, digger)
+	if not digger then
+		return
+	end
 	if pos and minerNodes[oldnode.name] then
 		if not playerLastUsedPos[digger:get_player_name()] then
 			playerLastUsedPos[digger:get_player_name()] = {}
