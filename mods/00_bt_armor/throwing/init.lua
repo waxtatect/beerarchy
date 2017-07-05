@@ -58,7 +58,11 @@ local throwing_shoot_arrow = function(itemstack, player)
 				obj:get_luaentity().node = player:get_inventory():get_stack("main", 1):get_name()
 				local bowCooldown = cooldowns[player:get_inventory():get_stack("main", player:get_wield_index()):get_name()]
 				local arrowCooldown = cooldowns[player:get_inventory():get_stack("main", player:get_wield_index()+1):get_name()]
-				local totalCooldown = bowCooldown + arrowCooldown
+
+				local totalCooldown = 1 -- Default
+				if bowCooldown ~= nil and arrowCooldown ~= nil then -- For some f#$!ing reason these can be nil?? -_-
+					totalCooldown = bowCooldown + arrowCooldown
+				end
 
 				local playername = player:get_player_name()
 				playerCooldown[playername] = totalCooldown
