@@ -515,7 +515,7 @@ minetest.register_chatcommand("rank", {
 
 			local xpName = "No level found, check ranking mod and tables"
 			local levels = ranks[i].levels
-			local nextLevel
+			local nextLevel = ""
 
 			for j = 1, #levels do
 				if not specialPlayer then
