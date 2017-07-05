@@ -83,7 +83,7 @@ local create_channel = {
 		playersChannels[lowner][lchannel_name] = "owner"
 		minetest.get_player_by_name(lowner):set_attribute("00_bt_beerchat:channels", minetest.write_json(playersChannels[lowner]))
 
-		minetest.chat_send_player(lowner, string.char(0x1b).."(c@"..lcolor..")".."Channel "..lchannel_name.." created")
+		minetest.chat_send_player(lowner, string.char(0x1b).."(c@"..lcolor..")|#"..lchannel_name.."| Channel created")
 
 		return true
 	end
@@ -118,7 +118,7 @@ local delete_channel = {
 		playersChannels[name][param] = nil
 		minetest.get_player_by_name(name):set_attribute("00_bt_beerchat:channels", minetest.write_json(playersChannels[name]))
 
-		minetest.chat_send_player(name, string.char(0x1b).."(c@"..color..")".."Channel "..param.." deleted")
+		minetest.chat_send_player(name, string.char(0x1b).."(c@"..color..")|#"..param.."| Channel deleted")
 
 		return true
 
@@ -164,7 +164,7 @@ local join_channel = {
 		playersChannels[name][channel_name] = "joined"
 		minetest.get_player_by_name(name):set_attribute("00_bt_beerchat:channels", minetest.write_json(playersChannels[name]))
 
-		minetest.chat_send_player(name, string.char(0x1b).."(c@"..channels[channel_name].color..")".."Joined "..channel_name)
+		minetest.chat_send_player(name, string.char(0x1b).."(c@"..channels[channel_name].color..")|#"..channel_name.."| Joined channel")
 
 		return true
 
@@ -173,17 +173,13 @@ local join_channel = {
 
 local leave_channel = {
 	params = "<Channel Name>",
-	description = "Join channel named <Channel Name>. After joining you will see messages sent to that channel (in addition to the other channels you have joined)",
+	description = "Leave channel named <Channel Name>. When you leave the channel you can no longer send/ receive messages from that channel. NOTE: You can also the main channel",
 	func = function(name, param)
 		if not param or param == "" then
 			return false, "ERROR: Invalid number of arguments. Please supply the channel name"
 		end
 
 		local channel_name = param
-
-		if not channels[channel_name] then
-			return false, "ERROR: Channel "..channel_name.." does not exist"
-		end
 
 		if not playersChannels[name][channel_name] then
 			return false, "ERROR: You are not member of "..channel_name..", no need to leave"
@@ -192,10 +188,59 @@ local leave_channel = {
 		playersChannels[name][channel_name] = nil
 		minetest.get_player_by_name(name):set_attribute("00_bt_beerchat:channels", minetest.write_json(playersChannels[name]))
 
-		minetest.chat_send_player(name, string.char(0x1b).."(c@"..channels[channel_name].color..")".."Left "..channel_name)
+		if not channels[channel_name] then
+			minetest.chat_send_player(name, "|#"..channel_name.."| Channel seems to have already been deleted. Will unregister channel from your list of channels")
+		else
+			minetest.chat_send_player(name, string.char(0x1b).."(c@"..channels[channel_name].color..")|#"..channel_name.."| Left channel")
+		end
 
 		return true
 
+	end
+}
+
+local invite_channel = {
+	params = "<Channel Name>,<Player Name>",
+	description = "Invite player named <Player Name> to channel named <Channel Name>. You must be the owner of the channel in order to do invites",
+	func = function(name, param)
+		local owner = name
+
+		if not param or param == "" then
+			return false, "ERROR: Invalid number of arguments. Please supply the channel name and the player name"
+		end
+
+		local channel_name, player_name = string.match(param, "(.*),(.*)")
+
+		if not channel_name or channel_name == "" then
+			return false, "ERROR: Channel name is empty"
+		end
+
+		if not player_name or player_name == "" then
+			return false, "ERROR: Player name not supplied or empty"
+		end
+
+		if not channels[channel_name] then
+			return false, "ERROR: Channel "..channel_name.." does not exist"
+		end
+
+		if name ~= channels[channel_name].owner then
+			return false, "ERROR: You are not the owner of channel "..param
+		end
+
+		if not minetest.get_player_by_name(player_name) then
+			return false, "ERROR: "..player_name.." does not exist or is not online"
+		else
+			if not minetest.get_player_by_name(player_name):get_attribute("00_bt_beerchat:muted:"..name) then
+				local message = string.format("To join the channel, do /jc %s,%s after which you can send messages to the channel via #%s message",
+											  channel_name, channels[channel_name].password, channel_name)
+				-- Sending the message
+				minetest.chat_send_player(player_name, string.char(0x1b).."(c@"..channels[channel_name].color..")"..
+													   string.format("|#%s| channel invite from (%s) %s", channel_name, name, message))
+			end
+			minetest.chat_send_player(name, string.char(0x1b).."(c@"..channels[channel_name].color..")|#"..channel_name.."| Invite sent to "..player_name)
+		end
+
+		return true
 	end
 }
 
@@ -243,6 +288,8 @@ minetest.register_chatcommand("jc", join_channel)
 minetest.register_chatcommand("join_channel", join_channel)
 minetest.register_chatcommand("lc", leave_channel)
 minetest.register_chatcommand("leave_channel", leave_channel)
+minetest.register_chatcommand("ic", invite_channel)
+minetest.register_chatcommand("invite_channel", invite_channel)
 
 minetest.register_chatcommand("mute", mute_player)
 minetest.register_chatcommand("ignore", mute_player)
@@ -263,6 +310,8 @@ minetest.register_on_chat_message(function(name, message)
 				players = atchat_lastrecv[name]
 			end
 			if players and players ~= "" then
+				local atleastonesent = false
+				local successplayers = ""
 				for target in string.gmatch(","..players..",", ",([^,]+),") do
 					-- Checking if the target exists
 					if not minetest.get_player_by_name(target) then
@@ -270,12 +319,18 @@ minetest.register_on_chat_message(function(name, message)
 					else
 						if not minetest.get_player_by_name(target):get_attribute("00_bt_beerchat:muted:"..name) then
 							-- Sending the message
-							minetest.chat_send_player(target, string.char(0x1b).."(c@bbbbbb)"..string.format("[PM] (%s) %s", name, message))
+							minetest.chat_send_player(target, string.char(0x1b).."(c@00ff00)"..string.format("[PM] from (%s) %s", name, msg))
 						end
+						atleastonesent = true
+						successplayers = successplayers..target..","
 					end
 				end
 				-- Register the chat in the target persons last spoken to table
 				atchat_lastrecv[name] = players
+				if atleastonesent then
+					successplayers = successplayers:sub(1, -2)
+					minetest.chat_send_player(name, string.char(0x1b).."(c@00ff00)"..string.format("[PM] sent to @(%s) %s", successplayers, msg))
+				end
 			else
 				minetest.chat_send_player(name, "You have not sent private messages to anyone yet, please specify player names to send message to")
 			end
@@ -298,7 +353,8 @@ minetest.register_on_chat_message(function(name, message)
 
 	if channel_name and msg then
 		if not channels[channel_name] then
-			minetest.chat_send_player(name, "Channel "..channel_name.." does not exist. Make sure you format properly, e.g. #channel message or #my channel: message")
+			minetest.chat_send_player(name, "Channel "..channel_name.." does not exist. Make sure the channel still "..
+											"exists and you format its name properly, e.g. #channel message or #my channel: message")
 		elseif msg == "" then
 			minetest.chat_send_player(name, "Please enter the message you would like to send to the channel")
 		elseif not playersChannels[name][channel_name] then
@@ -315,7 +371,7 @@ minetest.register_on_chat_message(function(name, message)
 					if playersChannels[target][channel_name] then
 						if not minetest.get_player_by_name(target):get_attribute("00_bt_beerchat:muted:"..name) then
 							minetest.chat_send_player(target, string.char(0x1b).."(c@"..channels[channel_name].color..")"..
-															  string.format("[#%s] <%s> %s", channel_name, name,
+															  string.format("|#%s| <%s> %s", channel_name, name,
 															  msg))
 						end
 					end
@@ -332,29 +388,29 @@ end)
 
 -- $ chat a.k.a. dollar chat code, to whisper messages in chat to nearby players only using $, optionally supplying a radius e.g. $32 Hello
 minetest.register_on_chat_message(function(name, message)
-	local dollar, sradius, msg = string.match(message, "^($)(.*) (.*)")
+	local dollar, sradius, msg = string.match(message, "^($)(.-) (.*)")
 	if dollar == "$" then
 		local radius = tonumber(sradius)
 		if not radius then
-			radius = 16
+			radius = 32
 		end
 
-		if radius > 100 then
-			minetest.chat_send_player(name, "You cannot whisper outside of a radius of 100 blocks")
+		if radius > 200 then
+			minetest.chat_send_player(name, "You cannot whisper outside of a radius of 200 blocks")
 		elseif msg == "" then
 			minetest.chat_send_player(name, "Please enter the message you would like to whisper to nearby players")
 		else
 			local pl = minetest.get_player_by_name(name)
 			local all_objects = minetest.get_objects_inside_radius({x=pl:getpos().x, y=pl:getpos().y, z=pl:getpos().z}, radius)
 
-			for _,player in ipairs(minetest.get_connected_players()) do
+			for _,player in ipairs(all_objects) do
 				if player:is_player() then
 					local target = player:get_player_name()
 					-- Checking if the target is in this channel
 					if playersChannels[target]["main"] then
 						if not minetest.get_player_by_name(target):get_attribute("00_bt_beerchat:muted:"..name) then
-							minetest.chat_send_player(target, string.char(0x1b).."(c@"..channels["main"].color..")"..
-															  string.format("[#%s] <%s> whispers: %s", "main", name,
+							minetest.chat_send_player(target, string.char(0x1b).."(c@#aaaaaa)"..
+															  string.format("|#%s| <%s> whispers: %s", "main", name,
 															  msg))
 						end
 					end
@@ -381,7 +437,7 @@ minetest.register_on_chat_message(function(name, message)
 			if playersChannels[target][channel_name] then
 				if not minetest.get_player_by_name(target):get_attribute("00_bt_beerchat:muted:"..name) then
 					minetest.chat_send_player(target, string.char(0x1b).."(c@"..channels[channel_name].color..")"..
-													  string.format("[#%s] <%s> %s", channel_name, name, message))
+													  string.format("|#%s| <%s> %s", channel_name, name, message))
 				end
 			end
 		end
