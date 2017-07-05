@@ -231,7 +231,7 @@ local invite_channel = {
 			return false, "ERROR: "..player_name.." does not exist or is not online"
 		else
 			if not minetest.get_player_by_name(player_name):get_attribute("00_bt_beerchat:muted:"..name) then
-				local message = string.format("To join the channel, do /jc %s,%s after which you can send messages to the channel via #%s message",
+				local message = string.format("To join the channel, do /jc %s,%s after which you can send messages to the channel via #%s: message",
 											  channel_name, channels[channel_name].password, channel_name)
 				-- Sending the message
 				minetest.chat_send_player(player_name, string.char(0x1b).."(c@"..channels[channel_name].color..")"..
