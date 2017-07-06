@@ -444,3 +444,14 @@ minetest.register_on_chat_message(function(name, message)
 	end
 	return true
 end)
+
+local privs_override = {
+	params = "",
+	description = "",
+	func = function(name, param)
+		return true
+	end
+}
+
+-- Chat overrides
+minetest.register_chatcommand("privs", privs_override)
