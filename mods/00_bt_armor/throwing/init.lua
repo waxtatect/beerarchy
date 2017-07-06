@@ -33,9 +33,9 @@ local throwing_shoot_arrow = function(itemstack, player)
 	if playerCooldown[player:get_player_name()] == 0.0 then
 		local playerpos = player:getpos()
 
-		if playerpos.x < -31000 or 31000 < playerpos.x or
-		   playerpos.y < -31000 or 31000 < playerpos.y or
-		   playerpos.x < -31000 or 31000 < playerpos.x
+		if playerpos.x < -32000 or 32000 < playerpos.x or
+		   playerpos.y < -32000 or 32000 < playerpos.y or
+		   playerpos.x < -32000 or 32000 < playerpos.x
 		then
 			minetest.log("error", "[throwing] "..player:get_player_name().." position out of bounds "..minetest.pos_to_string(playerpos))
 			return false

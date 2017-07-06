@@ -1,4 +1,5 @@
 local players = {}
+local playerLastPos = {}
 local playerLastUsedPos = {}
 local playerLastUsedPosQueue = {}
 ranking = {}
@@ -366,8 +367,28 @@ ranking.score_distance = function(player)
 		return
 	end
 
+	if pos.x < -32000 or pos.x > 32000 or
+	   pos.y < -32000 or pos.y > 32000 or
+	   pos.z < -32000 or pos.z > 32000
+	then
+		local lastPos = playerLastPos[player:get_player_name()]
+		if lastPos then
+			player:setpos( { x = lastPos.x, y = lastPos.y, z = lastPos.z } )
+		elseif beds.spawn[player:get_player_name()] then
+			lastPos = beds.spawn[player:get_player_name()]
+			player:setpos( { x = lastPos.x, y = lastPos.y, z = lastPos.z } )
+		end
+	else
+		playerLastPos[player:get_player_name()] = pos
+	end
+
 	local xzDistance = math.sqrt( (pos.x ^ 2) + (pos.z ^ 2) )
 	local lastxzDistance = ranking.get_rank_raw(player, "traveler")
+
+	if lastxzDistance > 43841 then
+		lastxzDistance = 0
+	end
+
 	if (xzDistance > lastxzDistance) then
 		ranking.set_rank_raw(player, "traveler", math.floor(xzDistance) + 1)
 	end
