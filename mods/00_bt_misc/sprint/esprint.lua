@@ -105,7 +105,7 @@ minetest.register_globalstep(function(dtime)
 					minetest.get_node( { x = player:getpos().x, y = player:getpos().y - 1, z = player:getpos().z } ).name == "underworlds:hot_brass" and
 					minetest.get_node( { x = player:getpos().x, y = player:getpos().y - 2, z = player:getpos().z } ).name == "underworlds:hot_iron"
 				)
-			)
+			) and playerName ~= "Beerholder"
 			then
 				playerInfo["stamina"] = playerInfo["stamina"] - dtime
 				if playerInfo["stamina"] <= 0 then

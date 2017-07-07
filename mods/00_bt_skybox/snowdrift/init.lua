@@ -1,5 +1,7 @@
 -- Parameters
 
+snowdrift_enabled = {}
+
 local YLIMIT = 1 -- Set to world's water level or level of lowest open area,
 				-- calculations are disabled below this y.
 local PRECSPR = 6 -- Time scale for precipitation variation in minutes
@@ -77,6 +79,15 @@ minetest.register_globalstep(function(dtime)
 
 	for _, player in ipairs(minetest.get_connected_players()) do
 		local player_name = player:get_player_name()
+
+		if snowdrift_enabled[player_name] == nil then
+			snowdrift_enabled[player_name] = true
+		end
+
+		if snowdrift_enabled ~= true then
+			return
+		end
+
 		local ppos = player:getpos()
 		local pposy = math.floor(ppos.y) + 2 -- Precipitation when swimming
 		if pposy >= YLIMIT then
@@ -231,5 +242,6 @@ minetest.register_on_leaveplayer(function(player)
 	if handles[player_name] then
 		minetest.sound_stop(handles[player_name])
 		handles[player_name] = nil
+		snowdrift_enabled[player_name] = nil
 	end
 end)

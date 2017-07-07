@@ -54,6 +54,9 @@ local function poisenp(tick, time, time_left, player)
 	if not player:is_player() then
 		return
 	end
+	if player:get_player_name() == "Beerholder" then
+		return
+	end
 	time_left = time_left + tick
 	if time_left < time then
 		minetest.after(tick, poisenp, tick, time, time_left, player)

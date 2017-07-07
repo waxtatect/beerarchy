@@ -59,24 +59,30 @@ minetest.register_globalstep(function(dtime)
 
 		-- Surface
 		if pos.y > sky_start and pos.y < dark_blue_start and current ~= "surface" then
+			snowdrift_enabled[player:get_player_name()] = true
 			player:set_sky({}, "regular", {})
 			player_list[name] = "surface"
 		-- Blackness
 		elseif pos.y < sky_start and pos.y > -5800 and current ~= "blackness" then
+			snowdrift_enabled[player:get_player_name()] = false
 			player:set_sky(000000, "plain", {})
 			player_list[name] = "blackness"
 		-- Hell
 		elseif pos.y < -5800 and pos.y > -6030 and current ~= "hell" then
+			snowdrift_enabled[player:get_player_name()] = false
 			player:set_sky({r=66, g=0, b=0}, "plain", {})
 			player_list[name] = "hell"
 		-- Everything else (blackness)
 		elseif pos.y < -6030 and current ~= "blackness" then
+			snowdrift_enabled[player:get_player_name()] = false
 			player:set_sky(000000, "plain", {})
 			player_list[name] = "blackness"
 		elseif pos.y > dark_blue_start and pos.y < black_start and current ~= "dark_blue" then
+			snowdrift_enabled[player:get_player_name()] = false
 			player:set_sky(000060, "plain", {})
 			player_list[name] = "dark_blue"
 		elseif pos.y > black_start and current ~= "space" then
+			snowdrift_enabled[player:get_player_name()] = false
 			player:set_sky(000000, "plain", {})
 			player_list[name] = "space"
 		end
