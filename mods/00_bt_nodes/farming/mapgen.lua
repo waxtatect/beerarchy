@@ -42,7 +42,26 @@ register_plant("carrot_8", 0, 3000, {"default:dirt_with_grass"}, "", -1, farming
 register_plant("cucumber_4", 0, 1000, {"default:dirt_with_grass"}, "", -1, farming.cucumber)
 register_plant("melon_8", 0, 200, {"default:dirt_with_grass"}, "group:water", 1, farming.melon)
 register_plant("pumpkin_8", 0, 500, {"default:dirt_with_grass"}, "", -1, farming.pumpkin)
-register_plant("hemp_7", 0, 5000, {"default:dirt_with_rainforest_litter"}, "", -1, farming.hemp)
+--register_plant("hemp_7", 0, 5000, {"default:dirt_with_rainforest_litter"}, "", -1, farming.hemp)
+
+minetest.register_decoration({
+	deco_type = "simple",
+	place_on = "default:dirt_with_rainforest_litter",
+	sidelen = 16,
+	noise_params = {
+		offset = 0,
+		scale = 0.06,
+		spread = {x = 100, y = 100, z = 100},
+		seed = 329,
+		octaves = 3,
+		persist = 0.6
+	},
+	y_min = 0,
+	y_max = 5000,
+	decoration = "farming:hemp_7",
+	spawn_by = "default:jungletree",
+	num_spawn_by = 1,
+})
 
 --[[if minetest.get_mapgen_params().mgname == "v6" then
 

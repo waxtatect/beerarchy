@@ -81,8 +81,9 @@ crop_def.groups = {snappy = 1, oddly_breakable_by_hand = 1, flammable = 2, plant
 crop_def.drop = "farming:melon_slice 9"
 crop_def.drop = {
 	items = {
-		{items = {"farming:melon_slice 2"}, rarity = 1},
-		{items = {"farming:melon_slice 1"}, rarity = 4},
+		{items = {"farming:melon_slice 4"}, rarity = 1},
+		{items = {"farming:melon_slice 2"}, rarity = 4},
+		{items = {"farming:melon_slice 1"}, rarity = 8},
 	}
 }
 
