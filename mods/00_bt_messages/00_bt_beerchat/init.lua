@@ -321,10 +321,11 @@ minetest.register_on_chat_message(function(name, message)
 							if target ~= name then
 								-- Sending the message
 								minetest.chat_send_player(target, string.char(0x1b).."(c@00ff00)"..string.format("[PM] from (%s) %s", name, msg))
+								minetest.sound_play("00_bt_beerchat_chime", { to_player = target, gain = 1.0 } )
 							else
 								minetest.chat_send_player(target, string.char(0x1b).."(c@00ff00)"..string.format("(%s utters to him/ herself) %s", name, msg))
+								minetest.sound_play("00_bt_beerchat_utter", { to_player = target, gain = 1.0 } )
 							end
-							minetest.sound_play("00_bt_beerchat_chime", { to_player = target, gain = 1.0 } )
 						end
 						atleastonesent = true
 						successplayers = successplayers..target..","
@@ -345,6 +346,59 @@ minetest.register_on_chat_message(function(name, message)
 		return true
 	end
 end)
+
+local msg_chat = {
+	params = "<Player Name> <Message>",
+	description = "Send private message to player, for compatibility with the old chat command but with new style chat muting support "..
+				  "(players will not receive your message if they muted you) and multiple (comma separated) player support",
+	func = function(name, param)
+		local players, msg = string.match(param, "^(.-) (.*)")
+		if players and msg then
+			if players == "" then
+				minetest.chat_send_player(name, "ERROR: Please enter the private message you would like to send")
+				return false
+			elseif msg == "" then
+				minetest.chat_send_player(name, "ERROR: Please enter the private message you would like to send")
+				return false
+			else
+				if players and players ~= "" then
+					local atleastonesent = false
+					local successplayers = ""
+					for target in string.gmatch(","..players..",", ",([^,]+),") do
+						-- Checking if the target exists
+						if not minetest.get_player_by_name(target) then
+							minetest.chat_send_player(name, ""..target.." is not online")
+						else
+							if not minetest.get_player_by_name(target):get_attribute("00_bt_beerchat:muted:"..name) then
+								if target ~= name then
+									-- Sending the message
+									minetest.chat_send_player(target, string.char(0x1b).."(c@00ff00)"..string.format("[PM] from (%s) %s", name, msg))
+									minetest.sound_play("00_bt_beerchat_chime", { to_player = target, gain = 1.0 } )
+								else
+									minetest.chat_send_player(target, string.char(0x1b).."(c@00ff00)"..string.format("(%s utters to him/ herself) %s", name, msg))
+									minetest.sound_play("00_bt_beerchat_utter", { to_player = target, gain = 1.0 } )
+								end
+							end
+							atleastonesent = true
+							successplayers = successplayers..target..","
+						end
+					end
+					-- Register the chat in the target persons last spoken to table
+					atchat_lastrecv[name] = players
+					if atleastonesent then
+						successplayers = successplayers:sub(1, -2)
+						if (successplayers ~= name) then
+							minetest.chat_send_player(name, string.char(0x1b).."(c@00ff00)"..string.format("[PM] sent to @(%s) %s", successplayers, msg))
+						end
+					end
+				end
+			end
+			return true
+		end
+	end
+}
+
+minetest.register_chatcommand("msg", msg_chat)
 
 -- # chat a.k.a. hash chat/ channel chat code, to send messages in chat channels using # e.g. #my channel: hello everyone in my channel!
 hashchat_lastrecv = {}
