@@ -318,8 +318,13 @@ minetest.register_on_chat_message(function(name, message)
 						minetest.chat_send_player(name, ""..target.." is not online")
 					else
 						if not minetest.get_player_by_name(target):get_attribute("00_bt_beerchat:muted:"..name) then
-							-- Sending the message
-							minetest.chat_send_player(target, string.char(0x1b).."(c@00ff00)"..string.format("[PM] from (%s) %s", name, msg))
+							if target ~= name then
+								-- Sending the message
+								minetest.chat_send_player(target, string.char(0x1b).."(c@00ff00)"..string.format("[PM] from (%s) %s", name, msg))
+							else
+								minetest.chat_send_player(target, string.char(0x1b).."(c@00ff00)"..string.format("(%s utters to him/ herself) %s", name, msg))
+							end
+							minetest.sound_play("00_bt_beerchat_chime", { to_player = target, gain = 1.0 } )
 						end
 						atleastonesent = true
 						successplayers = successplayers..target..","
@@ -329,7 +334,9 @@ minetest.register_on_chat_message(function(name, message)
 				atchat_lastrecv[name] = players
 				if atleastonesent then
 					successplayers = successplayers:sub(1, -2)
-					minetest.chat_send_player(name, string.char(0x1b).."(c@00ff00)"..string.format("[PM] sent to @(%s) %s", successplayers, msg))
+					if (successplayers ~= name) then
+						minetest.chat_send_player(name, string.char(0x1b).."(c@00ff00)"..string.format("[PM] sent to @(%s) %s", successplayers, msg))
+					end
 				end
 			else
 				minetest.chat_send_player(name, "You have not sent private messages to anyone yet, please specify player names to send message to")
@@ -373,6 +380,7 @@ minetest.register_on_chat_message(function(name, message)
 							minetest.chat_send_player(target, string.char(0x1b).."(c@"..channels[channel_name].color..")"..
 															  string.format("|#%s| <%s> %s", channel_name, name,
 															  msg))
+							minetest.sound_play("00_bt_beerchat_chime", { to_player = target, gain = 1.0 } )
 						end
 					end
 				end
