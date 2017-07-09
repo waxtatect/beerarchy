@@ -126,10 +126,21 @@ local delete_channel = {
 }
 
 local my_channels = {
-	description = "List the channels you have joined or are the owner of",
+	params = "<Channel Name optional>",
+	description = "List the channels you have joined or are the owner of, or show channel information when passing channel name as argument",
 	func = function(name, param)
-		minetest.sound_play("00_bt_beerchat_chirp", { to_player = name, gain = 1.0 } )
-		minetest.chat_send_player(name, dump2(playersChannels[name]))
+		if not param or param == "" then
+			minetest.sound_play("00_bt_beerchat_chirp", { to_player = name, gain = 1.0 } )
+			minetest.chat_send_player(name, dump2(playersChannels[name]))
+		else
+			if playersChannels[name][param] then
+				minetest.sound_play("00_bt_beerchat_chirp", { to_player = name, gain = 1.0 } )
+				minetest.chat_send_player(name, dump2(channels[param]))
+			else
+				minetest.chat_send_player(name, "ERROR: Channel not in your channel list")
+				return false
+			end
+		end
 		return true
 	end
 }
