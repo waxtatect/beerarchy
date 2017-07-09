@@ -535,6 +535,7 @@ travelnet.on_receive_fields = function(pos, formname, fields, player)
 
    if( travelnet.travelnet_sound_enabled ) then
       minetest.sound_play("travelnet_transporter", {pos = pos, gain = 1.0, max_hear_distance = 10,})
+      minetest.sound_play("travelnet_transporter_beep", {pos = pos, gain = 1.0, max_hear_distance = 10,})
       minetest.sound_play("travelnet_transporter", { to_player = player:get_player_name(), gain = 1.0 } )
    end
    if( travelnet.travelnet_effect_enabled ) then

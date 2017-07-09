@@ -82,7 +82,7 @@ local create_channel = {
 
 		playersChannels[lowner][lchannel_name] = "owner"
 		minetest.get_player_by_name(lowner):set_attribute("00_bt_beerchat:channels", minetest.write_json(playersChannels[lowner]))
-
+		minetest.sound_play("00_bt_beerchat_chirp", { to_player = lowner, gain = 1.0 } )
 		minetest.chat_send_player(lowner, string.char(0x1b).."(c@"..lcolor..")|#"..lchannel_name.."| Channel created")
 
 		return true
@@ -117,7 +117,7 @@ local delete_channel = {
 
 		playersChannels[name][param] = nil
 		minetest.get_player_by_name(name):set_attribute("00_bt_beerchat:channels", minetest.write_json(playersChannels[name]))
-
+		minetest.sound_play("00_bt_beerchat_chirp", { to_player = name, gain = 1.0 } )
 		minetest.chat_send_player(name, string.char(0x1b).."(c@"..color..")|#"..param.."| Channel deleted")
 
 		return true
@@ -128,6 +128,7 @@ local delete_channel = {
 local my_channels = {
 	description = "List the channels you have joined or are the owner of",
 	func = function(name, param)
+		minetest.sound_play("00_bt_beerchat_chirp", { to_player = name, gain = 1.0 } )
 		minetest.chat_send_player(name, dump2(playersChannels[name]))
 		return true
 	end
@@ -163,7 +164,7 @@ local join_channel = {
 
 		playersChannels[name][channel_name] = "joined"
 		minetest.get_player_by_name(name):set_attribute("00_bt_beerchat:channels", minetest.write_json(playersChannels[name]))
-
+		minetest.sound_play("00_bt_beerchat_chirp", { to_player = name, gain = 1.0 } )
 		minetest.chat_send_player(name, string.char(0x1b).."(c@"..channels[channel_name].color..")|#"..channel_name.."| Joined channel")
 
 		return true
@@ -188,6 +189,7 @@ local leave_channel = {
 		playersChannels[name][channel_name] = nil
 		minetest.get_player_by_name(name):set_attribute("00_bt_beerchat:channels", minetest.write_json(playersChannels[name]))
 
+		minetest.sound_play("00_bt_beerchat_chirp", { to_player = name, gain = 1.0 } )
 		if not channels[channel_name] then
 			minetest.chat_send_player(name, "|#"..channel_name.."| Channel seems to have already been deleted. Will unregister channel from your list of channels")
 		else
@@ -231,12 +233,14 @@ local invite_channel = {
 			return false, "ERROR: "..player_name.." does not exist or is not online"
 		else
 			if not minetest.get_player_by_name(player_name):get_attribute("00_bt_beerchat:muted:"..name) then
+				minetest.sound_play("00_bt_beerchat_chirp", { to_player = player_name, gain = 1.0 } )
 				local message = string.format("To join the channel, do /jc %s,%s after which you can send messages to the channel via #%s: message",
 											  channel_name, channels[channel_name].password, channel_name)
 				-- Sending the message
 				minetest.chat_send_player(player_name, string.char(0x1b).."(c@"..channels[channel_name].color..")"..
 													   string.format("|#%s| channel invite from (%s) %s", channel_name, name, message))
 			end
+			minetest.sound_play("00_bt_beerchat_chirp", { to_player = name, gain = 1.0 } )
 			minetest.chat_send_player(name, string.char(0x1b).."(c@"..channels[channel_name].color..")|#"..channel_name.."| Invite sent to "..player_name)
 		end
 

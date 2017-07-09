@@ -185,7 +185,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 			if registros[name].destinos[fields.destino] then
 				adicionar_waypoint(name, fields.destino)
 				minetest.chat_send_player(name, S("GPS Ativado. Destino @1 localizado.", fields.destino))
-				minetest.sound_play("gps_beep", {gain = 0.15, max_hear_distance = 3, object = player})
+				minetest.sound_play("gps_beep", {gain = 1.0, max_hear_distance = 3, object = player})
 				return true
 			else
 				minetest.chat_send_player(name, S("Nenhum destino encontrado. Defina novos destinos."))
