@@ -14,6 +14,7 @@ minetest.register_alias("moreores:mineral_tin", "default:stone_with_tin")
 minetest.register_alias("moreores:tin_lump", "default:tin_lump")
 minetest.register_alias("tin_lump", "default:tin_lump")
 minetest.register_alias("moreores:tin_ingot", "default:tin_ingot")
+minetest.register_alias("farming:hoe_mithril", "moreores:hoe_mithril")
 
 local S
 if minetest.get_modpath("intllib") then
