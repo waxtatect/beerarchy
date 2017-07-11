@@ -188,7 +188,8 @@ function default.register_blob_ores()
 			"deciduous_forest_shore", "deciduous_forest_ocean", "cold_desert",
 			"cold_desert_ocean", "savanna", "savanna_shore", "savanna_ocean",
 			"rainforest", "rainforest_swamp", "rainforest_ocean", "underground",
-			"floatland_ocean", "floatland_grassland", "floatland_coniferous_forest"}
+			"floatland_ocean", "floatland_grassland", "floatland_coniferous_forest",
+			"floatland_rainforest"}
 	})
 
 	-- Dirt
@@ -213,7 +214,7 @@ function default.register_blob_ores()
 		biomes = {"taiga", "snowy_grassland", "grassland", "coniferous_forest",
 			"deciduous_forest", "deciduous_forest_shore", "savanna", "savanna_shore",
 			"rainforest", "rainforest_swamp", "floatland_grassland",
-			"floatland_coniferous_forest"}
+			"floatland_coniferous_forest", "floatland_rainforest"}
 	})
 
 	-- Gravel
@@ -242,7 +243,8 @@ function default.register_blob_ores()
 			"deciduous_forest_shore", "deciduous_forest_ocean", "cold_desert",
 			"cold_desert_ocean", "savanna", "savanna_shore", "savanna_ocean",
 			"rainforest", "rainforest_swamp", "rainforest_ocean", "underground",
-			"floatland_ocean", "floatland_grassland", "floatland_coniferous_forest"}
+			"floatland_ocean", "floatland_grassland", "floatland_coniferous_forest",
+			"floatland_rainforest"}
 	})
 end
 
@@ -1223,6 +1225,28 @@ function default.register_floatland_biomes(floatland_level, shadow_limit)
 		humidity_point = 35,
 	})
 
+	-- Rainforest
+
+	minetest.register_biome({
+		name = "floatland_rainforest",
+		--node_dust = "",
+		node_top = "default:dirt_with_rainforest_litter",
+		depth_top = 1,
+		node_filler = "default:dirt",
+		depth_filler = 3,
+		--node_stone = "",
+		--node_water_top = "",
+		--depth_water_top = ,
+		--node_water = "",
+		--node_river_water = "",
+		--node_riverbed = "",
+		--depth_riverbed = ,
+		y_min = floatland_level + 2,
+		y_max = 5000,
+		heat_point = 55,
+		humidity_point = 65,
+	})
+
 	-- Sandstone desert
 
 	minetest.register_biome({
@@ -1491,7 +1515,7 @@ function default.register_decorations()
 			octaves = 3,
 			persist = 0.66
 		},
-		biomes = {"deciduous_forest"},
+		biomes = {"deciduous_forest", "floatland_grassland"},
 		y_min = 1,
 		y_max = 31000,
 		schematic = minetest.get_modpath("default") .. "/schematics/apple_tree.mts",
@@ -1511,7 +1535,7 @@ function default.register_decorations()
 			octaves = 3,
 			persist = 0.66
 		},
-		biomes = {"deciduous_forest"},
+		biomes = {"deciduous_forest", "floatland_grassland"},
 		y_min = 1,
 		y_max = 31000,
 		schematic = minetest.get_modpath("default") .. "/schematics/apple_log.mts",
@@ -1526,7 +1550,7 @@ function default.register_decorations()
 		place_on = {"default:dirt_with_rainforest_litter", "default:dirt"},
 		sidelen = 16,
 		fill_ratio = 0.1,
-		biomes = {"rainforest", "rainforest_swamp"},
+		biomes = {"rainforest", "rainforest_swamp", "floatland_rainforest"},
 		y_min = -1,
 		y_max = 31000,
 		schematic = minetest.get_modpath("default") .. "/schematics/jungle_tree.mts",
@@ -1539,7 +1563,7 @@ function default.register_decorations()
 		place_on = {"default:dirt_with_rainforest_litter", "default:dirt"},
 		sidelen = 16,
 		fill_ratio = 0.005,
-		biomes = {"rainforest", "rainforest_swamp"},
+		biomes = {"rainforest", "rainforest_swamp", "floatland_rainforest"},
 		y_min = 1,
 		y_max = 31000,
 		schematic = minetest.get_modpath("default") .. "/schematics/jungle_log.mts",
@@ -1580,7 +1604,7 @@ function default.register_decorations()
 			octaves = 3,
 			persist = 0.66
 		},
-		biomes = {"taiga", "coniferous_forest"},
+		biomes = {"taiga", "coniferous_forest", "floatland_coniferous_forest"},
 		y_min = 1,
 		y_max = 31000,
 		schematic = minetest.get_modpath("default") .. "/schematics/pine_log.mts",
@@ -1644,7 +1668,7 @@ function default.register_decorations()
 			octaves = 3,
 			persist = 0.66
 		},
-		biomes = {"deciduous_forest"},
+		biomes = {"deciduous_forest", "floatland_grassland"},
 		y_min = 1,
 		y_max = 31000,
 		schematic = minetest.get_modpath("default") .. "/schematics/aspen_tree.mts",
@@ -1663,7 +1687,7 @@ function default.register_decorations()
 			octaves = 3,
 			persist = 0.66
 		},
-		biomes = {"deciduous_forest"},
+		biomes = {"deciduous_forest", "floatland_grassland"},
 		y_min = 1,
 		y_max = 31000,
 		schematic = minetest.get_modpath("default") .. "/schematics/aspen_log.mts",
@@ -1685,7 +1709,7 @@ function default.register_decorations()
 			octaves = 3,
 			persist = 0.6
 		},
-		biomes = {"desert"},
+		biomes = {"desert", "floatland_sandstone_desert"},
 		y_min = 5,
 		y_max = 31000,
 		schematic = minetest.get_modpath("default") .. "/schematics/large_cactus.mts",
@@ -1707,7 +1731,7 @@ function default.register_decorations()
 			octaves = 3,
 			persist = 0.6
 		},
-		biomes = {"desert"},
+		biomes = {"desert", "floatland_sandstone_desert"},
 		y_min = 5,
 		y_max = 31000,
 		decoration = "default:cactus",
@@ -1801,7 +1825,7 @@ function default.register_decorations()
 		place_on = {"default:dirt_with_rainforest_litter"},
 		sidelen = 16,
 		fill_ratio = 0.1,
-		biomes = {"rainforest"},
+		biomes = {"rainforest", "floatland_rainforest"},
 		y_min = 1,
 		y_max = 31000,
 		decoration = "default:junglegrass",
