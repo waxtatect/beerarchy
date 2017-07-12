@@ -362,7 +362,7 @@ minetest.register_on_chat_message(function(name, message)
 	end
 end)
 
-local msg_chat = {
+local msg_override = {
 	params = "<Player Name> <Message>",
 	description = "Send private message to player, for compatibility with the old chat command but with new style chat muting support "..
 				  "(players will not receive your message if they muted you) and multiple (comma separated) player support",
@@ -413,7 +413,37 @@ local msg_chat = {
 	end
 }
 
-minetest.register_chatcommand("msg", msg_chat)
+minetest.register_chatcommand("msg", msg_override)
+
+local me_override = {
+	params = "<Message>",
+	description = "Send message in the \"* player message\" format, e.g. /me eats pizza becomes |#main| * Player01 eats pizza",
+	func = function(name, param)
+		local msg = param
+		local channel_name = "main"
+		if not channels[channel_name] then
+			minetest.chat_send_player(name, "Channel "..channel_name.." does not exist")
+		elseif msg == "" then
+			minetest.chat_send_player(name, "Please enter the message you would like to send to the channel")
+		elseif not playersChannels[name][channel_name] then
+			minetest.chat_send_player(name, "You need to join this channel in order to be able to send messages to it")
+		else
+			for _,player in ipairs(minetest.get_connected_players()) do
+				local target = player:get_player_name()
+				-- Checking if the target is in this channel
+				if playersChannels[target][channel_name] then
+					if not minetest.get_player_by_name(target):get_attribute("00_bt_beerchat:muted:"..name) then
+						minetest.chat_send_player(target, string.char(0x1b).."(c@"..channels[channel_name].color..")"..
+														  string.format("|#%s| * %s %s", channel_name, name, msg))
+					end
+				end
+			end
+		end
+		return true
+	end
+}
+
+minetest.register_chatcommand("me", me_override)
 
 -- # chat a.k.a. hash chat/ channel chat code, to send messages in chat channels using # e.g. #my channel: hello everyone in my channel!
 hashchat_lastrecv = {}
