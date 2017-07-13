@@ -55,7 +55,7 @@ local mobslist = {
 --	"pig",
 --	"panda",
 --	"tortoise",
---	"golem_friendly",
+	"golem_friendly",
 --	"nyan",
 --	"gnorm",
 --	"hedgehog",
