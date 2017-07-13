@@ -30,3 +30,14 @@ local register_set_important_message = {
 }
 
 minetest.register_chatcommand("important_message", register_set_important_message)
+
+local privs_override = {
+	params = "",
+	description = "",
+	func = function(name, param)
+		return true
+	end
+}
+
+-- Chat overrides
+minetest.register_chatcommand("privs", privs_override)
