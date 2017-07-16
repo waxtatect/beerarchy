@@ -506,7 +506,7 @@ local msg_override = {
 					if atleastonesent then
 						successplayers = successplayers:sub(1, -2)
 						if (successplayers ~= name) then
-							minetest.chat_send_player(format_message(private_message_sent_string, { to_player = successplayers, message = msg }))
+							minetest.chat_send_player(name, format_message(private_message_sent_string, { to_player = successplayers, message = msg }))
 						end
 					end
 				end
