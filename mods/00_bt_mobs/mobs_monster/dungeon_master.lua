@@ -70,6 +70,14 @@ mobs:spawn({
 	max_height = -70,
 })
 
+mobs:spawn({
+	name = "mobs_monster:dungeon_master",
+	nodes = {"default:obsidian"},
+	max_light = 14,
+	chance = 100,
+	active_object_count = 1,
+	max_height = -19800,
+})
 
 mobs:register_egg("mobs_monster:dungeon_master", S("Dungeon Master"), "fire_basic_flame.png", 1, true)
 

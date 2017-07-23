@@ -210,8 +210,8 @@ mobs:register_mob("horror:hellbaron", {
 	dogshoot_count_max =5,
    arrow = "horror:fireball_2",
    shoot_offset = 0.5,
-   hp_min = 200,
-   hp_max = 400,
+   hp_min = 100,
+   hp_max = 200,
    armor = 400,
    collisionbox = {-0.5, 0, -0.6, 0.6, 3, 0.6},
    visual = "mesh",
@@ -251,6 +251,7 @@ mobs:register_mob("horror:hellbaron", {
 })
 
 mobs:register_spawn("horror:hellbaron", {"underworlds:hot_cobble"}, 20, 0, 15000, 2, -5800)
+mobs:register_spawn("horror:hellbaron", {"default:obsidian"}, 20, 0, 1000, 1, -19800)
 
 --mobs:register_egg("horror:hellbaron", "Hell Baron", "default_dirt.png", 1)
 

@@ -8,7 +8,9 @@ local max_depth = 31000
 
 
 local terrain_noise = {offset = 15, scale = 10, seed = 3721, spread = {x = 40, y = 40, z = 40}, octaves = 3, persist = 1, lacunarity = 2}
+local earth_terrain_noise = {offset = 15, scale = 20, seed = 3721, spread = {x = 40, y = 40, z = 40}, octaves = 3, persist = 1, lacunarity = 2}
 local terrain_map
+local earth_terrain_map
 local terrain = {}
 
 
@@ -29,7 +31,20 @@ underworlds_mod.undergen = function(minp, maxp, data, p2data, area, node, underz
     end
   end
 
-	terrain = terrain_map:get2dMap_flat({x=minp.x, y=minp.z}, terrain)
+  if not earth_terrain_map then
+    earth_terrain_map = minetest.get_perlin_map(earth_terrain_noise, {x=csize.x, y=csize.z})
+
+    if not earth_terrain_map then
+      return
+    end
+  end
+
+	if underzone == "Chaos" or underzone == "Gaia" then
+		terrain = earth_terrain_map:get2dMap_flat({x=minp.x, y=minp.z}, terrain)
+	else
+		terrain = terrain_map:get2dMap_flat({x=minp.x, y=minp.z}, terrain)
+	end
+
 	if not terrain then
 		return
 	end

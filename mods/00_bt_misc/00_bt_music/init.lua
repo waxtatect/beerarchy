@@ -78,8 +78,13 @@ local musicTableNyan = {
 minetest.register_on_joinplayer(function(player)
 	local playerName = player:get_player_name()
 	players[playerName] = player
-	playerMusicEnabled[playerName] = true
-	mustStartNewMusic[playerName] = true
+	if (not player:get_attribute("00_bt_music:enabled")) or player:get_attribute("00_bt_music:enabled") == "true" then
+		playerMusicEnabled[playerName] = true
+		mustStartNewMusic[playerName] = true
+	else
+		playerMusicEnabled[playerName] = false
+		mustStartNewMusic[playerName] = false
+	end
 end)
 
 minetest.register_on_leaveplayer(function(player)
@@ -273,10 +278,12 @@ minetest.register_chatcommand("music", {
 			end
 			playerMusicEnabled[player:get_player_name()] = false
 			playerMusic[player:get_player_name()] = nil
+			player:set_attribute("00_bt_music:enabled", "false")
 			collectgarbage()
 		elseif param == "on" then
 			playerMusic[player:get_player_name()] = nil
 			playerMusicEnabled[player:get_player_name()] = true
+			player:set_attribute("00_bt_music:enabled", "true")
 		else
 			minetest.chat_send_player(name, "ERROR: Please only use \"on\" or \"off\" (without the quotes) as parameter to the /music chat command.")
 		end

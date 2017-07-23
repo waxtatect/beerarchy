@@ -122,6 +122,34 @@ underworlds_mod.underzones = {
                                 'nyancat:nyancat' },
 		special_floor_nodes_chances = { 200, 20, 400, 800, 800, 4000, 12000 },
 	},
+	Mantellum = {
+		name = 'Mantellum',
+		ceiling_node = 'underworlds:hot_cobble',
+		floor_node = 'underworlds:hot_cobble',
+    high_chunk = -120,
+    low_chunk = -125,
+		lake = 'default:lava_source',
+		lake_level = 600,
+		regular_columns = false,
+		stone_depth = 50,
+		vary = true,
+	},
+	Coreum = {
+		name = 'Coreum',
+		ceiling_node = 'underworlds:hot_cobble',
+		column_node = 'nyancat:nyancat_rainbow',
+		column_node_rare  =  'nyancat:nyancat',
+		floor_node = 'default:obsidian',
+    high_chunk = -170,
+    low_chunk = -190,
+		lake = 'default:lava_source',
+		lake_level = 20,
+		regular_columns = false,
+		stone_depth = 1,
+		vary = true,
+		special_floor_nodes = { 'default:mese', 'default:diamondblock', 'moreores:mithril_block' },
+		special_floor_nodes_chances = { 5, 5, 5 },
+	},
 }
 
 for _, uz in pairs(underworlds_mod.underzones) do
@@ -239,7 +267,7 @@ minetest.register_abm({
 	interval = 5,
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
-		if pos.y < -5800 and pos.y > -6030 then
+		if pos.y < -5800 then
 			if minetest.get_node( { x = pos.x, y = pos.y + 1, z = pos.z } ).name ~= "default:snow" then
 				for _,object in ipairs(minetest.get_objects_inside_radius(pos, 15.1/16)) do -- 15.1/16    1.3
 					if object:is_player() and object:get_hp() > 0 then
