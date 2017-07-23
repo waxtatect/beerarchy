@@ -17,26 +17,35 @@ ranks = {}
 
 -- Overall experience rank based on time on server
 -- and other points
+
+-- 20000 * 2  20000   20000 * 2   20000 * 10   30000   25000 * 3   24000 * 4   5000 * 7
+-- 40000      20000   40000       200000       30000   75000       96000       35000     = 350000
+--
 ranks["experience"] = {
 	code = "experience",
 	name = "Experience",
 	index = 1,
 	levels = {
-		{ min = 0,   max = 1,   name = "Baby"},				-- +1
-		{ min = 2,   max = 4,   name = "N00b"},				-- +2
-		{ min = 5,   max = 9,   name = "Newfag"},			-- +4
-		{ min = 10,  max = 16,  name = "Mostly harmless"},	-- +6
-		{ min = 17,  max = 25,  name = "Outsider"},			-- +8
-		{ min = 26,  max = 36,  name = "Familiar face"},	-- +10
-		{ min = 37,  max = 49,  name = "Local"},			-- +12
-		{ min = 50,  max = 66,  name = "Oldfag"},			-- +16
-		{ min = 67,  max = 87,  name = "Vetrain"},			-- +20
-		{ min = 88,  max = 112, name = "Elder"},			-- +24
-		{ min = 113, max = 141, name = "The great"},		-- +28
-		{ min = 142, max = 174, name = "Ancient one"},		-- +32
-		{ min = 175, max = 215, name = "Legendary"},		-- +40
-		{ min = 216, max = 264, name = "Demi god"},			-- +48
-		{ min = 265, max = 999, name = "God"},				-- +64
+		{ min = 0,    max = 1,     name = "Baby"},				-- +1
+		{ min = 2,    max = 4,     name = "N00b"},				-- +2
+		{ min = 5,    max = 9,     name = "Newfag"},			-- +4
+		{ min = 10,   max = 16,    name = "Mostly harmless"},	-- +6
+		{ min = 17,   max = 25,    name = "Outsider"},			-- +8
+		{ min = 26,   max = 36,    name = "Familiar face"},		-- +10
+		{ min = 37,   max = 49,    name = "Local"},				-- +12
+		{ min = 50,   max = 66,    name = "Oldfag"},			-- +16
+		{ min = 67,   max = 87,    name = "Vetrain"},			-- +20
+		{ min = 88,   max = 112,   name = "Elder"},				-- +24
+		{ min = 113,  max = 141,   name = "The great"},			-- +28
+		{ min = 142,  max = 174,   name = "Ancient one"},		-- +32
+		{ min = 175,  max = 215,   name = "Legendary"},			-- +40
+		{ min = 216,  max = 264,   name = "Demi god"},			-- +48
+		{ min = 265,  max = 346,   name = "God"},				-- +82
+		{ min = 347,  max = 460,   name = "Titan"},				-- +114
+		{ min = 461,  max = 999,   name = "Primordial Being"},
+		{ min = 1000, max = 1600,  name = "Chaos"},
+		{ min = 1601, max = 1703,  name = "Of Unknown Origin"},
+		{ min = 1704, max = 65535, name = "The True Definition of Cheater"},
 	}
 }
 ranks[1] = ranks["experience"]
@@ -56,7 +65,8 @@ ranks["hunter"] = {
 		{ min = 1001,  max = 2000,  name = "Master of the hunt"},
 		{ min = 2001,  max = 5000,  name = "Bird of prey"},
 		{ min = 5001,  max = 10000, name = "Carnivorous predator"},
-		{ min = 10001, max = 65535, name = "Dread of the beast"},
+		{ min = 10001, max = 20000, name = "Dread of the beast"},
+		{ min = 20001, max = 65535, name = "Terror of all that is living"},
 	}
 }
 ranks[2] = ranks["hunter"]
@@ -74,7 +84,8 @@ ranks["farmer"] = {
 		{ min = 1001,  max = 2000,  name = "Peasant"},
 		{ min = 2001,  max = 5000,  name = "Farmer"},
 		{ min = 5001,  max = 10000, name = "Agricultural wizard"},
-		{ min = 10001, max = 65535, name = "Biosphere engineer"},
+		{ min = 10001, max = 20000, name = "Biosphere engineer"},
+		{ min = 20001, max = 65535, name = "Terraformer"},
 	}
 }
 ranks[3] = ranks["farmer"]
@@ -91,7 +102,8 @@ ranks["miner"] = {
 		{ min = 1001,  max = 2000,  name = "Miner"},
 		{ min = 2001,  max = 5000,  name = "Demolition man"},
 		{ min = 5001,  max = 10000, name = "Human drill"},
-		{ min = 10001, max = 65535, name = "The Rock"},
+		{ min = 10001, max = 20000, name = "The Rock"},
+		{ min = 20001, max = 65535, name = "Digtron master"},
 	}
 }
 ranks[4] = ranks["miner"]
@@ -109,7 +121,8 @@ ranks["builder"] = {
 		{ min = 1001,  max = 2000,  name = "Mason"},
 		{ min = 2001,  max = 5000,  name = "Civil engineer"},
 		{ min = 5001,  max = 10000, name = "Architect"},
-		{ min = 10001, max = 65535, name = "Grand visionary"},
+		{ min = 10001, max = 20000, name = "Grand visionary"},
+		{ min = 20001, max = 65535, name = "Monumental builder"},
 	}
 }
 ranks[5] = ranks["builder"]
@@ -121,13 +134,14 @@ ranks["traveler"] = {
 	index = 6,
 	weight = 1,
 	levels = {
-		{ min = 0,     max = 500,   name = "Hermit"},
-		{ min = 501,   max = 1000,  name = "Homesick"},
-		{ min = 1001,  max = 2000,  name = "Errands runner"},
-		{ min = 2001,  max = 5000,  name = "Hiker"},
+		{ min = 0,     max = 800,   name = "Hermit"},
+		{ min = 801,   max = 1600,  name = "Homesick"},
+		{ min = 1601,  max = 2400,  name = "Errands runner"},
+		{ min = 2401,  max = 5000,  name = "Hiker"},
 		{ min = 5001,  max = 10000, name = "Traveler"},
 		{ min = 10001, max = 20000, name = "Nomad"},
-		{ min = 20001, max = 43841, name = "Cosmopolitan"},
+		{ min = 20001, max = 30000, name = "Cosmopolitan"},
+		{ min = 30001, max = 65535, name = "Ecumenopolitan"},
 	}
 }
 ranks[6] = ranks["traveler"]
@@ -148,7 +162,8 @@ ranks["mountaineer"] = {
 		{ min = 5001,  max = 10000, name = "Cosmonaut"},
 		{ min = 10001, max = 15000, name = "Astronaut"},
 		{ min = 15001, max = 20000, name = "Galactic explorer"},
-		{ min = 20001, max = 31000, name = "Master of the Universe"},
+		{ min = 20001, max = 25000, name = "Master of the Universe"},
+		{ min = 25001, max = 65535, name = "Emperor of the Multiverse"},
 	}
 }
 ranks[7] = ranks["mountaineer"]
@@ -160,12 +175,14 @@ ranks["caving"] = {
 	index = 8,
 	weight = 4,
 	levels = {
-		{ min = 0,    max = 200,   name = "Afraid of the dark"},
-		{ min = 201,  max = 500,   name = "Caveman"},
-		{ min = 501,  max = 1000,  name = "Spelunkologist"},
-		{ min = 1001, max = 2000,  name = "Returned from the dead"},
-		{ min = 2001, max = 5900,  name = "Satan's pall"},
-		{ min = 5901, max = 31000, name = "Hellraiser"},
+		{ min = 0,     max = 200,   name = "Afraid of the dark"},
+		{ min = 201,   max = 500,   name = "Caveman"},
+		{ min = 501,   max = 1000,  name = "Spelunkologist"},
+		{ min = 1001,  max = 2000,  name = "Returned from the dead"},
+		{ min = 2001,  max = 6000,  name = "Satan's pall"},
+		{ min = 6001,  max = 12000, name = "Hellraiser"},
+		{ min = 12001, max = 24000, name = "Monster of the deep"},
+		{ min = 24001, max = 65535, name = "Lord of the Inferno"},
 	}
 }
 ranks[8] = ranks["caving"]
@@ -177,14 +194,16 @@ ranks["intelligence"] = {
 	index = 9,
 	weight = 7,
 	levels = {
-		{ min = 0,      max = 50,   name = "Retard"},
-		{ min = 51,     max = 100,  name = "Preschooler"},
-		{ min = 101,    max = 150,  name = "Student"},
-		{ min = 151,    max = 200,  name = "Graduate"},
-		{ min = 201,    max = 400,  name = "Professor"},
-		{ min = 401,    max = 600,  name = "Megamind"},
-		{ min = 601,    max = 800,  name = "Bionic Brain"},
-		{ min = 801,    max = 1000, name = "Oracle of Wisdom"},
+		{ min = 0,      max = 50,    name = "Retard"},
+		{ min = 51,     max = 100,   name = "Preschooler"},
+		{ min = 101,    max = 150,   name = "Student"},
+		{ min = 151,    max = 200,   name = "Graduate"},
+		{ min = 201,    max = 400,   name = "Professor"},
+		{ min = 401,    max = 600,   name = "Megamind"},
+		{ min = 601,    max = 800,   name = "Bionic Brain"},
+		{ min = 801,    max = 1000,  name = "Oracle of Wisdom"},
+		{ min = 1001,   max = 5000,  name = "Master of Machinery"},
+		{ min = 5001,   max = 65535, name = "Uomo Universalis"},
 	}
 }
 ranks[9] = ranks["intelligence"]

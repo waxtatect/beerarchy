@@ -395,12 +395,12 @@ ranking.score_distance = function(player)
 
 	local lastHeight = ranking.get_rank_raw(player, "mountaineer")
 	if (pos.y > lastHeight) then
-		ranking.set_rank_raw(player, "mountaineer", math.floor(pos.y) + 1)
+		ranking.set_rank_raw(player, "mountaineer", math.floor(pos.y))
 	end
 
 	local lastDepth = ranking.get_rank_raw(player, "caving") * -1
 	if (pos.y < lastDepth) then
-		ranking.set_rank_raw(player, "caving", math.abs(math.floor(pos.y) + 1))
+		ranking.set_rank_raw(player, "caving", math.abs(math.floor(pos.y)))
 	end
 end
 
@@ -456,32 +456,41 @@ ranking.score_experience = function(player)
 end
 
 giftTable = {}
-giftTable[1] = "farming:joint"
-giftTable[2] = "wool:white"
-giftTable[3] = "default:sword_mese"
-giftTable[4] = "moreores:sword_mithril"
-giftTable[5] = "default:diamondblock"
-giftTable[6] = "default:mese"
-giftTable[7] = "unified_inventory:bag_medium"
-giftTable[8] = "integral:moon_juice"
-giftTable[9] = "throwing:bow_mithril"
-giftTable[10] = "throwing:bow_mithril"
-giftTable[11] = "throwing:bow_mithril"
-giftTable[12] = "throwing:bow_mithril"
-giftTable[13] = "throwing:bow_mithril"
-giftTable[14] = "throwing:bow_mithril"
-giftTable[15] = "protector:protect2"
+giftTable[1] = { } -- Baby
+giftTable[2] = { "wool:white 3" } -- N00b
+giftTable[3] = { "default:sword_mese" } -- Newfag
+giftTable[4] = { "moreores:sword_mithril" } --Mostly harmless
+giftTable[5] = { "default:diamondblock" } -- Outsider
+giftTable[6] = { "default:mese" } -- Familiar face
+giftTable[7] = { "unified_inventory:bag_medium" } -- Local
+giftTable[8] = { "integral:moon_juice 4" } -- Oldfag
+giftTable[9] = { "throwing:bow_mithril" } -- Vetrain
+giftTable[10] = { "throwing:arrow_mithril 32" } -- Elder
+giftTable[11] = { "underworlds:hot_stone 32" } -- The great
+giftTable[12] = { "underworlds:hot_stone 64" } -- Ancient one
+giftTable[13] = { "basic_machines:enviro", "throwing:arrow_mithril 32" } -- Legendary
+giftTable[14] = { "moreores:mithril_block 64" } -- Demi god
+giftTable[15] = { "protector:protect2 8",  "protector:chest 2", "protector:door_wood 2", "protector:trapdoor 2" } -- God
+giftTable[16] = { "protector:protect2 8",  "protector:chest 2", "protector:door_wood 2", "protector:trapdoor 2" } -- Titan
+giftTable[17] = { "protector:protect2 16",  "protector:chest 4", "protector:door_wood 4", "protector:trapdoor 4" } -- Primordial Being
+giftTable[18] = { "protector:protect2 32",  "protector:chest 8", "protector:door_steel 8", "protector:trapdoor_steel 8", "farming:melon_8 4" } -- Chaos
+giftTable[19] = { "protector:protect2 64",  "protector:chest 16", "protector:door_wood 8", "protector:trapdoor 8",
+				  "protector:door_steel 8", "protector:trapdoor_steel 8" } -- Of Unknown Origin
+giftTable[20] = { "farming:joint" } -- The True Definition of Cheater
 
 -- Give gift on reaching certain XP level
 ranking.on_xp_increase = function(player, xplevel)
 	if player:get_player_name() ~= "Beerholder" then
-		local stack = ItemStack("moreores:mithril_ingot")
-		local inv = player:get_inventory()
+		local stacks = giftTable[xplevel]
+		for i = 1, #stacks do
+			local stack = ItemStack(stacks[i])
+			local inv = player:get_inventory()
 
-		if inv:room_for_item("main", stack) then
-			inv:add_item("main", stack)
-		else
-			minetest.add_item(player:getpos(), stack)
+			if inv:room_for_item("main", stack) then
+				inv:add_item("main", stack)
+			else
+				minetest.add_item(player:getpos(), stack)
+			end
 		end
 
 		local msg = string.char(0x1b).."(c@#00ff00)"..player:get_player_name()..
