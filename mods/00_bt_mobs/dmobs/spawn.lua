@@ -48,6 +48,6 @@ if dmobs.dragons then
 	mobs:register_spawn("dmobs:dragon3", {"default:acacia_leaves","default:dirt_with_dry_grass"}, 20, 10, 5000000, 2, 31000)
 	mobs:register_spawn("dmobs:dragon4", {"default:jungleleaves"}, 20, 10, 5000000, 2, 31000)
 	mobs:register_spawn("dmobs:waterdragon", {"default:water_source"}, 20, 10, 5000000, 1, 31000, false)
-	mobs:register_spawn("dmobs:wyvern",	{"default:leaves"}, 20, 10, 32000, 1, 5000000, false)
-	mobs:register_spawn("dmobs:dragon_great", {"default:lava_source"}, 20, 0, 5000000, -21000, 1000, false)
+	mobs:register_spawn("dmobs:wyvern",	{"default:leaves"}, 20, 10, 5000000, 1, 31000, false)
+	mobs:register_spawn("dmobs:dragon_great", {"default:lava_source"}, 20, 0, 5000000, 1, 31000, false)
 end
