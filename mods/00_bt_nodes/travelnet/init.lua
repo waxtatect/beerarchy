@@ -534,9 +534,9 @@ travelnet.on_receive_fields = function(pos, formname, fields, player)
 
 
    if( travelnet.travelnet_sound_enabled ) then
-      minetest.sound_play("travelnet_transporter", {pos = pos, gain = 0.5, max_hear_distance = 10,})
-      minetest.sound_play("travelnet_transporter_beep", {pos = pos, gain = 0.5, max_hear_distance = 10,})
-      minetest.sound_play("travelnet_transporter", { to_player = player:get_player_name(), gain = 0.5 } )
+      minetest.sound_play("travelnet_transporter", {pos = pos, gain = 0.25, max_hear_distance = 10,})
+      minetest.sound_play("travelnet_transporter_beep", {pos = pos, gain = 0.25, max_hear_distance = 10,})
+      minetest.sound_play("travelnet_transporter", { to_player = player:get_player_name(), gain = 0.25 } )
    end
    if( travelnet.travelnet_effect_enabled ) then
       minetest.add_entity( {x=pos.x,y=pos.y+0.5,z=pos.z}, "travelnet:effect"); -- it self-destructs after 20 turns
@@ -547,7 +547,7 @@ travelnet.on_receive_fields = function(pos, formname, fields, player)
 
    local target_pos = travelnet.targets[ owner_name ][ station_network ][ fields.target ].pos;
    if( travelnet.travelnet_sound_enabled ) then
-      minetest.sound_play("travelnet_transporter", {pos = target_pos, gain = 0.5, max_hear_distance = 10,})
+      minetest.sound_play("travelnet_transporter", {pos = target_pos, gain = 0.25, max_hear_distance = 10,})
    end
    if( travelnet.travelnet_effect_enabled ) then
       minetest.add_entity( {x=target_pos.x,y=target_pos.y+0.5,z=target_pos.z}, "travelnet:effect"); -- it self-destructs after 20 turns

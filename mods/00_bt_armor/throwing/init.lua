@@ -14,7 +14,9 @@ arrows = {
 	{"throwing:arrow_fire", "throwing:arrow_fire_entity"},
 	{"throwing:arrow_teleport", "throwing:arrow_teleport_entity"},
 	{"throwing:arrow_dig", "throwing:arrow_dig_entity"},
-	{"throwing:arrow_build", "throwing:arrow_build_entity"}
+	{"throwing:arrow_build", "throwing:arrow_build_entity"},
+	{"throwing:arrow_tnt", "throwing:arrow_tnt_entity"},
+	{"throwing:arrow_nyan", "throwing:arrow_nyan_entity"},
 }
 
 local cooldowns = {}
@@ -23,8 +25,10 @@ cooldowns["throwing:bow_stone"] = 1.5
 cooldowns["throwing:bow_steel"] = 0.5
 cooldowns["throwing:bow_mithril"] = 0.2
 cooldowns["throwing:arrow"] = 0.5
+cooldowns["throwing:arrow_nyan"] = 0.2
 cooldowns["throwing:arrow_mithril"] = 0.2
 cooldowns["throwing:arrow_fire"] = 5.0
+cooldowns["throwing:arrow_tnt"] = 8.0
 cooldowns["throwing:arrow_teleport"] = 2.0
 cooldowns["throwing:arrow_dig"] = 0.5
 cooldowns["throwing:arrow_build"] = 1.0
@@ -177,6 +181,8 @@ dofile(minetest.get_modpath("throwing").."/fire_arrow.lua")
 dofile(minetest.get_modpath("throwing").."/teleport_arrow.lua")
 dofile(minetest.get_modpath("throwing").."/dig_arrow.lua")
 dofile(minetest.get_modpath("throwing").."/build_arrow.lua")
+dofile(minetest.get_modpath("throwing").."/tnt_arrow.lua")
+dofile(minetest.get_modpath("throwing").."/rainbow_arrow.lua")
 
 if minetest.setting_get("log_mods") then
 	minetest.log("action", "throwing loaded")

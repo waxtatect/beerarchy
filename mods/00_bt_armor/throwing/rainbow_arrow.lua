@@ -1,9 +1,9 @@
-minetest.register_craftitem("throwing:arrow_mithril", {
+minetest.register_craftitem("throwing:arrow_nyan", {
 	description = "Arrow",
-	inventory_image = "throwing_arrow_mithril.png",
+	inventory_image = "throwing_arrow_nyan.png",
 })
 
-minetest.register_node("throwing:arrow_mithril_box", {
+minetest.register_node("throwing:arrow_nyan_box", {
 	drawtype = "nodebox",
 	node_box = {
 		type = "fixed",
@@ -25,8 +25,8 @@ minetest.register_node("throwing:arrow_mithril_box", {
 			{7.5/17, -2.5/17, -2.5/17, 8.5/17, -3.5/17, -3.5/17},
 		}
 	},
-	tiles = {"throwing_arrow_mithril.png", "throwing_arrow_mithril.png", "throwing_arrow_mithril_back.png",
-			 "throwing_arrow_mithril_front.png", "throwing_arrow_mithril_2.png", "throwing_arrow_mithril.png"},
+	tiles = {"throwing_arrow_nyan.png", "throwing_arrow_nyan.png", "throwing_arrow_nyan_back.png",
+			 "throwing_arrow_nyan_front.png", "throwing_arrow_nyan_2.png", "throwing_arrow_nyan.png"},
 	groups = {not_in_creative_inventory=1},
 })
 
@@ -35,7 +35,7 @@ local THROWING_ARROW_ENTITY={
 	timer=0,
 	visual = "wielditem",
 	visual_size = {x=0.1, y=0.1},
-	textures = {"throwing:arrow_mithril_box"},
+	textures = {"throwing:arrow_nyan_box"},
 	lastpos={},
 	collisionbox = {0,0,0,0,0,0},
 }
@@ -49,8 +49,8 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 		local objs = minetest.env:get_objects_inside_radius({x=pos.x,y=pos.y,z=pos.z}, 2)
 		for k, obj in pairs(objs) do
 			if obj:get_luaentity() ~= nil then
-				if obj:get_luaentity().name ~= "throwing:arrow_mithril_entity" and obj:get_luaentity().name ~= "__builtin:item" then
-					local damage = 10
+				if obj:get_luaentity().name ~= "throwing:arrow_nyan_entity" and obj:get_luaentity().name ~= "__builtin:item" then
+					local damage = 20
 					obj:punch(self.object, 1.0, {
 						full_punch_interval=1.0,
 						damage_groups={fleshy=damage},
@@ -58,7 +58,7 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 					self.object:remove()
 				end
 			else
-				local damage = 10
+				local damage = 20
 				obj:punch(self.object, 1.0, {
 					full_punch_interval=1.0,
 					damage_groups={fleshy=damage},
@@ -70,18 +70,18 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 
 	if self.lastpos.x~=nil then
 		if node.name ~= "air" then
-			minetest.env:add_item(self.lastpos, 'throwing:arrow_mithril')
+			minetest.env:add_item(self.lastpos, "throwing:arrow_nyan")
 			self.object:remove()
 		end
 	end
 	self.lastpos={x=pos.x, y=pos.y, z=pos.z}
 end
 
-minetest.register_entity("throwing:arrow_mithril_entity", THROWING_ARROW_ENTITY)
+minetest.register_entity("throwing:arrow_nyan_entity", THROWING_ARROW_ENTITY)
 
 minetest.register_craft({
-	output = 'throwing:arrow_mithril 4',
+	output = "throwing:arrow_nyan 2",
 	recipe = {
-		{'default:stick', 'default:stick', 'moreores:mithril_ingot'},
+		{"nyancat:nyancat_rainbow", "nyancat:nyancat_rainbow", "moreores:mithril_block"},
 	}
 })
