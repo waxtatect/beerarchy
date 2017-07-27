@@ -23,7 +23,7 @@ hard_mobs_mod.path = minetest.get_modpath(minetest.get_current_modname())
 hard_mobs_mod.world = minetest.get_worldpath()
 
 
-local maximum_multiplier = 4  -- Set this to change the maximum difficulty.
+local maximum_multiplier = 3  -- Set this to change the maximum difficulty.
 local minimum_multiplier = 1  -- Set this to change the minimum difficulty.
 local speed_factor = 0.5  -- Mob speed increases by n * difficulty (2.5).
 local good_loot_chance = 10  -- chance = floor(difficulty - 1) / n
