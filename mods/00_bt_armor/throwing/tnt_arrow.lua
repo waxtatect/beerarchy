@@ -1,5 +1,5 @@
 minetest.register_craftitem("throwing:arrow_tnt", {
-	description = "Fire Arrow",
+	description = "TNT Arrow",
 	inventory_image = "throwing_arrow_tnt.png",
 })
 
@@ -49,21 +49,25 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 		for k, obj in pairs(objs) do
 			if obj:get_luaentity() ~= nil then
 				if obj:get_luaentity().name ~= "throwing:arrow_tnt_entity" and obj:get_luaentity().name ~= "__builtin:item" then
+					print(playerArrows[self.object])
 					local damage = 5
 					obj:punch(self.object, 1.0, {
 						full_punch_interval=1.0,
 						damage_groups={fleshy=damage},
 					}, nil)
 					tnt.boom(pos, { radius = 3, damage_radius = 5, ignore_protection = false, ignore_on_blast = false })
+					playerArrows[self.object] = nil
 					self.object:remove()
 				end
 			else
+				print(playerArrows[self.object])
 				local damage = 5
 				obj:punch(self.object, 1.0, {
 					full_punch_interval=1.0,
 					damage_groups={fleshy=damage},
 				}, nil)
 				tnt.boom(pos, { radius = 3, damage_radius = 5, ignore_protection = false, ignore_on_blast = true })
+				playerArrows[self.object] = nil
 				self.object:remove()
 			end
 		end
@@ -71,6 +75,8 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 
 	if self.lastpos.x~=nil then
 		if node.name ~= "air" then
+			print(playerArrows[self.object])
+			playerArrows[self.object] = nil
 			self.object:remove()
 			tnt.boom(self.lastpos, { radius = 3, damage_radius = 5, ignore_protection = false, ignore_on_blast = true })
 		end

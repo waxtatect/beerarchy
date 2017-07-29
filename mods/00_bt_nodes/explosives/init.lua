@@ -410,12 +410,12 @@ minetest.register_abm({
 	catch_up = false,
 	action = function(pos, _, _, _)
 		--detonate if something is placed above
-		if minetest.get_node({x = pos.x, y = pos.y + 1, z = pos.z}).name ~= "air" then
-			detonate(pos)
-			return
-		end
+--		if minetest.get_node({x = pos.x, y = pos.y + 1, z = pos.z}).name ~= "air" then
+--			detonate(pos)
+--			return
+--		end
 		--detonate if someone walks upon the mine
-		local objs = minetest.get_objects_inside_radius({x = pos.x, y = pos.y + 0.3, z = pos.z}, 0.6)
+		local objs = minetest.get_objects_inside_radius({x = pos.x, y = pos.y + 0.3, z = pos.z}, 1.6)
 		for k, player in pairs(objs) do
 			if player:get_player_name() ~= "" then
 				detonate(pos)

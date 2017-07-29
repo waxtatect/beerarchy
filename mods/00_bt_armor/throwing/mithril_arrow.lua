@@ -1,5 +1,5 @@
 minetest.register_craftitem("throwing:arrow_mithril", {
-	description = "Arrow",
+	description = "Mithril Arrow",
 	inventory_image = "throwing_arrow_mithril.png",
 })
 

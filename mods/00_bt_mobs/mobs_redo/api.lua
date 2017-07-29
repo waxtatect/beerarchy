@@ -376,7 +376,7 @@ function check_for_death(self)
 
 	mob_sound(self, self.sounds.death)
 
-	local all_objects = minetest.get_objects_inside_radius(pos, 16)
+	local all_objects = minetest.get_objects_inside_radius(pos, 3)
 	local players = {}
 	local _,obj
 	for _,obj in ipairs(all_objects) do
