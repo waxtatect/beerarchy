@@ -409,8 +409,97 @@ craftNodes["basic_machines:electronics_constructor"] = 2
 craftNodes["basic_machines:constructor"] = 5
 craftNodes["basic_machines:digtron_constructor"] = 10
 
+craftLevels = {}
+
+craftLevels["default:sword_steel"] = 2
+craftLevels["default:hoe_steel"] = 2
+craftLevels["default:axe_steel"] = 2
+craftLevels["default:shovel_steel"] = 2
+craftLevels["default:pick_steel"] = 2
+craftLevels["3d_armor:boots_steel"] = 2
+craftLevels["3d_armor:chestplate_steel"] = 2
+craftLevels["3d_armor:helmet_steel"] = 2
+craftLevels["3d_armor:leggings_steel"] = 2
+craftLevels["shields:shield_steel"] = 2
+
+craftLevels["default:sword_bronze"] = 5
+craftLevels["default:hoe_bronze"] = 5
+craftLevels["default:axe_bronze"] = 5
+craftLevels["default:shovel_bronze"] = 5
+craftLevels["default:pick_bronze"] = 5
+craftLevels["3d_armor:boots_bronze"] = 5
+craftLevels["3d_armor:chestplate_bronze"] = 5
+craftLevels["3d_armor:helmet_bronze"] = 5
+craftLevels["3d_armor:leggings_bronze"] = 5
+craftLevels["shields:shield_bronze"] = 5
+
+craftLevels["default:sword_mese"] = 10
+craftLevels["default:hoe_mese"] = 10
+craftLevels["default:axe_mese"] = 10
+craftLevels["default:shovel_mese"] = 10
+craftLevels["default:pick_mese"] = 10
+craftLevels["throwing:bow_wood"] = 10
+craftLevels["throwing:bow_stone"] = 10
+craftLevels["throwing:arrow"] = 10
+
+craftLevels["default:sword_diamond"] = 17
+craftLevels["default:hoe_diamond"] = 17
+craftLevels["default:axe_diamond"] = 17
+craftLevels["default:shovel_diamond"] = 17
+craftLevels["default:pick_diamond"] = 17
+craftLevels["3d_armor:boots_diamond"] = 17
+craftLevels["3d_armor:chestplate_diamond"] = 17
+craftLevels["3d_armor:helmet_diamond"] = 17
+craftLevels["3d_armor:leggings_diamond"] = 17
+craftLevels["shields:shield_diamond"] = 17
+
+craftLevels["basic_machines:electronics_constructor"] = 26
+craftLevels["throwing:bow_steel"] = 26
+craftLevels["throwing:arrow_dig"] = 26
+craftLevels["throwing:arrow_build"] = 26
+
+craftLevels["basic_machines:constructor"] = 37
+craftLevels["throwing:bow_steel"] = 37
+craftLevels["throwing:arrow_fire"] = 37
+
+craftLevels["moreores:sword_mithril"] = 50
+craftLevels["moreores:hoe_mithril"] = 50
+craftLevels["moreores:axe_mithril"] = 50
+craftLevels["moreores:shovel_mithril"] = 50
+craftLevels["moreores:pick_mithril"] = 50
+craftLevels["3d_armor:boots_mithril"] = 50
+craftLevels["3d_armor:chestplate_mithril"] = 50
+craftLevels["3d_armor:helmet_mithril"] = 50
+craftLevels["3d_armor:leggings_mithril"] = 50
+craftLevels["shields:shield_mithril"] = 50
+
+craftLevels["moontest_spacesuit:boots_space"] = 67
+craftLevels["moontest_spacesuit:chestplate_space"] = 67
+craftLevels["moontest_spacesuit:helmet_space"] = 67
+craftLevels["moontest_spacesuit:pants_space"] = 67
+craftLevels["throwing:bow_mithril"] = 67
+craftLevels["throwing:arrow_mithril"] = 67
+craftLevels["throwing:arrow_teleport"] = 67
+
+craftLevels["basic_machines:digtron_constructor"] = 88
+
+craftLevels["throwing:arrow_tnt"] = 113
+craftLevels["throwing:arrow_nyan"] = 113
+
 -- Intelligence ranking based on crafting using the above machines
 minetest.register_on_craft(function(itemstack, player, old_craft_grid, craft_inv)
+
+	if craftLevels[itemstack:get_name()] and ranking.get_rank_raw(player, "experience") < craftLevels[itemstack:get_name()] then
+		minetest.sound_play("00_bt_ranking_error", { to_player = player:get_player_name(), gain = 0.5 })
+		minetest.chat_send_player(player:get_player_name(), "You cannot craft this yet, you need at least "..craftLevels[itemstack:get_name()].." experience")
+
+		for i = 1, player:get_inventory():get_size("craft") do
+			player:get_inventory():set_stack("craft", i, old_craft_grid[i])
+		end
+
+		itemstack:clear()
+	end
+
 	local craftedItem = itemstack:get_name()
 	if craftNodes[craftedItem] then
 		ranking.increase_rank(player, "intelligence", craftNodes[craftedItem])
@@ -460,8 +549,8 @@ giftTable[1] = { } -- Baby
 giftTable[2] = { "wool:white 3" } -- N00b
 giftTable[3] = { "default:sword_mese" } -- Newfag
 giftTable[4] = { "moreores:sword_mithril" } --Mostly harmless
-giftTable[5] = { "default:diamondblock" } -- Outsider
-giftTable[6] = { "default:mese" } -- Familiar face
+giftTable[5] = { "default:mese" } -- Outsider
+giftTable[6] = { "default:diamondblock" } -- Familiar face
 giftTable[7] = { "unified_inventory:bag_medium" } -- Local
 giftTable[8] = { "integral:moon_juice 4" } -- Oldfag
 giftTable[9] = { "throwing:bow_mithril" } -- Vetrain
@@ -588,34 +677,3 @@ minetest.register_chatcommand("rank", {
 
 	end,
 })
-
---
--- Old rank chat command (not formspec based), can probably be removed as the formspec works better
---
---[[minetest.register_chatcommand("rank", {
-	params = "<player>",
-	description =	"Show rankings for given player. Leave player empty to list own stats.",
-	func = function(name, param)
-		local output = ""
-
-		local player
-
-		if param == "" then
-			player = minetest.get_player_by_name(name)
-			if not player then
-				return false, "FATAL: Player object for own player "..name..
-							  "is nil, this should never happen."
-			end
-		elseif param == "SatanicBibleBot" then
-			return true, "Experience: Prince of Darkness, Lord or Evil, Almighty Ruler of Hell"
-		else
-			player = minetest.get_player_by_name(param)
-			if not player then
-				return false, "ERROR: Player "..param.." not found."
-			end
-		end
-
-		return true, ranking.get_ranks(player)
-
-	end,
-})]]--
