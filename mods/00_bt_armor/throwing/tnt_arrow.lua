@@ -73,7 +73,6 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 
 	if self.lastpos.x~=nil then
 		if node.name ~= "air" then
-			print(playerArrows[self.object])
 			throwing.playerArrows[self.object] = nil
 			self.object:remove()
 			tnt.boom(self.lastpos, { radius = 3, damage_radius = 5, ignore_protection = false, ignore_on_blast = true })
