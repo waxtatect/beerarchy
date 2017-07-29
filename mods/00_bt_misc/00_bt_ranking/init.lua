@@ -410,6 +410,10 @@ craftNodes["basic_machines:constructor"] = 5
 craftNodes["basic_machines:digtron_constructor"] = 10
 
 craftLevels = {}
+levelMessages = {}
+levelMessages[1] = ""
+
+levelMessages[2] = "You have unlocked steel tools and armor"
 
 craftLevels["default:sword_steel"] = 2
 craftLevels["default:hoe_steel"] = 2
@@ -422,6 +426,8 @@ craftLevels["3d_armor:helmet_steel"] = 2
 craftLevels["3d_armor:leggings_steel"] = 2
 craftLevels["shields:shield_steel"] = 2
 
+levelMessages[3] = "You have unlocked bronze tools and armor"
+
 craftLevels["default:sword_bronze"] = 5
 craftLevels["default:hoe_bronze"] = 5
 craftLevels["default:axe_bronze"] = 5
@@ -433,6 +439,8 @@ craftLevels["3d_armor:helmet_bronze"] = 5
 craftLevels["3d_armor:leggings_bronze"] = 5
 craftLevels["shields:shield_bronze"] = 5
 
+levelMessages[4] = "You have unlocked mese tools and basic bow and arrows"
+
 craftLevels["default:sword_mese"] = 10
 craftLevels["default:hoe_mese"] = 10
 craftLevels["default:axe_mese"] = 10
@@ -441,6 +449,8 @@ craftLevels["default:pick_mese"] = 10
 craftLevels["throwing:bow_wood"] = 10
 craftLevels["throwing:bow_stone"] = 10
 craftLevels["throwing:arrow"] = 10
+
+levelMessages[5] = "You have unlocked diamond tools and armor"
 
 craftLevels["default:sword_diamond"] = 17
 craftLevels["default:hoe_diamond"] = 17
@@ -453,14 +463,19 @@ craftLevels["3d_armor:helmet_diamond"] = 17
 craftLevels["3d_armor:leggings_diamond"] = 17
 craftLevels["shields:shield_diamond"] = 17
 
+levelMessages[6] = "You have unlocked steel bow, dig and build arrows, and the electronics and small devices constructor"
+
 craftLevels["basic_machines:electronics_constructor"] = 26
 craftLevels["throwing:bow_steel"] = 26
 craftLevels["throwing:arrow_dig"] = 26
 craftLevels["throwing:arrow_build"] = 26
 
+levelMessages[7] = "You have unlocked fire arrows and the basic machines constructor"
+
 craftLevels["basic_machines:constructor"] = 37
-craftLevels["throwing:bow_steel"] = 37
 craftLevels["throwing:arrow_fire"] = 37
+
+levelMessages[8] = "You have unlocked mithril tools and armor"
 
 craftLevels["moreores:sword_mithril"] = 50
 craftLevels["moreores:hoe_mithril"] = 50
@@ -473,6 +488,8 @@ craftLevels["3d_armor:helmet_mithril"] = 50
 craftLevels["3d_armor:leggings_mithril"] = 50
 craftLevels["shields:shield_mithril"] = 50
 
+levelMessages[9] = "You have unlocked the spacesuit, mithril bow and arrows, and the teleport arrow"
+
 craftLevels["moontest_spacesuit:boots_space"] = 67
 craftLevels["moontest_spacesuit:chestplate_space"] = 67
 craftLevels["moontest_spacesuit:helmet_space"] = 67
@@ -481,7 +498,11 @@ craftLevels["throwing:bow_mithril"] = 67
 craftLevels["throwing:arrow_mithril"] = 67
 craftLevels["throwing:arrow_teleport"] = 67
 
+levelMessages[10] = "You have unlocked the digtron constructor"
+
 craftLevels["basic_machines:digtron_constructor"] = 88
+
+levelMessages[11] = "You have unlocked TNT arrows and the powerful Nyan Cat arrows. All crafts unlocked!"
 
 craftLevels["throwing:arrow_tnt"] = 113
 craftLevels["throwing:arrow_nyan"] = 113
@@ -587,6 +608,7 @@ ranking.on_xp_increase = function(player, xplevel)
 
 		minetest.sound_play("00_bt_ranking_level", { to_player = player:get_player_name(), gain = 2.0 })
 		minetest.chat_send_all(msg)
+		minetest.chat_send_player(player:get_player_name(), levelMessages[xplevel])
 	end
 end
 
