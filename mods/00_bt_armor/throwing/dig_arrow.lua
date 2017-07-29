@@ -18,7 +18,7 @@ minetest.register_node("throwing:arrow_dig_box", {
 			{7.5/17, -2.5/17, 2.5/17, 6.5/17, -1.5/17, 1.5/17},
 			{7.5/17, 2.5/17, -2.5/17, 6.5/17, 1.5/17, -1.5/17},
 			{6.5/17, -1.5/17, -1.5/17, 7.5/17, -2.5/17, -2.5/17},
-			
+
 			{7.5/17, 2.5/17, 2.5/17, 8.5/17, 3.5/17, 3.5/17},
 			{8.5/17, -3.5/17, 3.5/17, 7.5/17, -2.5/17, 2.5/17},
 			{8.5/17, 3.5/17, -3.5/17, 7.5/17, 2.5/17, -2.5/17},
@@ -51,11 +51,13 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 				if obj:get_luaentity().name ~= "throwing:arrow_dig_entity" and obj:get_luaentity().name ~= "__builtin:item" then
 					minetest.env:add_item(pos, 'throwing:arrow_dig')
 					minetest.env:remove_node(pos)
+					throwing.playerArrows[self.object] = nil
 					self.object:remove()
 				end
 			else
 				minetest.env:add_item(pos, 'throwing:arrow_dig')
 				minetest.env:remove_node(pos)
+				throwing.playerArrows[self.object] = nil
 				self.object:remove()
 			end
 		end
@@ -65,6 +67,7 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 		if node.name ~= "air" then
 			minetest.env:add_item(self.lastpos, 'throwing:arrow_dig')
 			minetest.env:remove_node(pos)
+			throwing.playerArrows[self.object] = nil
 			self.object:remove()
 		end
 	end

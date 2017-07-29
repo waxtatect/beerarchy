@@ -18,7 +18,7 @@ minetest.register_node("throwing:arrow_teleport_box", {
 			{7.5/17, -2.5/17, 2.5/17, 6.5/17, -1.5/17, 1.5/17},
 			{7.5/17, 2.5/17, -2.5/17, 6.5/17, 1.5/17, -1.5/17},
 			{6.5/17, -1.5/17, -1.5/17, 7.5/17, -2.5/17, -2.5/17},
-			
+
 			{7.5/17, 2.5/17, 2.5/17, 8.5/17, 3.5/17, 3.5/17},
 			{8.5/17, -3.5/17, 3.5/17, 7.5/17, -2.5/17, 2.5/17},
 			{8.5/17, 3.5/17, -3.5/17, 7.5/17, 2.5/17, -2.5/17},
@@ -54,6 +54,7 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 						self.player:setpos(pos)
 						self.player:get_inventory():add_item("main", ItemStack("throwing:arrow_teleport"))
 					end
+					throwing.playerArrows[self.object] = nil
 					self.object:remove()
 				end
 			else
@@ -61,6 +62,7 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 					self.player:setpos(pos)
 					self.player:get_inventory():add_item("main", ItemStack("throwing:arrow_teleport"))
 				end
+				throwing.playerArrows[self.object] = nil
 				self.object:remove()
 			end
 		end
@@ -69,9 +71,10 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 	if self.lastpos.x~=nil then
 		if node.name ~= "air" then
 			if self.player ~= "" then
-					self.player:setpos(self.lastpos)
-					self.player:get_inventory():add_item("main", ItemStack("throwing:arrow_teleport"))
-				end
+				self.player:setpos(self.lastpos)
+				self.player:get_inventory():add_item("main", ItemStack("throwing:arrow_teleport"))
+			end
+			throwing.playerArrows[self.object] = nil
 			self.object:remove()
 		end
 	end

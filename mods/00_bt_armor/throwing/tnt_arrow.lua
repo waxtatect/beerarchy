@@ -56,7 +56,7 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 						damage_groups={fleshy=damage},
 					}, nil)
 					tnt.boom(pos, { radius = 3, damage_radius = 5, ignore_protection = false, ignore_on_blast = false })
-					playerArrows[self.object] = nil
+					throwing.playerArrows[self.object] = nil
 					self.object:remove()
 				end
 			else
@@ -67,7 +67,7 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 					damage_groups={fleshy=damage},
 				}, nil)
 				tnt.boom(pos, { radius = 3, damage_radius = 5, ignore_protection = false, ignore_on_blast = true })
-				playerArrows[self.object] = nil
+				throwing.playerArrows[self.object] = nil
 				self.object:remove()
 			end
 		end
@@ -76,7 +76,7 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 	if self.lastpos.x~=nil then
 		if node.name ~= "air" then
 			print(playerArrows[self.object])
-			playerArrows[self.object] = nil
+			throwing.playerArrows[self.object] = nil
 			self.object:remove()
 			tnt.boom(self.lastpos, { radius = 3, damage_radius = 5, ignore_protection = false, ignore_on_blast = true })
 		end

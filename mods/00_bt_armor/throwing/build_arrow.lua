@@ -18,7 +18,7 @@ minetest.register_node("throwing:arrow_build_box", {
 			{7.5/17, -2.5/17, 2.5/17, 6.5/17, -1.5/17, 1.5/17},
 			{7.5/17, 2.5/17, -2.5/17, 6.5/17, 1.5/17, -1.5/17},
 			{6.5/17, -1.5/17, -1.5/17, 7.5/17, -2.5/17, -2.5/17},
-			
+
 			{7.5/17, 2.5/17, 2.5/17, 8.5/17, 3.5/17, 3.5/17},
 			{8.5/17, -3.5/17, 3.5/17, 7.5/17, -2.5/17, 2.5/17},
 			{8.5/17, 3.5/17, -3.5/17, 7.5/17, 2.5/17, -2.5/17},
@@ -53,12 +53,14 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 					if self.node ~= "" then
 						minetest.env:set_node(self.lastpos, {name=self.node})
 					end
+					throwing.playerArrows[self.object] = nil
 					self.object:remove()
 				end
 			else
 				if self.node ~= "" then
 					minetest.env:set_node(self.lastpos, {name=self.node})
 				end
+				throwing.playerArrows[self.object] = nil
 				self.object:remove()
 			end
 		end
@@ -69,6 +71,7 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 			if self.node ~= "" then
 				minetest.env:set_node(self.lastpos, {name=self.node})
 			end
+			throwing.playerArrows[self.object] = nil
 			self.object:remove()
 		end
 	end
