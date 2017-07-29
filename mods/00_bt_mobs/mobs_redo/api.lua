@@ -376,15 +376,6 @@ function check_for_death(self)
 
 	mob_sound(self, self.sounds.death)
 
-	local all_objects = minetest.get_objects_inside_radius(pos, 3)
-	local players = {}
-	local _,obj
-	for _,obj in ipairs(all_objects) do
-		if obj:is_player() then
-			ranking.increase_rank(obj, "hunter", math.ceil(self.hp_min / 10))
-		end
-	end
-
 	-- execute custom death function
 	if self.on_die then
 		self.on_die(self, pos)
@@ -2033,6 +2024,15 @@ local mob_punch = function(self, hitter, tflp, tool_capabilities, dir)
 
 		-- exit here if dead
 		if check_for_death(self) then
+			if hitter:is_player() then
+				ranking.increase_rank(hitter, "hunter", math.ceil(self.hp_min / 10))
+			elseif throwing then
+				local shooter = throwing.playerArrows[hitter]
+				if shooter then
+					ranking.increase_rank(minetest.get_player_by_name(shooter), "hunter", math.ceil(self.hp_min / 10) + 5) -- Something extra for shooting arrows
+				end
+			end
+
 			return
 		end
 

@@ -1,5 +1,6 @@
 local playerCooldown = {}
-playerArrows = {}
+throwing = {}
+throwing.playerArrows = {}
 
 minetest.register_on_joinplayer(function(player)
 	playerCooldown[player:get_player_name()] = 0.0
@@ -52,7 +53,7 @@ local throwing_shoot_arrow = function(itemstack, player)
 					player:get_inventory():remove_item("main", arrow[1])
 				end
 				local obj = minetest.env:add_entity({x=playerpos.x,y=playerpos.y+1.5,z=playerpos.z}, arrow[2])
-				playerArrows[obj] = player:get_player_name()
+				throwing.playerArrows[obj] = player:get_player_name()
 				local dir = player:get_look_dir()
 				obj:setvelocity({x=dir.x*19, y=dir.y*19, z=dir.z*19})
 				obj:setacceleration({x=dir.x*-3, y=-10, z=dir.z*-3})
@@ -113,7 +114,7 @@ minetest.register_tool("throwing:bow_stone", {
 	inventory_image = "throwing_bow_stone.png",
     stack_max = 1,
 	on_use = function(itemstack, user, pointed_thing)
-		if throwing_shoot_arrow(item, user, pointed_thing) then
+		if throwing_shoot_arrow(itemstack, user, pointed_thing) then
 			if not minetest.setting_getbool("creative_mode") then
 				itemstack:add_wear(65535/100)
 			end
@@ -136,7 +137,7 @@ minetest.register_tool("throwing:bow_steel", {
 	inventory_image = "throwing_bow_steel.png",
     stack_max = 1,
 	on_use = function(itemstack, user, pointed_thing)
-		if throwing_shoot_arrow(item, user, pointed_thing) then
+		if throwing_shoot_arrow(itemstack, user, pointed_thing) then
 			if not minetest.setting_getbool("creative_mode") then
 				itemstack:add_wear(65535/200)
 			end
@@ -159,7 +160,7 @@ minetest.register_tool("throwing:bow_mithril", {
 	inventory_image = "throwing_bow_mithril.png",
     stack_max = 1,
 	on_use = function(itemstack, user, pointed_thing)
-		if throwing_shoot_arrow(item, user, pointed_thing) then
+		if throwing_shoot_arrow(itemstack, user, pointed_thing) then
 			if not minetest.setting_getbool("creative_mode") then
 				itemstack:add_wear(65535/1000)
 			end
