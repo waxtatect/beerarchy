@@ -18,6 +18,8 @@ minetest.register_on_joinplayer(function(player)
 	end
 end)
 
+minetest.register_privilege("important_message", "Ability to set server messages")
+
 local register_set_important_message = {
 	params = "<Message> what message to display",
 	privs = {important_message = true},
