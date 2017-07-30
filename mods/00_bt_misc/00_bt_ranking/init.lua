@@ -2,7 +2,9 @@ local players = {}
 local playerLastPos = {}
 local playerLastUsedPos = {}
 local playerLastUsedPosQueue = {}
+
 ranking = {}
+ranking.playerXP = {}
 
 local skippy = 0
 local skippy2 = 0
@@ -52,17 +54,30 @@ minetest.register_on_joinplayer(function(player)
 	local inv = player:get_inventory()
 	inv:set_size("ranking", #ranks)
 	players[name] = player
+
 	if not playerLastUsedPos then
 		playerLastUsedPos[name] = {}
 	end
 	if not playerLastUsedPosQueue then
 		playerLastUsedPosQueue[name] = {}
 	end
+
+	local xplevels = ranks["experience"].levels
+	local xp = ranking.get_rank_raw(player, "experience")
+
+	for i = 1, #xplevels do
+		if xp >= xplevels[i].min and xp <= xplevels[i].max then
+			ranking.playerXP[name] = i
+			break
+		end
+	end
+
 end)
 
 minetest.register_on_leaveplayer(function(player)
 	local name = player:get_player_name()
 	players[name] = nil
+	ranking.playerXP[name] = nil
 	minetest.after(300, clearPlayerPos, player:get_player_name())
 end)
 
@@ -605,6 +620,7 @@ ranking.on_xp_increase = function(player, xplevel)
 
 		local msg = string.char(0x1b).."(c@#00ff00)"..player:get_player_name()..
 					" has reached the level of: "..ranks["experience"].levels[xplevel].name
+		ranking.playerXP[player:get_player_name()] = xplevel
 
 		minetest.sound_play("00_bt_ranking_level", { to_player = player:get_player_name(), gain = 2.0 })
 		minetest.chat_send_all(msg)

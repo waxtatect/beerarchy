@@ -107,7 +107,7 @@ minetest.register_globalstep(function(dtime)
 				)
 			) and playerName ~= "Beerholder"
 			then
-				playerInfo["stamina"] = playerInfo["stamina"] - dtime
+				playerInfo["stamina"] = playerInfo["stamina"] - (dtime / (1 - (1 / (ranking.playerXP[playerName] + 1))))
 				if playerInfo["stamina"] <= 0 then
 					playerInfo["stamina"] = 0
 					setSprinting(playerName, false)
@@ -129,7 +129,7 @@ minetest.register_globalstep(function(dtime)
 
 			--Increase player's stamina if he/she is not sprinting and his/her stamina is less than SPRINT_STAMINA
 			elseif playerInfo["sprinting"] == false and playerInfo["stamina"] < SPRINT_STAMINA then
-				playerInfo["stamina"] = playerInfo["stamina"] + dtime
+				playerInfo["stamina"] = playerInfo["stamina"] + (dtime * (1 - (1 / (ranking.playerXP[playerName] + 1))))
 			end
 			-- Cap stamina at SPRINT_STAMINA
 			if playerInfo["stamina"] > SPRINT_STAMINA then

@@ -21,7 +21,7 @@ if dmobs.regulars then
 --	mobs:register_spawn("dmobs:wasp_leader", {"default:dirt_with_grass","dmobs:hive"}, 20, 10, 64000, 2, 31000)
 
 	mobs:register_spawn("dmobs:golem", {"default:stone", "default:snow", "default:snowblock", "default:ice"}, 7, 0, 16000, 5000, 31000)
-	mobs:register_spawn("dmobs:golem", {"default:obsidian"}, 14, 0, 100, 1, -19800)
+	mobs:register_spawn("dmobs:golem", {"default:obsidian"}, 14, 0, 2000, 1, -14800)
 --	mobs:register_spawn("dmobs:pig_evil", {"default:pine_needles","default:leaves"}, 20, 10, 32000, 2, 31000)
 --	mobs:register_spawn("dmobs:fox", {"default:dirt_with_grass","default:dirt"}, 20, 10, 32000, 2, 31000)
 

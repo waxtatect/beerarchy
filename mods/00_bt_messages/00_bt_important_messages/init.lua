@@ -20,7 +20,7 @@ end)
 
 local register_set_important_message = {
 	params = "<Message> what message to display",
-	privs = {server = true},
+	privs = {important_message = true},
 	description = "Set the important message to show when players join",
 	func = function(name, param)
 		important_message.message = param

@@ -50,7 +50,14 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 		for k, obj in pairs(objs) do
 			if obj:get_luaentity() ~= nil then
 				if obj:get_luaentity().name ~= "throwing:arrow_nyan_entity" and obj:get_luaentity().name ~= "__builtin:item" then
-					local damage = 20
+					local extra_damage = 0
+					if throwing.playerArrows[self.object] then
+						extra_damage = ranking.playerXP[throwing.playerArrows[self.object]] + math.random(-5, 5)
+						if math.random(5) == 1 then
+							extra_damage = extra_damage + 10
+						end
+					end
+					local damage = 20 + extra_damage
 					obj:punch(self.object, 1.0, {
 						full_punch_interval=1.0,
 						damage_groups={fleshy=damage},
@@ -59,7 +66,14 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 					self.object:remove()
 				end
 			else
-				local damage = 20
+				local extra_damage = 0
+				if throwing.playerArrows[self.object] then
+					extra_damage = ranking.playerXP[throwing.playerArrows[self.object]] + math.random(-5, 5)
+					if math.random(5) == 1 then
+						extra_damage = extra_damage + 10
+					end
+				end
+				local damage = 20 + extra_damage
 				obj:punch(self.object, 1.0, {
 					full_punch_interval=1.0,
 					damage_groups={fleshy=damage},
