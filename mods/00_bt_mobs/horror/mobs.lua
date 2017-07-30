@@ -251,7 +251,7 @@ mobs:register_mob("horror:hellbaron", {
 })
 
 mobs:register_spawn("horror:hellbaron", {"underworlds:hot_cobble"}, 20, 0, 15000, 2, -5800)
-mobs:register_spawn("horror:hellbaron", {"default:obsidian"}, 20, 0, 2000, 1, -14800)
+mobs:register_spawn("horror:hellbaron", {"default:obsidian"}, 20, 0, 2000, 1, -13540)
 
 --mobs:register_egg("horror:hellbaron", "Hell Baron", "default_dirt.png", 1)
 
