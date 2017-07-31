@@ -85,6 +85,18 @@ end
 
 local toughNodes = {}
 toughNodes[minetest.get_content_id("default:obsidian")] = true
+toughNodes[minetest.get_content_id("default:obsidian")] = true
+toughNodes[minetest.get_content_id("default:obsidian_block")] = true
+toughNodes[minetest.get_content_id("default:obsidian_glass")] = true
+toughNodes[minetest.get_content_id("default:obsidianbrick")] = true
+toughNodes[minetest.get_content_id("doors:door_obsidian_glass")] = true
+toughNodes[minetest.get_content_id("stairs:slab_obsidian")] = true
+toughNodes[minetest.get_content_id("stairs:slab_obsidian_block")] = true
+toughNodes[minetest.get_content_id("stairs:slab_obsidianbrick")] = true
+toughNodes[minetest.get_content_id("stairs:slab_obsidian")] = true
+toughNodes[minetest.get_content_id("stairs:stair_obsidian")] = true
+toughNodes[minetest.get_content_id("stairs:stair_obsidian_block")] = true
+toughNodes[minetest.get_content_id("stairs:stair_obsidianbrick")] = true
 
 local basic_flame_on_construct -- cached value
 local function destroy(drops, npos, cid, c_air, c_fire,

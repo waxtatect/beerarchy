@@ -41,6 +41,17 @@ local THROWING_ARROW_ENTITY={
 
 local toughNodes = {}
 toughNodes["default:obsidian"] = "default:obsidian"
+toughNodes["default:obsidian_block"] = "default:obsidian_block"
+toughNodes["default:obsidian_glass"] = "default:obsidian_glass"
+toughNodes["default:obsidianbrick"] = "default:obsidianbrick"
+toughNodes["doors:door_obsidian_glass"] = "doors:door_obsidian_glass"
+toughNodes["stairs:slab_obsidian"] = "stairs:slab_obsidian"
+toughNodes["stairs:slab_obsidian_block"] = "stairs:slab_obsidian_block"
+toughNodes["stairs:slab_obsidianbrick"] = "stairs:slab_obsidianbrick"
+toughNodes["stairs:slab_obsidian"] = "stairs:slab_obsidian"
+toughNodes["stairs:stair_obsidian"] = "stairs:stair_obsidian"
+toughNodes["stairs:stair_obsidian_block"] = "stairs:stair_obsidian_block"
+toughNodes["stairs:stair_obsidianbrick"] = "stairs:stair_obsidianbrick"
 
 THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 	self.timer=self.timer+dtime
