@@ -207,11 +207,19 @@ bucket.register_liquid(
 )
 
 bucket.register_liquid(
-	"underworlds:lava_source",
-	"default:lava_flowing",
-	"bucket:bucket_lava",
-	"bucket_lava.png",
-	"Lava Bucket"
+	"underworlds:water_poison_source",
+	"underworlds:water_poison_flowing",
+	"bucket:bucket_poisonous_water",
+	"bucket_water.png",
+	"Poisonous Water Bucket"
+)
+
+bucket.register_liquid(
+	"underworlds:water_death_source",
+	"underworlds:water_death_flowing",
+	"bucket:bucket_death_water",
+	"bucket_water.png",
+	"Deadly Water Bucket"
 )
 
 minetest.register_craft({
