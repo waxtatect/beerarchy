@@ -72,7 +72,6 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 		if node.name ~= "air" then
 			if self.player ~= "" then
 				self.player:setpos(self.lastpos)
-				self.player:get_inventory():add_item("main", ItemStack("throwing:arrow_teleport"))
 			end
 			throwing.playerArrows[self.object] = nil
 			self.object:remove()

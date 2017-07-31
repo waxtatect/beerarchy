@@ -99,11 +99,11 @@ local function power(player, pos, tool_type, max)
 			local ivm = area:index(minp.x, y, z)
 			for x = minp.x, maxp.x do
 				p.x = x
-				if not names[data[ivm]] then
+				if data[ivm] and not names[data[ivm]] then
 					names[data[ivm]] = minetest.get_name_from_content_id(data[ivm])
 				end
 
-				if not diggable[data[ivm]] then
+				if data[ivm] and not diggable[data[ivm]] then
 					diggable[data[ivm]] = minetest.get_item_group(names[data[ivm]], node_type) or 0
 					if node_type == 'choppy' then
 						diggable[data[ivm]] = diggable[data[ivm]] + minetest.get_item_group(names[data[ivm]], 'snappy') or 0
@@ -115,7 +115,7 @@ local function power(player, pos, tool_type, max)
 					end
 				end
 
-				if count < max_nodes and diggable[data[ivm]] > 0 and not minetest.is_protected(p, player_name) then
+				if data[ivm] and count < max_nodes and diggable[data[ivm]] > 0 and not minetest.is_protected(p, player_name) then
 					drops[data[ivm]] = (drops[data[ivm]] or 0) + 1
 					data[ivm] = air
 					count = count + 1
@@ -157,7 +157,7 @@ minetest.register_tool("fun_tools:chainsaw", {
 		full_punch_interval = 2.0,
 		max_drop_level=1,
 		groupcaps={
-			choppy={times={[1]=2.50, [2]=1.40, [3]=1.00}, uses=80, maxlevel=2},
+			choppy={times={[1]=2.50, [2]=1.40, [3]=1.00}, uses=400, maxlevel=2},
 		},
 		damage_groups = {fleshy=15},
 	},
@@ -207,7 +207,7 @@ minetest.register_tool("fun_tools:jackhammer", {
 		full_punch_interval = 1.0,
 		max_drop_level=1,
 		groupcaps={
-			cracky = {times={[1]=4.00, [2]=1.60, [3]=0.80}, uses=80, maxlevel=2},
+			cracky = {times={[1]=4.00, [2]=1.60, [3]=0.80}, uses=200, maxlevel=2},
 		},
 		damage_groups = {fleshy=4},
 	},
@@ -366,7 +366,7 @@ minetest.register_tool("fun_tools:flare_gun", {
 		full_punch_interval = 1.2,
 		max_drop_level=0,
 		groupcaps={
-			snappy={times={[2]=1.6, [3]=0.40}, uses=10, maxlevel=1},
+			snappy={times={[2]=1.6, [3]=0.40}, uses=100, maxlevel=1},
 		},
 		damage_groups = {fleshy=2},
 	},
@@ -388,7 +388,7 @@ minetest.register_tool("fun_tools:flare_gun", {
     end
 
 		local count = flares(user)
-		itemstack:add_wear(count * 400)
+		itemstack:add_wear(count * 100)
 		return itemstack
 	end,
 })

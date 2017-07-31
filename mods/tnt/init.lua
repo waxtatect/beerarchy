@@ -83,11 +83,14 @@ local function add_drop(drops, item)
 	end
 end
 
+local toughNodes = {}
+toughNodes[minetest.get_content_id("default:obsidian")] = true
+
 local basic_flame_on_construct -- cached value
 local function destroy(drops, npos, cid, c_air, c_fire,
 		on_blast_queue, on_construct_queue,
 		ignore_protection, ignore_on_blast)
-	if not ignore_protection and minetest.is_protected(npos, "") then
+	if (not ignore_protection and minetest.is_protected(npos, "")) or toughNodes[cid] then
 		return cid
 	end
 

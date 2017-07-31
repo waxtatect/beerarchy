@@ -206,6 +206,14 @@ bucket.register_liquid(
 	"Lava Bucket"
 )
 
+bucket.register_liquid(
+	"underworlds:lava_source",
+	"default:lava_flowing",
+	"bucket:bucket_lava",
+	"bucket_lava.png",
+	"Lava Bucket"
+)
+
 minetest.register_craft({
 	type = "fuel",
 	recipe = "bucket:bucket_lava",

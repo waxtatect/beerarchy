@@ -39,6 +39,9 @@ local THROWING_ARROW_ENTITY={
 	collisionbox = {0,0,0,0,0,0},
 }
 
+local toughNodes = {}
+toughNodes["default:obsidian"] = "default:obsidian"
+
 THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 	self.timer=self.timer+dtime
 	local pos = self.object:getpos()
@@ -59,7 +62,7 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 							extra_radius = extra_radius + 1
 						end
 					end
-					local damage = 5 + extra_damage
+					local damage = 3 + extra_damage
 					obj:punch(self.object, 1.0, {
 						full_punch_interval=1.0,
 						damage_groups={fleshy=damage},
@@ -93,30 +96,53 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 
 	if self.lastpos.x~=nil then
 		if node.name ~= "air" then
-			local extra_damage = 0
-			local extra_radius = 0
-			if throwing.playerArrows[self.object] then
-				extra_damage = ranking.playerXP[throwing.playerArrows[self.object]] + math.random(0, 1)
-				extra_radius = math.floor((ranking.playerXP[throwing.playerArrows[self.object]] + 1) / 8) + math.random(-1, 0)
-				if math.random(20) == 1 then
-					extra_damage = extra_damage + math.random(1, 2)
-					extra_radius = extra_radius + 1
+			if toughNodes[node.name] or minetest.find_node_near({x=pos.x, y=pos.y, z=pos.z}, 2, toughNodes) then
+				local extra_damage = 0
+				if throwing.playerArrows[self.object] then
+					extra_damage = ranking.playerXP[throwing.playerArrows[self.object]] + math.random(0, 1)
 				end
-			end
-			local damage = 1 + extra_damage
+				local damage = 5 + extra_damage
 
-			local all_objects = minetest.get_objects_inside_radius({x=pos.x, y=pos.y, z=pos.z}, 5 + extra_radius)
-			local _,obj
-			for _,obj in ipairs(all_objects) do
-				obj:punch(self.object, 1.0, {
-					full_punch_interval=1.0,
-					damage_groups={fleshy=damage},
-				}, nil)
-			end
+				local all_objects = minetest.get_objects_inside_radius({x=self.lastpos.x, y=self.lastpos.y, z=self.lastpos.z}, 3)
+				local _,obj
+				for _,obj in ipairs(all_objects) do
+					obj:punch(self.object, 1.0, {
+						full_punch_interval=1.0,
+						damage_groups={fleshy=damage},
+					}, nil)
+				end
 
-			throwing.playerArrows[self.object] = nil
-			self.object:remove()
-			tnt.boom(self.lastpos, { radius = 3, damage_radius = 5, ignore_protection = false, ignore_on_blast = true })
+				throwing.playerArrows[self.object] = nil
+				self.object:remove()
+
+				tnt.boom(self.lastpos, { radius = 3, damage_radius = 3, ignore_protection = false, ignore_on_blast = true })
+			else
+				local extra_damage = 0
+				local extra_radius = 0
+				if throwing.playerArrows[self.object] then
+					extra_damage = ranking.playerXP[throwing.playerArrows[self.object]] + math.random(0, 1)
+					extra_radius = math.floor((ranking.playerXP[throwing.playerArrows[self.object]] + 1) / 8) + math.random(-1, 0)
+					if math.random(20) == 1 then
+						extra_damage = extra_damage + math.random(1, 2)
+						extra_radius = extra_radius + 1
+					end
+				end
+				local damage = 1 + extra_damage
+
+				local all_objects = minetest.get_objects_inside_radius({x=self.lastpos.x, y=self.lastpos.y, z=self.lastpos.z}, 5 + extra_radius)
+				local _,obj
+				for _,obj in ipairs(all_objects) do
+					obj:punch(self.object, 1.0, {
+						full_punch_interval=1.0,
+						damage_groups={fleshy=damage},
+					}, nil)
+				end
+
+				throwing.playerArrows[self.object] = nil
+				self.object:remove()
+
+				tnt.boom(pos, { radius = 3 + extra_radius, damage_radius = 5 + extra_radius, ignore_protection = false, ignore_on_blast = false })
+			end
 		end
 	end
 	self.lastpos={x=pos.x, y=pos.y, z=pos.z}

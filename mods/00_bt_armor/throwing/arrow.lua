@@ -85,7 +85,6 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 
 	if self.lastpos.x~=nil then
 		if node.name ~= "air" then
-			minetest.env:add_item(self.lastpos, 'throwing:arrow')
 			throwing.playerArrows[self.object] = nil
 			self.object:remove()
 		end
