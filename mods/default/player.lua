@@ -55,6 +55,7 @@ function default.player_set_model(player, model_name)
 		end
 		player:set_properties({
 			mesh = model_name,
+			physical = true,
 			textures = player_textures[name] or model.textures,
 			visual = "mesh",
 			visual_size = model.visual_size or {x=1, y=1},

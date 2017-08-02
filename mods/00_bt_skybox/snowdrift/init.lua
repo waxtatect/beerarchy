@@ -84,152 +84,150 @@ minetest.register_globalstep(function(dtime)
 			snowdrift_enabled[player_name] = true
 		end
 
-		if snowdrift_enabled ~= true then
-			return
-		end
+		if snowdrift_enabled[player_name] then
+			local ppos = player:getpos()
+			local pposy = math.floor(ppos.y) + 2 -- Precipitation when swimming
+			if pposy >= YLIMIT then
+				local pposx = math.floor(ppos.x)
+				local pposz = math.floor(ppos.z)
+				local ppos = {x = pposx, y = pposy, z = pposz}
 
-		local ppos = player:getpos()
-		local pposy = math.floor(ppos.y) + 2 -- Precipitation when swimming
-		if pposy >= YLIMIT then
-			local pposx = math.floor(ppos.x)
-			local pposz = math.floor(ppos.z)
-			local ppos = {x = pposx, y = pposy, z = pposz}
+				local nobj_temp = nobj_temp or minetest.get_perlin(np_temp)
+				local nobj_humid = nobj_humid or minetest.get_perlin(np_humid)
+				local nobj_prec = nobj_prec or minetest.get_perlin(np_prec)
 
-			local nobj_temp = nobj_temp or minetest.get_perlin(np_temp)
-			local nobj_humid = nobj_humid or minetest.get_perlin(np_humid)
-			local nobj_prec = nobj_prec or minetest.get_perlin(np_prec)
+				local nval_temp = nobj_temp:get2d({x = pposx, y = pposz})
+				local nval_humid = nobj_humid:get2d({x = pposx, y = pposz})
+				local nval_prec = nobj_prec:get2d({x = os.clock() / 60, y = 0})
 
-			local nval_temp = nobj_temp:get2d({x = pposx, y = pposz})
-			local nval_humid = nobj_humid:get2d({x = pposx, y = pposz})
-			local nval_prec = nobj_prec:get2d({x = os.clock() / 60, y = 0})
+				-- Biome system: Frozen biomes below heat 35,
+				-- deserts below line 14 * t - 95 * h = -1496
+				-- h = (14 * t + 1496) / 95
+				-- h = 14/95 * t + 1496/95
+				-- where 14/95 is gradient and 1496/95 is y intersection
+				-- h - 14/95 t = 1496/95 y intersection
+				-- so area above line is
+				-- h - 14/95 t > 1496/95
+				local freeze = nval_temp < 35
+				local precip = nval_prec < (nval_humid - 50) / 50 + PRECOFF and
+					nval_humid - grad * nval_temp > yint
 
-			-- Biome system: Frozen biomes below heat 35,
-			-- deserts below line 14 * t - 95 * h = -1496
-			-- h = (14 * t + 1496) / 95
-			-- h = 14/95 * t + 1496/95
-			-- where 14/95 is gradient and 1496/95 is y intersection
-			-- h - 14/95 t = 1496/95 y intersection
-			-- so area above line is
-			-- h - 14/95 t > 1496/95
-			local freeze = nval_temp < 35
-			local precip = nval_prec < (nval_humid - 50) / 50 + PRECOFF and
-				nval_humid - grad * nval_temp > yint
+				-- Occasionally reset player sky
+				if math.random() < 0.1 then
+					if precip then
+						-- Set overcast sky
+						local sval
+						local time = minetest.get_timeofday()
+						if time >= 0.5 then
+							time = 1 - time
+						end
+						-- Sky brightness transitions:
+						-- First transition (24000 -) 4500, (1 -) 0.1875
+						-- Last transition (24000 -) 5750, (1 -) 0.2396
+						if time <= 0.1875 then
+							sval = NISVAL
+						elseif time >= 0.2396 then
+							sval = DASVAL
+						else
+							sval = math.floor(NISVAL + ((time - 0.1875) / 0.0521) * difsval)
+						end
 
-			-- Occasionally reset player sky
-			if math.random() < 0.1 then
-				if precip then
-					-- Set overcast sky
-					local sval
-					local time = minetest.get_timeofday()
-					if time >= 0.5 then
-						time = 1 - time
-					end
-					-- Sky brightness transitions:
-					-- First transition (24000 -) 4500, (1 -) 0.1875
-					-- Last transition (24000 -) 5750, (1 -) 0.2396
-					if time <= 0.1875 then
-						sval = NISVAL
-					elseif time >= 0.2396 then
-						sval = DASVAL
+						player:set_sky({r = sval, g = sval, b = sval + 16, a = 255}, "plain", {})
 					else
-						sval = math.floor(NISVAL + ((time - 0.1875) / 0.0521) * difsval)
+						-- Reset sky to normal
+						player:set_sky({}, "regular", {})
 					end
-
-					player:set_sky({r = sval, g = sval, b = sval + 16, a = 255}, "plain", {})
-				else
-					-- Reset sky to normal
-					player:set_sky({}, "regular", {})
 				end
-			end
 
-			local outside_quota = 0
-			if precip then
-				-- Precipitation
-				if freeze then
-					-- Snowfall
-					for flake = 1, FLAKES do
-						local pos = {
-							x = pposx - 24 + math.random(0, 47),
-							y = pposy + 8 + math.random(0, 1),
-							z = pposz - 20 + math.random(0, 47)
-							}
-						if minetest.get_node_light(pos, 0.5) == 15 then
-							minetest.add_particle({
-								pos = pos,
-								vel = {
-									x = 0.0,
-									y = -2.0,
-									z = -1.0
-								},
-								acc = {x = 0, y = 0, z = 0},
-								expirationtime = 8.5,
-								size = 2.8,
-								collisiondetection = COLLIDE,
-								collision_removal = true,
-								vertical = false,
-								texture = "snowdrift_snowflake" .. math.random(1, 4) .. ".png",
-								playername = player:get_player_name()
-							})
-							outside_quota = outside_quota + 1 / FLAKES
+				local outside_quota = 0
+				if precip then
+					-- Precipitation
+					if freeze then
+						-- Snowfall
+						for flake = 1, FLAKES do
+							local pos = {
+								x = pposx - 24 + math.random(0, 47),
+								y = pposy + 8 + math.random(0, 1),
+								z = pposz - 20 + math.random(0, 47)
+								}
+							if minetest.get_node_light(pos, 0.5) == 15 then
+								minetest.add_particle({
+									pos = pos,
+									vel = {
+										x = 0.0,
+										y = -2.0,
+										z = -1.0
+									},
+									acc = {x = 0, y = 0, z = 0},
+									expirationtime = 8.5,
+									size = 2.8,
+									collisiondetection = COLLIDE,
+									collision_removal = true,
+									vertical = false,
+									texture = "snowdrift_snowflake" .. math.random(1, 4) .. ".png",
+									playername = player:get_player_name()
+								})
+								outside_quota = outside_quota + 1 / FLAKES
+							end
 						end
-					end
-				else
-					-- Rainfall
-					for flake = 1, DROPS do
-						local pos = {
-							x = pposx - 8 + math.random(0, 16),
-							y = pposy + 8 + math.random(0, 5),
-							z = pposz - 8 + math.random(0, 16)
-							}
-						if minetest.get_node_light(pos, 0.5) == 15 then
-							minetest.add_particle({
-								pos = pos,
-								vel = {
-									x = 0.0,
-									y = -10.0,
-									z = 0.0
-								},
-								acc = {x = 0, y = 0, z = 0},
-								expirationtime = 2.1,
-								size = 2.8,
-								collisiondetection = COLLIDE,
-								collision_removal = true,
-								vertical = true,
-								texture = "snowdrift_raindrop.png",
-								playername = player:get_player_name()
-							})
-							outside_quota = outside_quota + 1 / DROPS
+					else
+						-- Rainfall
+						for flake = 1, DROPS do
+							local pos = {
+								x = pposx - 8 + math.random(0, 16),
+								y = pposy + 8 + math.random(0, 5),
+								z = pposz - 8 + math.random(0, 16)
+								}
+							if minetest.get_node_light(pos, 0.5) == 15 then
+								minetest.add_particle({
+									pos = pos,
+									vel = {
+										x = 0.0,
+										y = -10.0,
+										z = 0.0
+									},
+									acc = {x = 0, y = 0, z = 0},
+									expirationtime = 2.1,
+									size = 2.8,
+									collisiondetection = COLLIDE,
+									collision_removal = true,
+									vertical = true,
+									texture = "snowdrift_raindrop.png",
+									playername = player:get_player_name()
+								})
+								outside_quota = outside_quota + 1 / DROPS
+							end
 						end
-					end
 
-					if not handles[player_name] then
-						-- Start sound if not playing
-						local handle = minetest.sound_play(
-							"snowdrift_rain",
-							{
-								to_player = player_name,
-								gain = RAINGAIN,
-								loop = true,
-							}
-						)
-						if handle then
-							handles[player_name] = handle
+						if not handles[player_name] then
+							-- Start sound if not playing
+							local handle = minetest.sound_play(
+								"snowdrift_rain",
+								{
+									to_player = player_name,
+									gain = RAINGAIN,
+									loop = true,
+								}
+							)
+							if handle then
+								handles[player_name] = handle
+							end
 						end
 					end
 				end
-			end
-			if not precip or freeze or outside_quota < 0.3 then
-				if handles[player_name] then
-					-- Stop sound if playing
-					minetest.sound_stop(handles[player_name])
-					handles[player_name] = nil
+				if not precip or freeze or outside_quota < 0.3 then
+					if handles[player_name] then
+						-- Stop sound if playing
+						minetest.sound_stop(handles[player_name])
+						handles[player_name] = nil
+					end
 				end
-			end
 
-		elseif handles[player_name] then
-			-- Stop sound when player goes under y limit
-			minetest.sound_stop(handles[player_name])
-			handles[player_name] = nil
+			elseif handles[player_name] then
+				-- Stop sound when player goes under y limit
+				minetest.sound_stop(handles[player_name])
+				handles[player_name] = nil
+			end
 		end
 	end
 end)
