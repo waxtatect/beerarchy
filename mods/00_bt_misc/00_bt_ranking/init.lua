@@ -624,7 +624,9 @@ ranking.on_xp_increase = function(player, xplevel)
 
 		minetest.sound_play("00_bt_ranking_level", { to_player = player:get_player_name(), gain = 2.0 })
 		minetest.chat_send_all(msg)
-		minetest.chat_send_player(player:get_player_name(), levelMessages[xplevel])
+		if levelMessages[xplevel] then
+			minetest.chat_send_player(player:get_player_name(), levelMessages[xplevel])
+		end
 	end
 end
 
