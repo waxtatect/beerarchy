@@ -44,7 +44,8 @@ mobs:register_mob("mobs_animal:penguin", {
 	},
 	fly_in = "default:water_source",
 	floats = 0,
-	follow = {"ethereal:fish_raw"},
+	follow = {"mobs_animal:rat", "fishing:bluewhite_raw", "fishing:carp_raw", "fishing:catfish_raw", "fishing:clownfish_raw", "fishing:exoticfish_raw",
+			  "fishing:fish_cooked", "fishing:fish_raw", "fishing:perch_raw", "fishing:pike_cooked", "fishing:pike_raw"},
 	view_range = 5,
 
 	on_rightclick = function(self, clicker)
