@@ -92,12 +92,6 @@ underworlds_mod.undergen = function(vm, minp, maxp, data, p2data, area, node, un
 	local cave_width = underworlds_mod.cave_width
 	local styx_sea_level = underworlds_mod.underzones['Styx'].sealevel
 
---	for x = minp.x, maxp.x do
---		for z = minp.z, maxp.z do
---			cindex = index + 1
---		end
---	end
-
 	for z = minp.z, maxp.z do
 		for x = minp.x, maxp.x do
 			index = index + 1
