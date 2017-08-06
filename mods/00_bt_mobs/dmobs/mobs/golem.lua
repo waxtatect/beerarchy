@@ -42,7 +42,14 @@ mobs:register_mob("dmobs:golem", {
 		punch_start = 20,
 		punch_end = 45,
 	},
+	sounds = {
+		random = "mobs_golem_footstep",
+		war_cry = "mobs_golem_growl",
+		attack = "mobs_golem_growl",
+		damage = "mobs_golem_growl",
+		jump = "mobs_golem_footstep",
+		distance = 20,
+	},
 })
-
 
 mobs:register_egg("dmobs:golem", "Stone Golem", "default_stone.png", 1)
