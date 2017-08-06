@@ -5,7 +5,7 @@ snowdrift_enabled = {}
 local YLIMIT = 1 -- Set to world's water level or level of lowest open area,
 				-- calculations are disabled below this y.
 local PRECSPR = 6 -- Time scale for precipitation variation in minutes
-local PRECOFF = -0.4 -- Precipitation offset, higher = rains more often
+local PRECOFF = -0.2 -- Precipitation offset, higher = rains more often
 local GSCYCLE = 0.5 -- Globalstep cycle (seconds)
 local FLAKES = 16 -- Snowflakes per cycle
 local DROPS = 64 -- Raindrops per cycle
