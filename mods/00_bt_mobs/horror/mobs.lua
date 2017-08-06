@@ -54,147 +54,39 @@ mobs:register_arrow("horror:fireball_2", {
    end,
 })
 
-local destructive = false
-
---[[
-if destructive == true then
-mobs:register_arrow("horror:fireball_3", {
-   visual = "sprite",
-   visual_size = {x = 1, y = 1},
-   textures = {"horror_fireshot.png"},
-   velocity = 5,
-   tail = 1, -- enable tail
-   tail_texture = "horror_flame2.png",
-
-   hit_player = function(self, player)
-      player:punch(self.object, 1.0, {
-         full_punch_interval = 1.0,
-         damage_groups = {fleshy = 2},
-      }, nil)
-   end,
-
-   hit_mob = function(self, player)
-      player:punch(self.object, 1.0, {
-         full_punch_interval = 1.0,
-         damage_groups = {fleshy = 2},
-      }, nil)
-   end,
-
-   hit_node = function(self, pos, node)
-      mobs:explosion(pos, 1, 1, 1)
-   end,
-})
-
 mobs:register_arrow("horror:rocket", {
-   visual = "sprite",
-   visual_size = {x = 0.5, y = 0.5},
-   textures = {"horror_rocket.png"},
-   velocity = 8,
-   tail = 1, -- enable tail
-   tail_texture = "horror_rocket_smoke.png",
+	visual = "sprite",
+	visual_size = {x = 1, y = 1},
+	textures = {"horror_rocket.png"},
+	velocity = 6,
+	tail = 1,
+	tail_texture = "horror_rocket_smoke.png",
+	tail_size = 10,
+	glow = 5,
+	expire = 0.1,
 
-   hit_player = function(self, player)
-      player:punch(self.object, 1.0, {
-         full_punch_interval = 1.0,
-         damage_groups = {fleshy = 3},
-      }, nil)
-   end,
+	-- direct hit, no fire... just plenty of pain
+	hit_player = function(self, player)
+		player:punch(self.object, 1.0, {
+			full_punch_interval = 1.0,
+			damage_groups = {fleshy = 8},
+		}, nil)
+		tnt.boom(self.object:getpos(), { radius = 2, damage_radius = 3, ignore_protection = false, ignore_on_blast = false })
+	end,
 
-   hit_mob = function(self, player)
-      player:punch(self.object, 1.0, {
-         full_punch_interval = 1.0,
-         damage_groups = {fleshy = 3},
-      }, nil)
-   end,
+	hit_mob = function(self, player)
+		player:punch(self.object, 1.0, {
+			full_punch_interval = 1.0,
+			damage_groups = {fleshy = 8},
+		}, nil)
+		tnt.boom(self.object:getpos(), { radius = 2, damage_radius = 3, ignore_protection = false, ignore_on_blast = false })
+	end,
 
-   hit_node = function(self, pos, node)
-      mobs:explosion(pos, 2, 1, 1)
-   end,
+	-- node hit, bursts into flame
+	hit_node = function(self, pos, node)
+		tnt.boom(pos, { radius = 2, damage_radius = 3, ignore_protection = false, ignore_on_blast = false })
+	end
 })
-else
-
-mobs:register_arrow("horror:fireball_3", {
-   visual = "sprite",
-   visual_size = {x = 1, y = 1},
-   textures = {"horror_fireshot.png"},
-   velocity = 3,
-   tail = 1, -- enable tail
-   tail_texture = "horror_flame2.png",
-
-   hit_player = function(self, player)
-      player:punch(self.object, 1.0, {
-         full_punch_interval = 1.0,
-         damage_groups = {fleshy = 2},
-      }, nil)
-   end,
-
-   hit_mob = function(self, player)
-      player:punch(self.object, 1.0, {
-         full_punch_interval = 1.0,
-         damage_groups = {fleshy = 2},
-      }, nil)
-   end,
-
-   hit_node = function(self, pos, node)
-      self.object:remove()
-   end,
-})
-
-mobs:register_arrow("horror:rocket", {
-   visual = "sprite",
-   visual_size = {x = 0.5, y = 0.5},
-   textures = {"horror_rocket.png"},
-   velocity = 8,
-   tail = 1, -- enable tail
-   tail_texture = "horror_rocket_smoke.png",
-
-   hit_player = function(self, player)
-      player:punch(self.object, 1.0, {
-         full_punch_interval = 1.0,
-         damage_groups = {fleshy = 3},
-      }, nil)
-   end,
-
-   hit_mob = function(self, player)
-      player:punch(self.object, 1.0, {
-         full_punch_interval = 1.0,
-         damage_groups = {fleshy = 3},
-      }, nil)
-   end,
-
-   hit_node = function(self, pos, node)
-      self.object:remove()
-   end,
-})
-end
-
-mobs:register_arrow("horror:fireball_4", {
-   visual = "sprite",
-   visual_size = {x = 1, y = 1},
-   textures = {"horror_plasma.png"},
-   velocity = 6,
-   tail = 0, -- enable tail
-   tail_texture = "horror_steam.png",
-
-   hit_player = function(self, player)
-      player:punch(self.object, 1.0, {
-         full_punch_interval = 1.0,
-         damage_groups = {fleshy = 3},
-      }, nil)
-   end,
-
-   hit_mob = function(self, player)
-      player:punch(self.object, 1.0, {
-         full_punch_interval = 1.0,
-         damage_groups = {fleshy = 3},
-      }, nil)
-   end,
-
-   hit_node = function(self, pos, node)
-      self.object:remove()
-   end,
-})
-]]--
 
 --mobs, eggs and spawning
 mobs:register_mob("horror:hellbaron", {
@@ -253,44 +145,213 @@ mobs:register_mob("horror:hellbaron", {
 mobs:register_spawn("horror:hellbaron", {"underworlds:hot_cobble"}, 20, 0, 15000, 2, -5800)
 mobs:register_spawn("horror:hellbaron", {"default:obsidian"}, 20, 0, 2000, 1, -13540)
 
---mobs:register_egg("horror:hellbaron", "Hell Baron", "default_dirt.png", 1)
+mobs:register_egg("horror:hellbaron", "Hell Baron", "default_dirt.png", 1)
 
---[[mobs:register_mob("horror:dragon", {
+mobs:register_mob("horror:spider", {
+	type = "monster",
+	passive = false,
+	reach = 2,
+	damage = 2,
+	attack_type = "dogfight",
+	hp_min = 80,
+	hp_max = 120,
+	armor = 130,
+	collisionbox = {-0.7, 0, -0.7, 0.7, 1.5, 0.7},
+	visual = "mesh",
+	mesh = "hspider.b3d",
+	textures = {
+		{"hspider.png"},
+	},
+   blood_amount = 80,
+	blood_texture = "horror_blood_effect.png",
+	visual_size = {x=3, y=3},
+	makes_footstep_sound = true,
+	walk_velocity = 2.5,
+	run_velocity = 3.1,
+	sounds = {
+		random = "mobs_spider",
+		attack = "mobs_spider",
+	},
+	jump = true,
+	on_die = function(self, pos)
+		minetest.add_entity({ x = pos.x, y = pos.y, z = pos.z }, "horror:mini_spider")
+		minetest.add_entity({ x = pos.x - 1, y = pos.y, z = pos.z }, "horror:mini_spider")
+		minetest.add_entity({ x = pos.x + 1, y = pos.y, z = pos.z }, "horror:mini_spider")
+		minetest.add_entity({ x = pos.x - 1, y = pos.y, z = pos.z - 1 }, "horror:mini_spider")
+		minetest.add_entity({ x = pos.x + 1, y = pos.y, z = pos.z - 1 }, "horror:mini_spider")
+		minetest.add_entity({ x = pos.x - 1, y = pos.y, z = pos.z + 1 }, "horror:mini_spider")
+		minetest.add_entity({ x = pos.x + 1, y = pos.y, z = pos.z + 1 }, "horror:mini_spider")
+		minetest.add_entity({ x = pos.x, y = pos.y + 1, z = pos.z }, "horror:mini_spider")
+		minetest.add_entity({ x = pos.x - 1, y = pos.y + 1, z = pos.z }, "horror:mini_spider")
+		minetest.add_entity({ x = pos.x + 1, y = pos.y + 1, z = pos.z }, "horror:mini_spider")
+		minetest.add_entity({ x = pos.x - 1, y = pos.y + 1, z = pos.z - 1 }, "horror:mini_spider")
+		minetest.add_entity({ x = pos.x + 1, y = pos.y + 1, z = pos.z - 1 }, "horror:mini_spider")
+		minetest.add_entity({ x = pos.x - 1, y = pos.y + 1, z = pos.z + 1 }, "horror:mini_spider")
+		minetest.add_entity({ x = pos.x + 1, y = pos.y + 1, z = pos.z + 1 }, "horror:mini_spider")
+	end,
+	drops = {
+		{name = "mobs:meat_raw", chance = 2, min = 1, max = 1},
+		{name = "farming:cotton", chance = 1, min = 3, max = 6},
+		{name = "default:mese", chance = 20, min = 1, max = 2},
+	},
+	water_damage = 0,
+	lava_damage = 2,
+	light_damage = 0,
+	replace_rate = 20,
+	replace_what = {"air"},
+	replace_with = "horror:spiderweb_decaying",
+	view_range = 14,
+	animation = {
+		speed_normal = 10,
+		speed_run = 15,
+		walk_start = 45,
+		walk_end = 65,
+		run_start = 45,
+		run_end = 65,
+		stand_start = 1,
+		stand_end = 20,
+		punch_start = 20,
+		punch_end = 40,
+
+	},
+})
+
+mobs:register_spawn("horror:spider", {"underworlds:polluted_dirt"}, 20, 0, 35000, 2, -4000)
+mobs:register_spawn("horror:spider", {"default:stone"}, 20, 0, 15000, 1, -13540)
+
+mobs:register_egg("horror:spider", "Giant Spider", "default_obsidian.png", 1)
+
+mobs:register_mob("horror:mini_spider", {
+	group_attack = true,
+	type = "monster",
+	passive = false,
+	attack_type = "dogfight",
+	reach = 2,
+	damage = 1,
+	hp_min = 10,
+	hp_max = 20,
+	armor = 50,
+	collisionbox = {-0.9, -0.01, -0.7, 0.7, 0.6, 0.7},
+	visual = "mesh",
+	mesh = "mobs_spider.x",
+	textures = {
+		{"mobs_spider.png"},
+	},
+	visual_size = {x = 2, y = 2},
+	makes_footstep_sound = false,
+	sounds = {
+		random = "mobs_spider",
+		attack = "mobs_spider",
+	},
+	walk_velocity = 2,
+	run_velocity = 5,
+	jump = true,
+	view_range = 15,
+	floats = 0,
+	drops = {
+		{name = "farming:string", chance = 1, min = 1, max = 2},
+		{name = "mobs:leather", chance = 10, min = 0, max = 2},
+	},
+	water_damage = 5,
+	lava_damage = 5,
+	light_damage = 0,
+	animation = {
+		speed_normal = 15,
+		speed_run = 15,
+		stand_start = 1,
+		stand_end = 1,
+		walk_start = 20,
+		walk_end = 40,
+		run_start = 20,
+		run_end = 40,
+		punch_start = 50,
+		punch_end = 90,
+	},
+})
+
+mobs:register_mob("horror:cyberdemon", {
    type = "monster",
    passive = false,
    attacks_monsters = true,
-   damage = 8,
-   reach = 3,
+   damage = 3,
+   reach = 2,
    attack_type = "dogshoot",
-   shoot_interval = 3.5,
-   arrow = "horror:fireball",
-   shoot_offset = 1,
-   hp_min = 50,
-   hp_max = 85,
-   armor = 90,
-   collisionbox = {-0.6, -0.9, -0.6, 0.6, 0.6, 0.6},
+   shoot_interval = 1.5,
+	dogshoot_switch = 2,
+	dogshoot_count = 1,
+	dogshoot_count_max = 5,
+   arrow = "horror:rocket",
+   shoot_offset = -0.5,
+   hp_min = 100,
+   hp_max = 200,
+   armor = 200,
+   collisionbox = {-0.5, 0, -0.6, 0.6, 3, 0.6},
    visual = "mesh",
-   mesh = "dragon_new.b3d",
+   mesh = "cyberdemon.b3d",
    textures = {
-      {"horror_dragon.png"},
+      {"horror_cyberdemon.png"},
    },
-   blood_amount = 90,
+   blood_amount = 80,
+   blood_texture = "horror_blood_effect.png",
+   visual_size = {x=1, y=1},
+   makes_footstep_sound = true,
+   walk_velocity = 2,
+   run_velocity = 3.5,
+   jump = true,
+   drops = {
+      {name = "moreores:mithril_block", chance = 1, min = 1, max = 5},
+	  {name = "mobs:lava_orb", chance = 1, min = 1, max = 1},
+   },
+   water_damage = 0,
+   lava_damage = 0,
+   light_damage = 0,
+   view_range = 20,
+	animation = {
+		speed_normal = 10,
+		speed_run = 15,
+		walk_start = 20,
+		walk_end = 40,
+		run_start = 20,
+		run_end = 40,
+		stand_start = 64,
+		stand_end = 80,
+		shoot_start = 1,
+		shoot_end = 15,
+
+	},
+})
+
+mobs:register_spawn("horror:cyberdemon", {"underworlds:hot_cobble"}, 20, 0, 35000, 2, -13600)
+
+mobs:register_egg("horror:cyberdemon", "Cyberdemon", "wool_red.png", 1)
+
+mobs:register_mob("horror:manticore", {
+   type = "monster",
+   passive = false,
+   attacks_monsters = true,
+   damage = 2,
+   reach = 3,
+   attack_type = "dogfight",
+   hp_min = 30,
+   hp_max = 45,
+   armor = 130,
+   collisionbox = {-0.5, -0.5, -0.6, 0.6, 0.6, 0.6},
+   visual = "mesh",
+   mesh = "manticore.b3d",
+   textures = {
+      {"manticore.png"},
+   },
+   blood_amount = 80,
    blood_texture = "horror_blood_effect.png",
    visual_size = {x=3, y=3},
    makes_footstep_sound = true,
-   sounds = {
-      shoot_attack = "mobs_fireball",
-   },
-   walk_velocity = 3,
-   run_velocity = 5,
+   walk_velocity = 2.5,
+   run_velocity = 3.5,
    jump = true,
-   fly = true,
    drops = {
-      {name = "mobs:lava_orb", chance = 2, min = 1, max = 3},
-      {name = "default:diamond", chance = 2, min = 1, max = 3},
+      {name = "default:diamond", chance = 20, min = 1, max = 1},
+--      {name = "horror:cockroach", chance = 1, min = 1, max = 1},
    },
-   fall_speed = 0,
-   stepheight = 10,
    water_damage = 2,
    lava_damage = 0,
    light_damage = 0,
@@ -299,17 +360,87 @@ mobs:register_spawn("horror:hellbaron", {"default:obsidian"}, 20, 0, 2000, 1, -1
       speed_normal = 10,
       speed_run = 20,
       walk_start = 1,
-      walk_end = 22,
+      walk_end = 11,
       stand_start = 1,
-      stand_end = 22,
+      stand_end = 11,
       run_start = 1,
-      run_end = 22,
-      punch_start = 22,
-      punch_end = 47,
+      run_end = 11,
+      punch_start = 11,
+      punch_end = 26,
    },
 })
 
-mobs:register_spawn("horror:dragon", {"default:pine_needles",}, 20, 0, 35000, 200, 31000)
+mobs:register_spawn("horror:manticore", {"underworlds:hot_cobble"}, 20, 0, 15000, 2, -3200)
 
-mobs:register_egg("horror:dragon", "Zombie Dragon", "horror_orb.png", 1)
-]]--
+mobs:register_egg("horror:manticore", "Manticore", "default_dirt.png", 1)
+
+mobs:register_mob("horror:mothman", {
+   type = "monster",
+   passive = false,
+   attacks_monsters = true,
+   damage = 2,
+   reach = 3,
+   attack_type = "dogfight",
+   hp_min = 30,
+   hp_max = 45,
+   armor = 80,
+   collisionbox = {-0.3, -0.3, -0.3, 0.3, 0.3, 0.3},
+   visual = "mesh",
+   mesh = "mothman.b3d",
+   textures = {
+      {"mothman.png"},
+   },
+   blood_amount = 60,
+   blood_texture = "horror_blood_effect.png",
+   visual_size = {x=3, y=3},
+   makes_footstep_sound = true,
+   walk_velocity = 2,
+   run_velocity = 4,
+   jump = true,
+   fly = true,
+   do_custom = function(self)
+   local apos = self.object:getpos()
+		local part = minetest.add_particlespawner(
+			1, --amount
+			0.3, --time
+			{x=apos.x-0.3, y=apos.y-0.3, z=apos.z-0.3}, --minpos
+			{x=apos.x+0.3, y=apos.y-0.3, z=apos.z+0.3}, --maxpos
+			{x=-0, y=-0, z=-0}, --minvel
+			{x=0, y=0, z=0}, --maxvel
+			{x=0,y=-1,z=0}, --minacc
+			{x=0.5,y=-1,z=0.5}, --maxacc
+			3, --minexptime
+			5, --maxexptime
+			3, --minsize
+			5, --maxsize
+			false, --collisiondetection
+			"horror_dust.png" --texture
+		)
+   end,
+   fall_speed = 0,
+   stepheight = 5,
+   drops = {
+      {name = "moreores:mithril_ingot", chance = 20, min = 1, max = 1},
+   },
+   water_damage = 2,
+   lava_damage = 0,
+   light_damage = 0,
+   view_range = 20,
+   animation = {
+      speed_normal = 20,
+      speed_run = 33,
+      walk_start = 1,
+      walk_end = 11,
+      stand_start = 1,
+      stand_end = 11,
+      run_start = 1,
+      run_end = 11,
+      punch_start = 1,
+      punch_end = 11,
+   },
+})
+
+mobs:register_spawn("horror:mothman", {"underworlds:hot_cobble"}, 20, 0, 15000, 2, -3200)
+mobs:register_spawn("horror:mothman", {"default:stone"}, 20, 0, 15000, 1, -13540)
+
+mobs:register_egg("horror:mothman", "Mothman", "horror_orb.png", 1)
