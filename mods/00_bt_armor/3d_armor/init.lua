@@ -258,7 +258,7 @@ if armor.config.drop == true or armor.config.destroy == true then
 		local drop = {}
 		for i=1, player_inv:get_size("armor") do
 			local stack = player_inv:get_stack("armor", i)
-			if stack:get_count() > 0 then
+			if stack:get_count() > 0 and stack:get_name() ~= "painting:paintedcanvas" and stack:get_name() ~= "painted_3d_armor:banner_armor" then
 				table.insert(drop, stack)
 				armor:set_inventory_stack(player, i, nil)
 				armor:run_callbacks("on_unequip", player, i, stack)
