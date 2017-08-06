@@ -210,7 +210,7 @@ bucket.register_liquid(
 	"underworlds:water_poison_source",
 	"underworlds:water_poison_flowing",
 	"bucket:bucket_poisonous_water",
-	"bucket_water.png",
+	"underworlds_bucket_water_poison.png",
 	"Poisonous Water Bucket"
 )
 
@@ -218,7 +218,7 @@ bucket.register_liquid(
 	"underworlds:water_death_source",
 	"underworlds:water_death_flowing",
 	"bucket:bucket_death_water",
-	"bucket_water.png",
+	"underworlds_bucket_water_death.png",
 	"Deadly Water Bucket"
 )
 

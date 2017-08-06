@@ -49,7 +49,7 @@ local function generate(p_minp, p_maxp, seed)
     local avg = (minp.y + maxp.y) / 2
     for _, uz in pairs(underworlds_mod.underzones) do
       if avg <= uz.upper_bound and avg >= uz.lower_bound then
-        write = underworlds_mod.undergen(minp, maxp, data, p2data, area, node, uz)
+        write = underworlds_mod.undergen(vm, minp, maxp, data, p2data, area, node, uz)
       end
     end
   end
@@ -58,12 +58,19 @@ local function generate(p_minp, p_maxp, seed)
     vm:set_data(data)
     vm:set_param2_data(p2data)
     minetest.generate_ores(vm, minp, maxp)
+    for i = 1, #generate_trees do
+		minetest.place_schematic_on_vmanip(vm, generate_trees[i][1], generate_trees[i][2], "random", nil, false)
+    end
+    generate_trees = {}
 
     if DEBUG then
       vm:set_lighting({day = 8, night = 8})
+    elseif minp.y < 18400 then
+      vm:set_lighting({day = 15, night = 2}, minp, maxp)
+      vm:calc_lighting()
     else
       vm:set_lighting({day = 0, night = 0}, minp, maxp)
-      vm:calc_lighting()
+      vm:calc_lighting(minp, maxp, false)
     end
     vm:update_liquids()
     vm:write_to_map()

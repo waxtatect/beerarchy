@@ -150,6 +150,19 @@ underworlds_mod.underzones = {
 		special_floor_nodes = { 'default:mese', 'default:diamondblock', 'moreores:mithril_block' },
 		special_floor_nodes_chances = { 5, 5, 5 },
 	},
+--[[	Gaia = {
+		name = 'Gaia',
+		ceiling_node = 'default:stone',
+    high_chunk = -230,
+    low_chunk = -250,
+		lake = 'default:water_source',
+		lake_level = 150,
+		regular_columns = false,
+		stone_depth = 1,
+		vary = true,
+        special_ceiling_nodes = { 'default:dirt' },
+        special_ceiling_nodes_chances = { 100 },
+	},]]--
 }
 
 for _, uz in pairs(underworlds_mod.underzones) do

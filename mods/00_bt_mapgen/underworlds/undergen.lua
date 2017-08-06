@@ -8,13 +8,26 @@ local max_depth = 31000
 
 
 local terrain_noise = {offset = 15, scale = 10, seed = 3721, spread = {x = 40, y = 40, z = 40}, octaves = 3, persist = 1, lacunarity = 2}
-local earth_terrain_noise = {offset = 15, scale = 20, seed = 3721, spread = {x = 40, y = 40, z = 40}, octaves = 3, persist = 1, lacunarity = 2}
+local earth_terrain_noise = {offset = 200, scale = 100, seed = 3721, spread = {x = 1000, y = 1000, z = 1000}, octaves = 4, persist = 1, lacunarity = 2}
+local humidity_noise = {offset = 0, scale = 100, seed = 666, spread = {x = 1000, y = 1000, z = 1000}, octaves = 2, persist = 1, lacunarity = 2}
+local temperature_noise = {offset = -50, scale = 100, seed = -666, spread = {x = 1000, y = 1000, z = 1000}, octaves = 2, persist = 1, lacunarity = 2}
+local tree_noise = {offset = 0, scale = 10, seed = 888, spread = {x = 600, y = 600, z = 600}, octaves = 3, persist = 1, lacunarity = 2}
+local beach_noise = {offset = 0, scale = 10, seed = -888, spread = {x = 600, y = 600, z = 600}, octaves = 2, persist = 1, lacunarity = 2}
 local terrain_map
 local earth_terrain_map
+local humidity_map
+local temperature_map
+local tree_map
+local beach_map
 local terrain = {}
+local humidity = {}
+local temperature = {}
+local climate = {}
+local trees = {}
+local beaches = {}
+generate_trees = {}
 
-
-underworlds_mod.undergen = function(minp, maxp, data, p2data, area, node, underzone)
+underworlds_mod.undergen = function(vm, minp, maxp, data, p2data, area, node, underzone)
 	if not (minp and maxp and data and area and node and type(data) == 'table' and underzone and underworlds_mod.underzones) then
 		return
 	end
@@ -33,14 +46,22 @@ underworlds_mod.undergen = function(minp, maxp, data, p2data, area, node, underz
 
   if not earth_terrain_map then
     earth_terrain_map = minetest.get_perlin_map(earth_terrain_noise, {x=csize.x, y=csize.z})
+    humidity_map = minetest.get_perlin_map(humidity_noise, {x=csize.x, y=csize.z})
+    temperature_map = minetest.get_perlin_map(temperature_noise, {x=csize.x, y=csize.z})
+    tree_map = minetest.get_perlin_map(tree_noise, {x=csize.x, y=csize.z})
+    beach_map = minetest.get_perlin_map(beach_noise, {x=csize.x, y=csize.z})
 
     if not earth_terrain_map then
       return
     end
   end
 
-	if underzone == "Chaos" or underzone == "Gaia" then
+	if underzone.name == "Gaia" or underzone.name == "Paradisium" then
 		terrain = earth_terrain_map:get2dMap_flat({x=minp.x, y=minp.z}, terrain)
+		humidity = humidity_map:get2dMap_flat({x=minp.x, y=minp.z}, humidity)
+		temperature = temperature_map:get2dMap_flat({x=minp.x, y=minp.z}, temperature)
+		trees = tree_map:get2dMap_flat({x=minp.x, y=minp.z}, trees)
+		beaches = beach_map:get2dMap_flat({x=minp.x, y=minp.z}, beaches)
 	else
 		terrain = terrain_map:get2dMap_flat({x=minp.x, y=minp.z}, terrain)
 	end
@@ -66,14 +87,25 @@ underworlds_mod.undergen = function(minp, maxp, data, p2data, area, node, underz
 	local write = false
 
 	local index = 0
+	local cindex = 0
 	local index3d = 0
 	local cave_width = underworlds_mod.cave_width
 	local styx_sea_level = underworlds_mod.underzones['Styx'].sealevel
+
+--	for x = minp.x, maxp.x do
+--		for z = minp.z, maxp.z do
+--			cindex = index + 1
+--		end
+--	end
+
 	for z = minp.z, maxp.z do
 		for x = minp.x, maxp.x do
 			index = index + 1
+
 			index3d = (z - minp.z) * (csize.y + 2) * csize.x + (x - minp.x) + 1
 			local ivm = area:index(x, minp.y-1, z)
+
+
 
 			local column = 0
       if terrain[index] < 30 then
@@ -119,6 +151,7 @@ underworlds_mod.undergen = function(minp, maxp, data, p2data, area, node, underz
 
 	for z = minp.z, maxp.z do
 		for x = minp.x, maxp.x do
+			cindex = cindex + 1
 			index = index + 1
 			index3d = (z - minp.z) * (csize.y + 2) * csize.x + (x - minp.x) + 1
 			local ivm = area:index(x, minp.y-1, z)
@@ -153,7 +186,425 @@ underworlds_mod.undergen = function(minp, maxp, data, p2data, area, node, underz
             end
 
             if air_above then
-              if underzone.deco and math_random(underzone.deco_chance) == 1 then
+			if underzone.name == "Gaia" then
+				local temp = temperature[cindex] - (terrain[cindex] / 60)
+				local pos = {}
+				pos.x = x
+				pos.y = y - 3
+				pos.z = z
+				if y > -19890 then
+
+
+					if humidity[cindex] < 25 then -- desert
+						if temp < -25 then -- iceworld
+							data[ivm] = node["default:ice"]
+							for i = 1, math.random(1,3) do
+								data[ivm - area.ystride * i] = node["default:ice"]
+							end
+						elseif temp >= -25 and temp < 0 then -- snow
+							if y > -19864 then
+								if y < -19860 and beaches[cindex] <= 8 then
+									data[ivm] = node["default:ice"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:ice"]
+									end
+								else
+									data[ivm] = node["default:snowblock"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:snowblock"]
+									end
+								end
+							else
+								if beaches[cindex] <= 8 then
+									data[ivm] = node["default:ice"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:ice"]
+									end
+								end
+							end
+						elseif temp >= 0 and temp < 25 then -- desert
+							data[ivm] = node["default:sand"]
+							for i = 1, math.random(1,3) do
+								data[ivm - area.ystride * i] = node["default:sand"]
+							end
+						elseif temp >= 25 then -- desert
+							data[ivm] = node["default:silver_sand"]
+							for i = 1, math.random(1,3) do
+								data[ivm - area.ystride * i] = node["default:silver_sand"]
+							end
+						end
+
+
+					elseif humidity[cindex] >= 25 and humidity[cindex] < 50 then -- tundra
+						if temp < -25 then -- iceworld
+							if y > -19864 then
+								if y < -19860 and beaches[cindex] <= 8 then
+									data[ivm] = node["default:ice"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:ice"]
+									end
+								else
+									data[ivm] = node["default:snowblock"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:snowblock"]
+									end
+								end
+							else
+								if beaches[cindex] <= 8 then
+									data[ivm] = node["default:ice"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:ice"]
+									end
+								end
+							end
+						elseif temp >= -25 and temp < 0 then -- snow
+							if y > -19864 then
+								if y < -19860 and beaches[cindex] <= 8 then
+									data[ivm] = node["default:gravel"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:gravel"]
+									end
+								else
+									data[ivm] = node["default:snowblock"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:snowblock"]
+									end
+								end
+							else
+								if beaches[cindex] <= 8 then
+									data[ivm] = node["default:gravel"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:gravel"]
+									end
+								end
+							end
+						elseif temp >= 0 and temp < 25 then -- tundra
+							if y > -19864 then
+								if y < -19860 and beaches[cindex] <= 8 then
+									data[ivm] = node["default:sand"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:sand"]
+									end
+								else
+									data[ivm] = node["default:dirt_with_dry_grass"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:dirt"]
+									end
+									if y > -19863 and trees[cindex] > 5 and math.random(1, 500) == 1 then
+										for i = 1, 5 do
+											if data[ivm - area.ystride * i] ~= node["air"] then
+												pos.y = pos.y - i
+												table.insert(generate_trees, {pos, minetest.get_modpath("default").."/schematics/acacia_tree.mts"})
+												break
+											end
+										end
+									end
+								end
+							else
+								if beaches[cindex] <= 8 then
+									data[ivm] = node["default:sand"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:sand"]
+									end
+								else
+									data[ivm] = node["default:dirt"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:dirt"]
+									end
+								end
+							end
+						elseif temp >= 25 then -- desert
+							data[ivm] = node["default:desert_sand"]
+							for i = 1, math.random(1,3) do
+								data[ivm - area.ystride * i] = node["default:desert_sand"]
+							end
+						end
+
+
+					elseif humidity[cindex] >= 50 and humidity[cindex] < 75 then -- temperate
+						if temp < -25 then -- iceworld
+							if y > -19864 then
+								if y < -19860 and beaches[cindex] <= 8 then
+									data[ivm] = node["default:gravel"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:gravel"]
+									end
+								else
+									data[ivm] = node["default:snowblock"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:snowblock"]
+									end
+								end
+							else
+								if beaches[cindex] <= 8 then
+									data[ivm] = node["default:gravel"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:gravel"]
+									end
+								end
+							end
+						elseif temp >= -25 and temp < 0 then -- taiga
+							if y > -19864 then
+								if y < -19860 and beaches[cindex] <= 8 then
+									data[ivm] = node["default:sand"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:sand"]
+									end
+								else
+									data[ivm] = node["default:dirt_with_snow"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:dirt"]
+									end
+									if y > -19863 and trees[cindex] > 5 and math.random(1, 20) == 1 then
+										table.insert(generate_trees, {pos, minetest.get_modpath("default").."/schematics/pine_tree.mts"})
+									end
+								end
+							else
+								if beaches[cindex] <= 8 then
+									data[ivm] = node["default:sand"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:sand"]
+									end
+								else
+									data[ivm] = node["default:dirt"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:dirt"]
+									end
+								end
+							end
+						elseif temp >= 0 and temp < 25 then -- temperate
+							if y > -19864 then
+								if y < -19860 and beaches[cindex] <= 8 then
+									data[ivm] = node["default:sand"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:sand"]
+									end
+								else
+									data[ivm] = node["default:dirt_with_grass"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:dirt"]
+									end
+									if y > -19863 and trees[cindex] > 5 and math.random(1, 20) == 1 then
+										if math.random(1, 40) == 1 then
+											for i = 1, 5 do
+												if data[ivm - area.ystride * i] ~= node["air"] then
+													pos.y = pos.y - i
+													table.insert(generate_trees, {pos, minetest.get_modpath("default").."/schematics/aspen_tree.mts"})
+													break
+												end
+											end
+										else
+											for i = 1, 5 do
+												if data[ivm - area.ystride * i] ~= node["air"] then
+													pos.y = pos.y - i
+													table.insert(generate_trees, {pos, minetest.get_modpath("default").."/schematics/apple_tree.mts"})
+													break
+												end
+											end
+										end
+									end
+								end
+							else
+								if beaches[cindex] <= 8 then
+									data[ivm] = node["default:sand"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:sand"]
+									end
+								else
+									data[ivm] = node["default:dirt"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:dirt"]
+									end
+								end
+							end
+						elseif temp >= 25 then -- temperate
+							if y > -19864 then
+								if y < -19860 and beaches[cindex] <= 8 then
+									data[ivm] = node["default:sand"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:sand"]
+									end
+								else
+									data[ivm] = node["default:dirt_with_grass"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:dirt"]
+									end
+									if y > -19863 and trees[cindex] > 5 and math.random(1, 20) == 1 then
+										if math.random(1, 40) == 1 then
+											for i = 1, 5 do
+												if data[ivm - area.ystride * i] ~= node["air"] then
+													pos.y = pos.y - i
+													table.insert(generate_trees, {pos, minetest.get_modpath("default").."/schematics/aspen_tree.mts"})
+													break
+												end
+											end
+										else
+											for i = 1, 5 do
+												if data[ivm - area.ystride * i] ~= node["air"] then
+													pos.y = pos.y - i
+													table.insert(generate_trees, {pos, minetest.get_modpath("default").."/schematics/apple_tree.mts"})
+													break
+												end
+											end
+										end
+									end
+								end
+							else
+								if beaches[cindex] <= 8 then
+									data[ivm] = node["default:sand"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:sand"]
+									end
+								else
+									data[ivm] = node["default:dirt"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:dirt"]
+									end
+								end
+							end
+						end
+
+
+					else -- tropical
+						if temp < -25 then -- iceworld
+							if y > -19864 then
+								if y < -19860 and beaches[cindex] <= 8 then
+									data[ivm] = node["default:gravel"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:gravel"]
+									end
+								else
+									data[ivm] = node["default:snowblock"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:snowblock"]
+									end
+								end
+							else
+								if beaches[cindex] <= 8 then
+									data[ivm] = node["default:gravel"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:gravel"]
+									end
+								end
+							end
+						elseif temp >= -25 and temp < 0 then -- snow
+							if y > -19864 then
+								if y < -19860 and beaches[cindex] <= 8 then
+									data[ivm] = node["default:gravel"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:gravel"]
+									end
+								else
+									data[ivm] = node["default:dirt_with_snow"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:dirt"]
+									end
+									if y > -19863 and trees[cindex] > 5 and math.random(1, 20) == 1 then
+										table.insert(generate_trees, {pos, minetest.get_modpath("default").."/schematics/pine_tree.mts"})
+									end
+								end
+							else
+								if beaches[cindex] <= 8 then
+									data[ivm] = node["default:gravel"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:gravel"]
+									end
+								else
+									data[ivm] = node["default:dirt"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:dirt"]
+									end
+								end
+							end
+						elseif temp >= 0 and temp < 25 then -- temperate
+							if y > -19864 then
+								if y < -19860 and beaches[cindex] <= 8 then
+									data[ivm] = node["default:sand"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:silver_sand"]
+									end
+								else
+									data[ivm] = node["default:dirt_with_grass"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:dirt"]
+									end
+									if y > -19863 and trees[cindex] > 5 and math.random(1, 20) == 1 then
+										if math.random(1, 40) == 1 then
+											for i = 1, 5 do
+												if data[ivm - area.ystride * i] ~= node["air"] then
+													pos.y = pos.y - i
+													table.insert(generate_trees, {pos, minetest.get_modpath("default").."/schematics/aspen_tree.mts"})
+													break
+												end
+											end
+										else
+											for i = 1, 5 do
+												if data[ivm - area.ystride * i] ~= node["air"] then
+													pos.y = pos.y - i
+													table.insert(generate_trees, {pos, minetest.get_modpath("default").."/schematics/apple_tree.mts"})
+													break
+												end
+											end
+										end
+									end
+								end
+							else
+								if beaches[cindex] <= 8 then
+									data[ivm] = node["default:sand"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:sand"]
+									end
+								else
+									data[ivm] = node["default:dirt"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:dirt"]
+									end
+								end
+							end
+
+
+						elseif temp >= 25 then -- jungle
+							if y > -19864 then
+								if y < -19860 and beaches[cindex] <= 8 then
+									data[ivm] = node["default:desert_sand"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:desert_sand"]
+									end
+								else
+									data[ivm] = node["default:dirt_with_rainforest_litter"]
+									for i = 1, math.random(0,4) do
+										data[ivm - area.ystride * i] = node["default:dirt"]
+									end
+									if y > -19863 and math.random(1, 10) == 1 then
+										for i = 1, 5 do
+											if data[ivm - area.ystride * i] ~= node["air"] then
+												pos.y = pos.y - i
+												table.insert(generate_trees, {pos, minetest.get_modpath("default").."/schematics/jungle_tree.mts"})
+												break
+											end
+										end
+									end
+								end
+							else
+								if beaches[cindex] <= 8 then
+									data[ivm] = node["default:desert_sand"]
+									for i = 1, math.random(1,3) do
+										data[ivm - area.ystride * i] = node["default:desert_sand"]
+									end
+								else
+									data[ivm] = node["default:dirt"]
+									for i = 1, math.random(0,4) do
+										data[ivm - area.ystride * i] = node["default:dirt"]
+									end
+								end
+							end
+						end
+					end
+					write = true
+					break
+				end
+
+              elseif underzone.deco and math_random(underzone.deco_chance) == 1 then
                 data[ivm] = node[underzone.deco]
                 write = true
                 break

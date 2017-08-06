@@ -156,6 +156,9 @@ newnode.groups.poison = 3
 newnode.light_source = 6
 newnode.liquid_alternative_flowing = "underworlds:water_death_flowing"
 newnode.liquid_alternative_source = "underworlds:water_death_source"
+newnode.post_effect_color = {a = 103, r = 128, g = 108, b = 64}
+newnode.special_tiles[1].name = "underworlds_water_death_source_animated.png"
+newnode.tiles[1] = "underworlds_water_death.png"
 newnode.damage_per_second = 4 * 2
 minetest.register_node("underworlds:water_death_source", newnode)
 
@@ -165,6 +168,9 @@ newnode.groups.poison = 3
 newnode.light_source = 6
 newnode.liquid_alternative_flowing = "underworlds:water_death_flowing"
 newnode.liquid_alternative_source = "underworlds:water_death_source"
+newnode.post_effect_color = {a = 103, r = 128, g = 108, b = 64}
+newnode.special_tiles[1].name = "underworlds_water_death_flowing_animated.png"
+newnode.tiles[1] = "underworlds_water_death.png"
 newnode.damage_per_second = 4 * 2
 minetest.register_node("underworlds:water_death_flowing", newnode)
 
