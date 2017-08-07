@@ -58,16 +58,16 @@ local function generate(p_minp, p_maxp, seed)
     vm:set_data(data)
     vm:set_param2_data(p2data)
     minetest.generate_ores(vm, minp, maxp)
---    for i = 1, #generate_trees do
---		minetest.place_schematic_on_vmanip(vm, generate_trees[i][1], generate_trees[i][2], "random", nil, false)
---    end
---    generate_trees = {}
+    for i = 1, #generate_trees do
+		minetest.place_schematic_on_vmanip(vm, generate_trees[i][1], generate_trees[i][2], "random", nil, false)
+    end
+    generate_trees = {}
 
     if DEBUG then
       vm:set_lighting({day = 8, night = 8})
---    elseif minp.y < 18400 then
---      vm:set_lighting({day = 15, night = 2}, minp, maxp)
---      vm:calc_lighting()
+    elseif minp.y < 18400 then
+      vm:set_lighting({day = 15, night = 2}, minp, maxp)
+      vm:calc_lighting()
     else
       vm:set_lighting({day = 0, night = 0}, minp, maxp)
       vm:calc_lighting(minp, maxp, false)

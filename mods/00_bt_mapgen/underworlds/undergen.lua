@@ -182,10 +182,7 @@ underworlds_mod.undergen = function(vm, minp, maxp, data, p2data, area, node, un
             if air_above then
 			if underzone.name == "Gaia" then
 				local temp = temperature[cindex] - (terrain[cindex] / 60)
-				local pos = {}
-				pos.x = x
-				pos.y = y - 3
-				pos.z = z
+				local pos = area:position(ivm)
 				if y > -19890 then
 
 
