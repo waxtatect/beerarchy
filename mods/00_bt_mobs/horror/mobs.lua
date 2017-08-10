@@ -227,7 +227,7 @@ mobs:register_mob("horror:mini_spider", {
 	passive = false,
 	attack_type = "dogfight",
 	reach = 2,
-	damage = 1,
+	damage = 2,
 	hp_min = 10,
 	hp_max = 20,
 	armor = 50,
