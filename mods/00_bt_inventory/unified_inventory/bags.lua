@@ -9,17 +9,21 @@ local F = unified_inventory.fgettext
 unified_inventory.register_page("bags", {
 	get_formspec = function(player)
 		local player_name = player:get_player_name()
-		local formspec = "background[0.06,0.99;7.92,7.52;ui_bags_main_form.png]"
+		local formspec = "background[0.06,0.99;7.92,7.52;ui_bags_main_form_6.png]"
 		formspec = formspec.."label[0,0;"..F("Bags").."]"
-		formspec = formspec.."button[0,2;2,0.5;bag1;"..F("Bag 1").."]"
-		formspec = formspec.."button[2,2;2,0.5;bag2;"..F("Bag 2").."]"
-		formspec = formspec.."button[4,2;2,0.5;bag3;"..F("Bag 3").."]"
-		formspec = formspec.."button[6,2;2,0.5;bag4;"..F("Bag 4").."]"
+		formspec = formspec.."button[0,2;1,0.5;bag1;"..F("Bag 1").."]"
+		formspec = formspec.."button[1,2;1,0.5;bag2;"..F("Bag 2").."]"
+		formspec = formspec.."button[2,2;1,0.5;bag3;"..F("Bag 3").."]"
+		formspec = formspec.."button[3,2;1,0.5;bag4;"..F("Bag 4").."]"
+		formspec = formspec.."button[4,2;1,0.5;bag5;"..F("Bag 5").."]"
+		formspec = formspec.."button[5,2;1,0.5;bag6;"..F("Bag 6").."]"
 		formspec = formspec.."listcolors[#00000000;#00000000]"
-		formspec = formspec.."list[detached:"..minetest.formspec_escape(player_name).."_bags;bag1;0.5,1;1,1;]"
-		formspec = formspec.."list[detached:"..minetest.formspec_escape(player_name).."_bags;bag2;2.5,1;1,1;]"
-		formspec = formspec.."list[detached:"..minetest.formspec_escape(player_name).."_bags;bag3;4.5,1;1,1;]"
-		formspec = formspec.."list[detached:"..minetest.formspec_escape(player_name).."_bags;bag4;6.5,1;1,1;]"
+		formspec = formspec.."list[detached:"..minetest.formspec_escape(player_name).."_bags;bag1;0,1;1,1;]"
+		formspec = formspec.."list[detached:"..minetest.formspec_escape(player_name).."_bags;bag2;1,1;1,1;]"
+		formspec = formspec.."list[detached:"..minetest.formspec_escape(player_name).."_bags;bag3;2,1;1,1;]"
+		formspec = formspec.."list[detached:"..minetest.formspec_escape(player_name).."_bags;bag4;3,1;1,1;]"
+		formspec = formspec.."list[detached:"..minetest.formspec_escape(player_name).."_bags;bag5;4,1;1,1;]"
+		formspec = formspec.."list[detached:"..minetest.formspec_escape(player_name).."_bags;bag6;5,1;1,1;]"
 		return {formspec=formspec}
 	end,
 })
@@ -31,14 +35,14 @@ unified_inventory.register_button("bags", {
 	hide_lite=true
 })
 
-for i = 1, 4 do
+for i = 1, 6 do
 	local bi = i
 	unified_inventory.register_page("bag"..bi, {
 		get_formspec = function(player)
 			local stack = player:get_inventory():get_stack("bag"..bi, 1)
 			local image = stack:get_definition().inventory_image
 			local formspec = ("image[7,0;1,1;"..image.."]"
-					.."label[0,0;"..F("Bag @1", bi).."]"
+					.."label[0.1,3.9;"..F("Bag @1", bi).."]"
 					.."listcolors[#00000000;#00000000]"
 					.."list[current_player;bag"..bi.."contents;0,1;8,3;]"
 					.."listring[current_name;bag"..bi.."contents]"
@@ -57,7 +61,7 @@ for i = 1, 4 do
 						.."list[detached:trash;main;6,0.1;1,1;]")
 			end
 			local inv = player:get_inventory()
-			for i = 1, 4 do
+			for i = 1, 6 do
 				local def = inv:get_stack("bag"..i, 1):get_definition()
 				local button
 				if def.groups.bagslots then
@@ -72,7 +76,7 @@ for i = 1, 4 do
 					end
 					local img = def.inventory_image
 					local label = F("Bag @1", i).."\n"..used.."/"..size
-					button = "image_button["..(i+1)..",0;1,1;"..img..";bag"..i..";"..label.."]"
+					button = "image_button["..(i - 1)..",0;1,1;"..img..";bag"..i..";"..label.."]"
 				else
 					button = ""
 				end
@@ -87,7 +91,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	if formname ~= "" then
 		return
 	end
-	for i = 1, 4 do
+	for i = 1, 6 do
 		if fields["bag"..i] then
 			local stack = player:get_inventory():get_stack("bag"..i, 1)
 			if not stack:get_definition().groups.bagslots then
@@ -154,7 +158,7 @@ minetest.register_on_joinplayer(function(player)
 			return 0
 		end,
 	}, player_name)
-	for i=1,4 do
+	for i=1,6 do
 		local bag = "bag"..i
 		player_inv:set_size(bag, 1)
 		bags_inv:set_size(bag, 1)
