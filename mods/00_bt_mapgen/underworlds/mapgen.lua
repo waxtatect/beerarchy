@@ -58,10 +58,6 @@ local function generate(p_minp, p_maxp, seed)
     vm:set_data(data)
     vm:set_param2_data(p2data)
     minetest.generate_ores(vm, minp, maxp)
-    for i = 1, #generate_trees do
-		minetest.place_schematic_on_vmanip(vm, generate_trees[i][1], generate_trees[i][2], "random", nil, false)
-    end
-    generate_trees = {}
 
     if DEBUG then
       vm:set_lighting({day = 8, night = 8})
@@ -75,6 +71,16 @@ local function generate(p_minp, p_maxp, seed)
     vm:update_liquids()
     vm:write_to_map()
   end
+
+  if write and #generate_trees > 0 then
+	vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
+    for i = 1, #generate_trees do
+		minetest.place_schematic_on_vmanip(vm, generate_trees[i][1], generate_trees[i][2], "random", nil, false)
+    end
+    generate_trees = {}
+    vm:write_to_map()
+  end
+
 end
 
 

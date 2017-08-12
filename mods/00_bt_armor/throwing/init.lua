@@ -26,6 +26,7 @@ cooldowns["throwing:bow_wood"] = 2.5
 cooldowns["throwing:bow_stone"] = 1.5
 cooldowns["throwing:bow_steel"] = 0.5
 cooldowns["throwing:bow_mithril"] = 0.2
+cooldowns["throwing:bow_rapid"] = 0
 cooldowns["throwing:arrow"] = 0.5
 cooldowns["throwing:arrow_nyan"] = 0.2
 cooldowns["throwing:arrow_mithril"] = 0.2
@@ -52,22 +53,35 @@ local throwing_shoot_arrow = function(itemstack, player)
 				if not minetest.setting_getbool("creative_mode") then
 					player:get_inventory():remove_item("main", arrow[1])
 				end
+
+				local bowCooldown = cooldowns[player:get_inventory():get_stack("main", player:get_wield_index()):get_name()]
+				local arrowCooldown = cooldowns[player:get_inventory():get_stack("main", player:get_wield_index()+1):get_name()]
+
 				local obj = minetest.env:add_entity({x=playerpos.x,y=playerpos.y+1.5,z=playerpos.z}, arrow[2])
 				throwing.playerArrows[obj] = player:get_player_name()
 				local dir = player:get_look_dir()
-				obj:setvelocity({x=dir.x*19, y=dir.y*19, z=dir.z*19})
-				obj:setacceleration({x=dir.x*-3, y=-10, z=dir.z*-3})
-				obj:setyaw(player:get_look_yaw()+math.pi)
-				minetest.sound_play("throwing_sound", {pos=playerpos})
+
+				if bowCooldown == 0 then -- Rapid fire bow
+					obj:setvelocity({x=dir.x*20, y=dir.y*20, z=dir.z*20})
+					obj:setacceleration({x=dir.x*-1, y=-5, z=dir.z*-1})
+					obj:setyaw(player:get_look_yaw()+math.pi)
+					minetest.sound_play("throwing_heavy", {pos=playerpos, gain = 0.5})
+				else
+					obj:setvelocity({x=dir.x*19, y=dir.y*19, z=dir.z*19})
+					obj:setacceleration({x=dir.x*-3, y=-10, z=dir.z*-3})
+					obj:setyaw(player:get_look_yaw()+math.pi)
+					minetest.sound_play("throwing_light", {pos=playerpos, gain = 0.5})
+				end
+
 				if obj:get_luaentity().player == "" then
 					obj:get_luaentity().player = player
 				end
 				obj:get_luaentity().node = player:get_inventory():get_stack("main", 1):get_name()
-				local bowCooldown = cooldowns[player:get_inventory():get_stack("main", player:get_wield_index()):get_name()]
-				local arrowCooldown = cooldowns[player:get_inventory():get_stack("main", player:get_wield_index()+1):get_name()]
 
 				local totalCooldown = 1 -- Default
-				if bowCooldown ~= nil and arrowCooldown ~= nil then -- For some f#$!ing reason these can be nil?? -_-
+				if bowCooldown == 0 then -- Rapid fire bow
+					totalCooldown = 0.2
+				elseif bowCooldown ~= nil and arrowCooldown ~= nil then -- For some f#$!ing reason these can be nil?? -_-
 					totalCooldown = bowCooldown + arrowCooldown
 				end
 
@@ -76,6 +90,7 @@ local throwing_shoot_arrow = function(itemstack, player)
 
 				minetest.after(totalCooldown, function(playername)
 					if playerCooldown[playername] then
+						minetest.sound_play("throwing_reload", {to_player=playername, gain = 0.5})
 						playerCooldown[playername] = 0.0
 					end
 				end, playername)
@@ -176,6 +191,20 @@ minetest.register_craft({
 		{'farming:string', 'moreores:silver_ingot', 'moreores:mithril_ingot'},
 		{'farming:string', 'moreores:mithril_ingot', ''},
 	}
+})
+
+minetest.register_tool("throwing:bow_rapid", {
+	description = "Rapid Fire Bow",
+	inventory_image = "throwing_bow_rapid.png",
+    stack_max = 1,
+	on_use = function(itemstack, user, pointed_thing)
+		if throwing_shoot_arrow(itemstack, user, pointed_thing) then
+			if not minetest.setting_getbool("creative_mode") then
+				itemstack:add_wear(65535/100)
+			end
+		end
+		return itemstack
+	end,
 })
 
 dofile(minetest.get_modpath("throwing").."/arrow.lua")

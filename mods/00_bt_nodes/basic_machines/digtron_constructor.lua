@@ -27,6 +27,16 @@ basic_machines.digtron_craft_recipes = {
 	tex = "doors_protected_wood"
 },
 ]]--
+
+-- Advanced devices
+
+["rapid_bow"] = {
+	item = "throwing:bow_rapid",
+	description = "Rapid firing heavy crossbow",
+	craft = { "basic_machines:control_logic_unit 4", "underworlds:hot_stone 4", "default:mese 4", "moreores:mithril_block 4", "integral:moon_juice 8" },
+	tex = "throwing_bow_rapid"
+},
+
 -- Digtron
 
 ["digtron_core"] = {
@@ -156,6 +166,7 @@ basic_machines.digtron_craft_recipe_order = { -- order in which nodes appear
 --	"protection_logo",
 --	"protected_chest",
 --	"protected_door_wood",
+	"rapid_bow",
 	"digtron_core",
 	"controller",
 	"auto_controller",
@@ -271,7 +282,7 @@ end
 
 
 minetest.register_node("basic_machines:digtron_constructor", {
-	description = "Advanced Constructor: used to make digtron construction and excavation vehicles",
+	description = "Advanced Constructor: used to make advaned devices and the digtron construction and excavation vehicles",
 	tiles = {"grinder.png","default_furnace_top.png", "digtron_constructor.png","digtron_constructor.png","digtron_constructor.png","digtron_constructor.png"},
 	groups = {cracky=3, mesecon_effector_on = 1},
 	sounds = default.node_sound_wood_defaults(),

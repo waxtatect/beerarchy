@@ -301,6 +301,8 @@ mobs:register_mob("horror:cyberdemon", {
    drops = {
       {name = "moreores:mithril_block", chance = 1, min = 1, max = 5},
 	  {name = "mobs:lava_orb", chance = 1, min = 1, max = 1},
+	  {name = "throwing:arrow_tnt", chance = 1, min = 1, max = 10},
+	  {name = "throwing:bow_mithril", chance = 10, min = 1, max = 1},
    },
    water_damage = 0,
    lava_damage = 0,
@@ -321,7 +323,7 @@ mobs:register_mob("horror:cyberdemon", {
 	},
 })
 
-mobs:register_spawn("horror:cyberdemon", {"underworlds:hot_cobble"}, 20, 0, 35000, 2, -13600)
+mobs:register_spawn("horror:cyberdemon", {"default:obsidian"}, 20, 0, 35000, 2, -13600)
 
 mobs:register_egg("horror:cyberdemon", "Cyberdemon", "wool_red.png", 1)
 
