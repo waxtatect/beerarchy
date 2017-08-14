@@ -32,7 +32,7 @@ basic_machines.digtron_craft_recipes = {
 
 ["rapid_bow"] = {
 	item = "throwing:bow_rapid",
-	description = "Rapid firing heavy crossbow",
+	description = "MTG9000 rapid fire heavy crossbow Mk II",
 	craft = { "basic_machines:control_logic_unit 4", "underworlds:hot_stone 4", "default:mese 4", "moreores:mithril_block 4", "integral:moon_juice 8" },
 	tex = "throwing_bow_rapid"
 },

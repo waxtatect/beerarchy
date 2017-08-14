@@ -8,9 +8,9 @@ local max_depth = 31000
 
 
 local terrain_noise = {offset = 15, scale = 10, seed = 3721, spread = {x = 40, y = 40, z = 40}, octaves = 3, persist = 1, lacunarity = 2}
-local earth_terrain_noise = {offset = 150, scale = 250, seed = 3721, spread = {x = 6000, y = 6000, z = 6000}, octaves = 6, persist = 1, lacunarity = 2}
-local humidity_noise = {offset = 20, scale = 150, seed = 666, spread = {x = 2000, y = 2000, z = 2000}, octaves = 2, persist = 1, lacunarity = 2}
-local temperature_noise = {offset = -30, scale = 150, seed = -666, spread = {x = 2000, y = 2000, z = 2000}, octaves = 2, persist = 1, lacunarity = 2}
+local earth_terrain_noise = {offset = 150, scale = 250, seed = 3721, spread = {x = 6000, y = 6000, z = 6000}, octaves = 8, persist = 0.7, lacunarity = 2}
+local humidity_noise = {offset = 20, scale = 200, seed = 666, spread = {x = 2000, y = 2000, z = 2000}, octaves = 2, persist = 0.9, lacunarity = 2}
+local temperature_noise = {offset = -30, scale = 200, seed = -666, spread = {x = 2000, y = 2000, z = 2000}, octaves = 2, persist = 0.9, lacunarity = 2}
 local tree_noise = {offset = 0, scale = 10, seed = 888, spread = {x = 600, y = 600, z = 600}, octaves = 3, persist = 1, lacunarity = 2}
 local beach_noise = {offset = 0, scale = 10, seed = -888, spread = {x = 600, y = 600, z = 600}, octaves = 2, persist = 1, lacunarity = 2}
 local terrain_map
@@ -282,7 +282,7 @@ underworlds_mod.undergen = function(vm, minp, maxp, data, p2data, area, node, un
 									end
 								end
 							end
-						elseif temp >= 0 and temp < 25 then -- tundra
+						elseif temp >= 0 and temp < 150 then -- tundra
 							if y > -19864 then
 								if y < -19860 and beaches[cindex] <= 8 then
 									data[ivm] = node["default:sand"]
@@ -311,7 +311,7 @@ underworlds_mod.undergen = function(vm, minp, maxp, data, p2data, area, node, un
 									end
 								end
 							end
-						elseif temp >= 25 then -- desert
+						elseif temp >= 150 then -- desert
 							data[ivm] = node["default:desert_sand"]
 							for i = 1, math.random(1,3) do
 								data[ivm - area.ystride * i] = node["default:desert_sand"]
@@ -319,7 +319,7 @@ underworlds_mod.undergen = function(vm, minp, maxp, data, p2data, area, node, un
 						end
 
 
-					elseif humidity[cindex] >= 50 and humidity[cindex] < 75 then -- temperate
+					elseif humidity[cindex] >= 50 and humidity[cindex] < 125 then -- temperate
 						if temp < -25 then -- iceworld
 							if y > -19864 then
 								if y < -19860 and beaches[cindex] <= 8 then
@@ -341,7 +341,7 @@ underworlds_mod.undergen = function(vm, minp, maxp, data, p2data, area, node, un
 									end
 								end
 							end
-						elseif temp >= -25 and temp < 0 then -- taiga
+						elseif temp >= -25 and temp < 25 then -- taiga
 							if y > -19864 then
 								if y < -19860 and beaches[cindex] <= 8 then
 									data[ivm] = node["default:sand"]
@@ -355,39 +355,6 @@ underworlds_mod.undergen = function(vm, minp, maxp, data, p2data, area, node, un
 									end
 									if y > -19863 and trees[cindex] > 3 and math.random(1, 20) == 1 then
 										table.insert(generate_trees, { { x = pos.x - 1, y = pos.y, z = pos.z - 1 }, minetest.get_modpath("default").."/schematics/pine_tree.mts"})
-									end
-								end
-							else
-								if beaches[cindex] <= 8 then
-									data[ivm] = node["default:sand"]
-									for i = 1, math.random(1,3) do
-										data[ivm - area.ystride * i] = node["default:sand"]
-									end
-								else
-									data[ivm] = node["default:dirt"]
-									for i = 1, math.random(1,3) do
-										data[ivm - area.ystride * i] = node["default:dirt"]
-									end
-								end
-							end
-						elseif temp >= 0 and temp < 25 then -- temperate
-							if y > -19864 then
-								if y < -19860 and beaches[cindex] <= 8 then
-									data[ivm] = node["default:sand"]
-									for i = 1, math.random(1,3) do
-										data[ivm - area.ystride * i] = node["default:sand"]
-									end
-								else
-									data[ivm] = node["default:dirt_with_grass"]
-									for i = 1, math.random(1,3) do
-										data[ivm - area.ystride * i] = node["default:dirt"]
-									end
-									if y > -19863 and trees[cindex] > 3 and math.random(1, 20) == 1 then
-										if math.random(1, 40) == 1 then
-											table.insert(generate_trees, { { x = pos.x - 2, y = pos.y - 1, z = pos.z - 2 }, minetest.get_modpath("default").."/schematics/aspen_tree.mts"})
-										else
-											table.insert(generate_trees, { { x = pos.x - 2, y = pos.y - 1, z = pos.z - 2 }, minetest.get_modpath("default").."/schematics/apple_tree.mts"})
-										end
 									end
 								end
 							else
@@ -490,7 +457,7 @@ underworlds_mod.undergen = function(vm, minp, maxp, data, p2data, area, node, un
 									end
 								end
 							end
-						elseif temp >= 0 and temp < 25 then -- temperate
+						elseif temp >= 0 and temp < 75 then -- temperate
 							if y > -19864 then
 								if y < -19860 and beaches[cindex] <= 8 then
 									data[ivm] = node["default:sand"]
@@ -525,7 +492,7 @@ underworlds_mod.undergen = function(vm, minp, maxp, data, p2data, area, node, un
 							end
 
 
-						elseif temp >= 25 then -- jungle
+						elseif temp >= 75 then -- jungle
 							if y > -19864 then
 								if y < -19860 and beaches[cindex] <= 8 then
 									data[ivm] = node["default:desert_sand"]

@@ -194,8 +194,9 @@ minetest.register_craft({
 })
 
 minetest.register_tool("throwing:bow_rapid", {
-	description = "Rapid Fire Bow",
+	description = "MTG9000 rapid fire heavy crossbow Mk II",
 	inventory_image = "throwing_bow_rapid.png",
+	wield_scale = { x = 1.3, y = 1.3, z = 1.3 },
     stack_max = 1,
 	on_use = function(itemstack, user, pointed_thing)
 		if throwing_shoot_arrow(itemstack, user, pointed_thing) then
