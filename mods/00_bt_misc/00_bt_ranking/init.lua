@@ -382,11 +382,12 @@ ranking.score_distance = function(player)
 		return
 	end
 
+	local lastPos = playerLastPos[player:get_player_name()]
+
 	if pos.x < -32000 or pos.x > 32000 or
 	   pos.y < -32000 or pos.y > 32000 or
 	   pos.z < -32000 or pos.z > 32000
 	then
-		local lastPos = playerLastPos[player:get_player_name()]
 		if lastPos then
 			player:setpos( { x = lastPos.x, y = lastPos.y, z = lastPos.z } )
 		elseif beds.spawn[player:get_player_name()] then
@@ -397,25 +398,21 @@ ranking.score_distance = function(player)
 		playerLastPos[player:get_player_name()] = pos
 	end
 
-	local xzDistance = math.sqrt( (pos.x ^ 2) + (pos.z ^ 2) )
-	local lastxzDistance = ranking.get_rank_raw(player, "traveler")
+	if lastPos then
+		local xzDistance = math.sqrt( ( (pos.x - lastPos.x) ^ 2) + ( ( pos.z - lastPos.z) ^ 2) )
 
-	if lastxzDistance > 43841 then
-		lastxzDistance = 0
-	end
+		if xzDistance <= 100 then
+			print("Scoring distance traveled: "..xzDistance)
+			ranking.increase_rank(player, "traveler", math.floor(xzDistance))
+		end
 
-	if (xzDistance > lastxzDistance) then
-		ranking.set_rank_raw(player, "traveler", math.floor(xzDistance) + 1)
-	end
+		if (pos.y >= 0 and lastPos.y >= 0 and pos.y > lastPos.y and pos.y - lastPos.y < 100) then
+			ranking.increase_rank(player, "mountaineer", math.floor(pos.y - lastPos.y))
+		end
 
-	local lastHeight = ranking.get_rank_raw(player, "mountaineer")
-	if (pos.y > lastHeight) then
-		ranking.set_rank_raw(player, "mountaineer", math.floor(pos.y))
-	end
-
-	local lastDepth = ranking.get_rank_raw(player, "caving") * -1
-	if (pos.y < lastDepth) then
-		ranking.set_rank_raw(player, "caving", math.abs(math.floor(pos.y)))
+		if (pos.y < 0 and lastPos.y < 0 and pos.y < lastPos.y and math.abs(pos.y) - math.abs(lastPos.y) < 100) then
+			ranking.increase_rank(player, "caving", math.abs(math.floor(math.abs(pos.y) - math.abs(lastPos.y))))
+		end
 	end
 end
 
