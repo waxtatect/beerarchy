@@ -402,7 +402,6 @@ ranking.score_distance = function(player)
 		local xzDistance = math.sqrt( ( (pos.x - lastPos.x) ^ 2) + ( ( pos.z - lastPos.z) ^ 2) )
 
 		if xzDistance <= 100 then
-			print("Scoring distance traveled: "..xzDistance)
 			ranking.increase_rank(player, "traveler", math.floor(xzDistance))
 		end
 
