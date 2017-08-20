@@ -21,7 +21,9 @@ ranking.set_rank_raw = function(player, rankName, value)
 	local inv = player:get_inventory()
 	local name = player:get_player_name()
 	if not inv then return nil end
-	inv:set_stack("ranking", ranks[rankName].index, ItemStack( { name = ":", count = value } ))
+	local newval = value
+	if newval > 65535 then newval = 65535 end
+	inv:set_stack("ranking", ranks[rankName].index, ItemStack( { name = ":", count = newval } ))
 	return true
 end
 

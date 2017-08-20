@@ -1331,7 +1331,7 @@ local do_states = function(self, dtime)
 	local yaw = 0
 
 	if self.state == "stand" then
-
+		self.view_range = self.def_view_range
 		if random(1, 4) == 1 then
 
 			local lp = nil
@@ -2102,12 +2102,20 @@ local mob_punch = function(self, hitter, tflp, tool_capabilities, dir)
 	if self.passive == false
 	and self.state ~= "flop"
 	and self.child == false
-	and hitter:get_player_name() ~= self.owner
+--	and hitter:get_player_name() ~= self.owner
 	and not mobs.invis[ hitter:get_player_name() ] then
-
+		if hitter:get_luaentity() and (self.friendly_fire and self.name == hitter:get_luaentity().name) then
+			return
+		end
 		-- attack whoever punched mob
 		self.state = ""
-		do_attack(self, hitter)
+		if throwing.playerArrows[hitter] then
+			local old_view_range = self.view_range
+			self.view_range = self.view_range + 10
+			do_attack(self, minetest.get_player_by_name(throwing.playerArrows[hitter]))
+		else
+			do_attack(self, hitter)
+		end
 
 		-- alert others to the attack
 		local objs = minetest.get_objects_inside_radius(hitter:getpos(), self.view_range)
@@ -2440,6 +2448,7 @@ minetest.register_entity(name, {
 	mesh = def.mesh,
 	makes_footstep_sound = def.makes_footstep_sound or false,
 	view_range = def.view_range or 5,
+	def_view_range = def.view_range or 5,
 	walk_velocity = def.walk_velocity or 1,
 	run_velocity = def.run_velocity or 2,
 	damage = max(1, (def.damage or 0) * difficulty),
@@ -2500,6 +2509,7 @@ minetest.register_entity(name, {
 	dogshoot_count2_max = def.dogshoot_count2_max or (def.dogshoot_count_max or 5),
 	attack_animals = def.attack_animals or false,
 	specific_attack = def.specific_attack,
+	friendly_fire = def.friendly_fire,
 
 	on_blast = def.on_blast or do_tnt,
 

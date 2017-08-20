@@ -1,6 +1,7 @@
 local playerOverlays = {}
 local playerShields = {}
 local playerChestplates = {}
+playerOverlayTextures = {}
 
 -- Whether to overlay the banner on top of the player skin in case the player does not
 -- wear a chest plate. If true, the banner will be shown on top of the skin and the
@@ -17,6 +18,7 @@ minetest.register_on_leaveplayer(function(player)
 		playerOverlays[name] = nil
 		playerShields[name] = nil
 		playerChestplates[name] = nil
+		playerOverlayTextures[name] = nil
 	end
 end)
 
@@ -213,6 +215,8 @@ function set_painting(player, stack)
 			..tostring(armorTextureSize.h * data.res / 6)..total_overlay,
 			armor.textures[name].wielditem,
 		})
+		playerOverlayTextures[name] = "^[resize:"..tostring(armorTextureSize.w * data.res / 6).."x"..tostring(armorTextureSize.h * data.res / 6)..total_overlay
+
 		armor.textures[name].preview = armor.textures[name].preview.."^[resize:"
 			..tostring(armorPreviewTextureSize.w * data.res / 6).."x"
 			..tostring(armorPreviewTextureSize.h * data.res / 6)..total_preview_overlay
@@ -252,6 +256,8 @@ function set_banner(player, stack)
 			..tostring(armorTextureSize.h * 8).."^"..total_overlay,
 			armor.textures[name].wielditem,
 		})
+		playerOverlayTextures[name] = "^[resize:"..tostring(armorTextureSize.w * 8).."x"..tostring(armorTextureSize.h * 8).."^"..total_overlay
+
 		armor.textures[name].preview = armor.textures[name].preview.."^[resize:"
 			..tostring(armorPreviewTextureSize.w * 4).."x"
 			..tostring(armorPreviewTextureSize.h * 4).."^"..total_preview_overlay
