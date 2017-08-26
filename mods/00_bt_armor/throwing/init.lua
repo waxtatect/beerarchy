@@ -27,6 +27,7 @@ cooldowns["throwing:bow_stone"] = 1.5
 cooldowns["throwing:bow_steel"] = 0.5
 cooldowns["throwing:bow_mithril"] = 0.2
 cooldowns["throwing:bow_rapid"] = 0
+cooldowns["throwing:bow_admin"] = 0
 cooldowns["throwing:arrow"] = 0.5
 cooldowns["throwing:arrow_nyan"] = 0.2
 cooldowns["throwing:arrow_mithril"] = 0.2
@@ -204,6 +205,18 @@ minetest.register_tool("throwing:bow_rapid", {
 				itemstack:add_wear(65535/100)
 			end
 		end
+		return itemstack
+	end,
+})
+
+minetest.register_tool("throwing:bow_admin", {
+	description = "MTG9000 rapid fire heavy crossbow Mk IV admin edition",
+	inventory_image = "throwing_bow_admin.png",
+	wield_scale = { x = 1.3, y = 1.3, z = 1.3 },
+    stack_max = 1,
+    groups = {not_in_creative_inventory=1},
+	on_use = function(itemstack, user, pointed_thing)
+		throwing_shoot_arrow(itemstack, user, pointed_thing)
 		return itemstack
 	end,
 })

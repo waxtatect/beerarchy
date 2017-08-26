@@ -323,8 +323,8 @@ else -- Fire enabled
 		label = "Ignite flame",
 		nodenames = {"group:flammable"},
 		neighbors = {"group:igniter"},
-		interval = 7,
-		chance = 12,
+		interval = 10,
+		chance = 100,
 		catch_up = false,
 		action = function(pos, node, active_object_count, active_object_count_wider)
 			-- If there is water or stuff like that around node, don't ignite
@@ -345,7 +345,7 @@ else -- Fire enabled
 		nodenames = {"fire:basic_flame"},
 		neighbors = "group:flammable",
 		interval = 5,
-		chance = 18,
+		chance = 15,
 		catch_up = false,
 		action = function(pos, node, active_object_count, active_object_count_wider)
 			local p = minetest.find_node_near(pos, 1, {"group:flammable"})

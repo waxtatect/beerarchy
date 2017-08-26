@@ -379,6 +379,22 @@ minetest.register_tool("default:sword_diamond", {
 	sound = {breaks = "default_tool_breaks"},
 })
 
+minetest.register_tool("default:sword_admin", {
+	description = "Admin Sword",
+	inventory_image = "default_tool_adminsword.png",
+	wield_scale = { x = 1.0, y = 1.6, z = 1.0 },
+	groups = {not_in_creative_inventory=1},
+	tool_capabilities = {
+		full_punch_interval = 0.1,
+		max_drop_level=1,
+		groupcaps={
+			snappy={times={[1]=0.30, [2]=0.20, [3]=0.10}, uses=65535, maxlevel=10000},
+		},
+		damage_groups = {fleshy=10000},
+	},
+	sound = {breaks = "default_tool_breaks"},
+})
+
 minetest.register_tool("default:key", {
 	description = "Key",
 	inventory_image = "default_key.png",
