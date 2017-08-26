@@ -1,0 +1,3 @@
+Encyclopedia = Enzyklopädie
+Allows you to access the help. = Damit kann man auf die Hilfe zuzugreifen.
+Wield it, then leftclick to access the help. = Halten Sie sie in der Hand und linksklicken Sie, um auf die Hilfe zuzugreifen.

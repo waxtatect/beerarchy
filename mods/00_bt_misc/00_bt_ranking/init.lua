@@ -329,7 +329,7 @@ minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack
 			playerLastUsedPosQueue[placer:get_player_name()] = {}
 		end
 		if not playerLastUsedPos[placer:get_player_name()][minetest.serialize(pos)] then
-			ranking.increase_rank(placer, "builder", 1)
+			ranking.increase_rank(placer, "builder", buildNodes[newnode.name])
 			playerLastUsedPos[placer:get_player_name()][minetest.serialize(pos)] = true
 			table.insert(playerLastUsedPosQueue[placer:get_player_name()], minetest.serialize(pos))
 			if #playerLastUsedPosQueue[placer:get_player_name()] > 500 then

@@ -48,6 +48,25 @@ for color, _ in pairs(textures) do
 	table.insert(revcolors, color)
 end
 
+--[[minetest.register_craftitem("painted_3d_armor:image_armor",
+	{
+		drawtype = "mesh",
+		wield_image = "banner_sheet.png",
+		inventory_image = "banner_sheet.png",
+		description = "Armor image",
+		groups = {armor_banner=1},
+	}
+)
+
+minetest.register_craft({
+	output = "painted_3d_armor:image_armor",
+	recipe = {
+		{ "default:paper", "default:paper", "default:paper" },
+		{ "default:paper", "default:sign_wall_wood", "default:paper" },
+		{ "", "default:paper", "" },
+	}
+})]]--
+
 if painting then
 	minetest.register_craftitem("painted_3d_armor:armor_canvas_6x6", {
 		description = "Armor Canvas 6x6",
@@ -261,6 +280,50 @@ function set_banner(player, stack)
 		armor.textures[name].preview = armor.textures[name].preview.."^[resize:"
 			..tostring(armorPreviewTextureSize.w * 4).."x"
 			..tostring(armorPreviewTextureSize.h * 4).."^"..total_preview_overlay
+	end
+end
+
+
+-- 20x40
+-- 6x ...
+function set_image(player, stack)
+	local name = player:get_player_name()
+	local image_name = "_"..name.."_banner.png"
+
+	local chestplate_overlay = "^[combine:40x20:"..image_name
+	local chestplate_preview_overlay = "^"..to_imagestring(data.grid, data.res, 10 * data.res / 6, 22 * data.res / 6, 2)
+	local shield_overlay = "^"..to_imagestring(data.grid, data.res, 5 * data.res / 6, 5 * data.res / 6, 1)
+	local shield_preview_overlay = "^"..to_imagestring(data.grid, data.res, 23 * data.res / 6, 37 * data.res / 6, 1)
+
+	local total_overlay = ""
+	local total_preview_overlay = ""
+
+	if playerChestplates[name] then
+		total_overlay = chestplate_overlay
+		total_preview_overlay = chestplate_preview_overlay
+	elseif (not playerChestplates[name]) and overlayOnSkin then
+		total_overlay = chestplate_overlay
+		total_preview_overlay = chestplate_preview_overlay
+	end
+
+	if playerShields[name] then
+		total_overlay = total_overlay..shield_overlay
+		total_preview_overlay = total_preview_overlay..shield_preview_overlay
+	end
+
+	if armor.textures[name] then
+		default.player_set_textures(player, {
+			armor.textures[name].skin,
+			armor.textures[name].armor.."^[resize:"
+			..tostring(armorTextureSize.w * data.res / 6).."x"
+			..tostring(armorTextureSize.h * data.res / 6)..total_overlay,
+			armor.textures[name].wielditem,
+		})
+		playerOverlayTextures[name] = "^[resize:"..tostring(armorTextureSize.w * data.res / 6).."x"..tostring(armorTextureSize.h * data.res / 6)..total_overlay
+
+		armor.textures[name].preview = armor.textures[name].preview.."^[resize:"
+			..tostring(armorPreviewTextureSize.w * data.res / 6).."x"
+			..tostring(armorPreviewTextureSize.h * data.res / 6)..total_preview_overlay
 	end
 end
 

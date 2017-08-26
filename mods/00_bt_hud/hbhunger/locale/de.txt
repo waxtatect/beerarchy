@@ -1,1 +1,1 @@
-Satiation = Sättigung
+Hunger = Hunger

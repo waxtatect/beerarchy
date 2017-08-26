@@ -2025,11 +2025,15 @@ local mob_punch = function(self, hitter, tflp, tool_capabilities, dir)
 		-- exit here if dead
 		if check_for_death(self) then
 			if hitter:is_player() then
-				ranking.increase_rank(hitter, "hunter", math.ceil(self.hp_min / 10))
+				local score = math.ceil(self.hp_min / 10)
+				if score > 50 then score = 50 end
+				ranking.increase_rank(hitter, "hunter", score)
 			elseif throwing then
 				local shooter = throwing.playerArrows[hitter]
 				if shooter then
-					ranking.increase_rank(minetest.get_player_by_name(shooter), "hunter", math.ceil(self.hp_min / 10) + 5) -- Something extra for shooting arrows
+					local score = math.ceil(self.hp_min / 10) + 5
+					if score > 50 then score = 50 end
+					ranking.increase_rank(minetest.get_player_by_name(shooter), "hunter", score) -- Something extra for shooting arrows
 				end
 			end
 

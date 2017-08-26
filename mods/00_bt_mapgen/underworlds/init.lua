@@ -147,8 +147,8 @@ underworlds_mod.underzones = {
 		regular_columns = false,
 		stone_depth = 1,
 		vary = true,
-		special_floor_nodes = { 'default:mese', 'default:diamondblock', 'moreores:mithril_block' },
-		special_floor_nodes_chances = { 5, 5, 5 },
+		special_floor_nodes = { 'default:mese', 'default:diamondblock', 'moreores:mithril_block', 'default:gold_block' },
+		special_floor_nodes_chances = { 5, 5, 5, 5 },
 	},
 	Gaia = {
 		name = 'Gaia',

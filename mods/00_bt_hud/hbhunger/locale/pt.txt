@@ -1,1 +1,1 @@
-Satiation = Saciedade
+Hunger = Fome
