@@ -404,15 +404,15 @@ ranking.score_distance = function(player)
 		local xzDistance = math.sqrt( ( (pos.x - lastPos.x) ^ 2) + ( ( pos.z - lastPos.z) ^ 2) )
 
 		if xzDistance <= 100 then
-			ranking.increase_rank(player, "traveler", math.floor(xzDistance))
+			ranking.increase_rank(player, "traveler", math.ceil(xzDistance / 10))
 		end
 
 		if (pos.y >= 0 and lastPos.y >= 0 and pos.y > lastPos.y and pos.y - lastPos.y < 100) then
-			ranking.increase_rank(player, "mountaineer", math.floor(pos.y - lastPos.y))
+			ranking.increase_rank(player, "mountaineer", math.ceil((pos.y - lastPos.y) / 10)
 		end
 
 		if (pos.y < 0 and lastPos.y < 0 and pos.y < lastPos.y and math.abs(pos.y) - math.abs(lastPos.y) < 100) then
-			ranking.increase_rank(player, "caving", math.abs(math.floor(math.abs(pos.y) - math.abs(lastPos.y))))
+			ranking.increase_rank(player, "caving", math.abs(math.ceil((math.abs(pos.y) - math.abs(lastPos.y)) / 10))
 		end
 	end
 end
@@ -594,7 +594,7 @@ giftTable[12] = { "underworlds:hot_stone 64" } -- Ancient one
 giftTable[13] = { "basic_machines:enviro", "throwing:arrow_mithril 32" } -- Legendary
 giftTable[14] = { "moreores:mithril_block 64" } -- Demi god
 giftTable[15] = { "protector:protect2 8",  "protector:chest 2", "protector:door_wood 2", "protector:trapdoor 2" } -- God
-giftTable[16] = { "protector:protect2 8",  "protector:chest 2", "protector:door_wood 2", "protector:trapdoor 2" } -- Titan
+giftTable[16] = { "protector:protect2 8",  "protector:chest 2", "protector:door_wood 2", "protector:trapdoor 2", "fishing:fish_raw 200" } -- Titan
 giftTable[17] = { "protector:protect2 16",  "protector:chest 4", "protector:door_wood 4", "protector:trapdoor 4" } -- Primordial Being
 giftTable[18] = { "protector:protect2 32",  "protector:chest 8", "protector:door_steel 8", "protector:trapdoor_steel 8", "farming:melon_8 4" } -- Chaos
 giftTable[19] = { "protector:protect2 64",  "protector:chest 16", "protector:door_wood 8", "protector:trapdoor 8",

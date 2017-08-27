@@ -19,6 +19,7 @@ arrows = {
 	{"throwing:arrow_build", "throwing:arrow_build_entity"},
 	{"throwing:arrow_tnt", "throwing:arrow_tnt_entity"},
 	{"throwing:arrow_nyan", "throwing:arrow_nyan_entity"},
+	{"throwing:arrow_admin", "throwing:arrow_admin_entity"},
 }
 
 local cooldowns = {}
@@ -36,6 +37,7 @@ cooldowns["throwing:arrow_tnt"] = 8.0
 cooldowns["throwing:arrow_teleport"] = 2.0
 cooldowns["throwing:arrow_dig"] = 0.5
 cooldowns["throwing:arrow_build"] = 1.0
+cooldowns["throwing:arrow_admin"] = 0.1
 
 local throwing_shoot_arrow = function(itemstack, player)
 	if playerCooldown[player:get_player_name()] == 0.0 then
@@ -52,7 +54,9 @@ local throwing_shoot_arrow = function(itemstack, player)
 		for _,arrow in ipairs(arrows) do
 			if player:get_inventory():get_stack("main", player:get_wield_index()+1):get_name() == arrow[1] then
 				if not minetest.setting_getbool("creative_mode") then
-					player:get_inventory():remove_item("main", arrow[1])
+					if arrow[1] ~= "throwing:arrow_admin" then
+						player:get_inventory():remove_item("main", arrow[1])
+					end
 				end
 
 				local bowCooldown = cooldowns[player:get_inventory():get_stack("main", player:get_wield_index()):get_name()]
@@ -229,6 +233,7 @@ dofile(minetest.get_modpath("throwing").."/dig_arrow.lua")
 dofile(minetest.get_modpath("throwing").."/build_arrow.lua")
 dofile(minetest.get_modpath("throwing").."/tnt_arrow.lua")
 dofile(minetest.get_modpath("throwing").."/rainbow_arrow.lua")
+dofile(minetest.get_modpath("throwing").."/admin_arrow.lua")
 
 if minetest.setting_get("log_mods") then
 	minetest.log("action", "throwing loaded")
