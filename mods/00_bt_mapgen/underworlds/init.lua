@@ -122,7 +122,7 @@ underworlds_mod.underzones = {
                                 'nyancat:nyancat' },
 		special_floor_nodes_chances = { 200, 20, 400, 800, 800, 4000, 12000 },
 	},
-	Mantellum = {
+--[[	Mantellum = {
 		name = 'Mantellum',
 		ceiling_node = 'underworlds:hot_cobble',
 		floor_node = 'underworlds:hot_cobble',
@@ -133,7 +133,7 @@ underworlds_mod.underzones = {
 		regular_columns = false,
 		stone_depth = 50,
 		vary = true,
-	},
+	},]]--
 	Coreum = {
 		name = 'Coreum',
 		ceiling_node = 'underworlds:hot_cobble',

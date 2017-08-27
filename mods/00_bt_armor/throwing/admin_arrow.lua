@@ -1,6 +1,7 @@
 minetest.register_craftitem("throwing:arrow_admin", {
 	description = "Admin Arrow",
 	inventory_image = "throwing_arrow_admin.png",
+	groups = {not_in_creative_inventory=1},
 })
 
 minetest.register_node("throwing:arrow_admin_box", {
