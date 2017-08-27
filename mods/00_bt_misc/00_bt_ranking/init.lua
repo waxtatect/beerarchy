@@ -408,7 +408,7 @@ ranking.score_distance = function(player)
 		end
 
 		if (pos.y >= 0 and lastPos.y >= 0 and pos.y > lastPos.y and pos.y - lastPos.y < 100) then
-			ranking.increase_rank(player, "mountaineer", math.ceil((pos.y - lastPos.y) / 10)
+			ranking.increase_rank(player, "mountaineer", math.ceil((pos.y - lastPos.y) / 10))
 		end
 
 		if (pos.y < 0 and lastPos.y < 0 and pos.y < lastPos.y and math.abs(pos.y) - math.abs(lastPos.y) < 100) then
