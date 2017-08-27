@@ -412,7 +412,7 @@ ranking.score_distance = function(player)
 		end
 
 		if (pos.y < 0 and lastPos.y < 0 and pos.y < lastPos.y and math.abs(pos.y) - math.abs(lastPos.y) < 100) then
-			ranking.increase_rank(player, "caving", math.abs(math.ceil((math.abs(pos.y) - math.abs(lastPos.y)) / 10))
+			ranking.increase_rank(player, "caving", math.abs(   math.ceil( (math.abs(pos.y) - math.abs(lastPos.y) ) / 10)   ))
 		end
 	end
 end
