@@ -48,7 +48,7 @@ for color, _ in pairs(textures) do
 	table.insert(revcolors, color)
 end
 
---[[minetest.register_craftitem("painted_3d_armor:image_armor",
+minetest.register_craftitem("painted_3d_armor:image_armor",
 	{
 		drawtype = "mesh",
 		wield_image = "banner_sheet.png",
@@ -65,7 +65,7 @@ minetest.register_craft({
 		{ "default:paper", "default:sign_wall_wood", "default:paper" },
 		{ "", "default:paper", "" },
 	}
-})]]--
+})
 
 if painting then
 	minetest.register_craftitem("painted_3d_armor:armor_canvas_6x6", {
@@ -149,7 +149,10 @@ end
 armor:register_on_equip(
 	function(player, index, stack)
 		if player then
-			if	stack:get_name() == "painting:paintedcanvas" or stack:get_name() == "painted_3d_armor:banner_armor" then
+			if	stack:get_name() == "painting:paintedcanvas" or
+				stack:get_name() == "painted_3d_armor:banner_armor" or
+				stack:get_name() == "painted_3d_armor:image_armor"
+			then
 				playerOverlays[player:get_player_name()] = stack
 			else
 				local tool = minetest.registered_tools[stack:get_name()]
@@ -173,6 +176,8 @@ armor:register_on_update(
 					set_painting(player, stack)
 				elseif stack:get_name() == "painted_3d_armor:banner_armor" then
 					set_banner(player, stack)
+				elseif stack:get_name() == "painted_3d_armor:image_armor" then
+					set_image(player, stack)
 				end
 			end
 		end
@@ -284,16 +289,14 @@ function set_banner(player, stack)
 end
 
 
--- 20x40
--- 6x ...
 function set_image(player, stack)
 	local name = player:get_player_name()
 	local image_name = "_"..name.."_banner.png"
 
-	local chestplate_overlay = "^[combine:40x20:"..image_name
-	local chestplate_preview_overlay = "^"..to_imagestring(data.grid, data.res, 10 * data.res / 6, 22 * data.res / 6, 2)
-	local shield_overlay = "^"..to_imagestring(data.grid, data.res, 5 * data.res / 6, 5 * data.res / 6, 1)
-	local shield_preview_overlay = "^"..to_imagestring(data.grid, data.res, 23 * data.res / 6, 37 * data.res / 6, 1)
+	local chestplate_overlay = "^[combine:18x36:87,88="..image_name
+	local chestplate_preview_overlay = "^[combine:18x36:23,40="..image_name.."^[resize:128x256"
+	local shield_overlay = "^[combine:18x36:23,16="..image_name
+	local shield_preview_overlay = "^[combine:18x36:93,144="..image_name
 
 	local total_overlay = ""
 	local total_preview_overlay = ""
@@ -314,23 +317,21 @@ function set_image(player, stack)
 	if armor.textures[name] then
 		default.player_set_textures(player, {
 			armor.textures[name].skin,
-			armor.textures[name].armor.."^[resize:"
-			..tostring(armorTextureSize.w * data.res / 6).."x"
-			..tostring(armorTextureSize.h * data.res / 6)..total_overlay,
+			armor.textures[name].armor.."^[resize:256x128"..total_overlay,
 			armor.textures[name].wielditem,
 		})
-		playerOverlayTextures[name] = "^[resize:"..tostring(armorTextureSize.w * data.res / 6).."x"..tostring(armorTextureSize.h * data.res / 6)..total_overlay
+		playerOverlayTextures[name] = "^[resize:256x128"..total_overlay
 
-		armor.textures[name].preview = armor.textures[name].preview.."^[resize:"
-			..tostring(armorPreviewTextureSize.w * data.res / 6).."x"
-			..tostring(armorPreviewTextureSize.h * data.res / 6)..total_preview_overlay
+		armor.textures[name].preview = armor.textures[name].preview.."^[resize:64x128"..total_preview_overlay
 	end
 end
 
 armor:register_on_unequip(
 	function(player, index, stack)
 		if player then
-			if	stack:get_name() == "painting:paintedcanvas" or stack:get_name() == "painted_3d_armor:banner_armor"
+			if	stack:get_name() == "painting:paintedcanvas" or
+				stack:get_name() == "painted_3d_armor:banner_armor" or
+				stack:get_name() == "painted_3d_armor:image_armor"
 			then
 				playerOverlays[player:get_player_name()] = nil
 			else
