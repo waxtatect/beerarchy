@@ -84,6 +84,13 @@ local function add_drop(drops, item)
 end
 
 local toughNodes = {}
+toughNodes[minetest.get_content_id("protector:protect")] = true
+toughNodes[minetest.get_content_id("protector:protect2")] = true
+toughNodes[minetest.get_content_id("protector:chest")] = true
+toughNodes[minetest.get_content_id("protector:door_steel")] = true
+toughNodes[minetest.get_content_id("protector:door_wood")] = true
+toughNodes[minetest.get_content_id("protector:trapdoor")] = true
+toughNodes[minetest.get_content_id("protector:trapdoor_steel")] = true
 toughNodes[minetest.get_content_id("default:obsidian")] = true
 toughNodes[minetest.get_content_id("default:obsidian")] = true
 toughNodes[minetest.get_content_id("default:obsidian_block")] = true
@@ -395,7 +402,9 @@ end
 
 function tnt.boom(pos, def)
 	minetest.sound_play("tnt_explode", {pos = pos, gain = 1.5, max_hear_distance = 2*64})
-	minetest.set_node(pos, {name = "tnt:boom"})
+	if not minetest.is_protected(pos, "") or minetest.get_node(pos).name == "air" then
+		minetest.set_node(pos, {name = "tnt:boom"})
+	end
 	local drops, radius = tnt_explode(pos, def.radius, def.ignore_protection,
 			def.ignore_on_blast)
 	-- append entity drops

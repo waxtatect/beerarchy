@@ -23,7 +23,7 @@ doc.add_category("beerarchy",
 	name = S("The Beerarchy"),
 	description = S("Specific information about the Beerarchy server and game"),
 	sorting = "custom",
-	sorting_data = {"introduction", "start", "physics", "ranks","subranks", "terrain"},
+	sorting_data = {"introduction", "start", "physics", "ranks", "subranks", "terrain", "armory", "farming", "mobs", "factions"},
 --	sorting_data = {"introduction", "start", "physics", "armory", "jgdfjshgskdhfsk"},
 	build_formspec = doc.entry_builders.text_and_gallery,
 })
@@ -208,11 +208,86 @@ S("• TNT arrow: Why? Because we can! Shoot these babies using the MTG9000 and 
 
 S("There are some special weapons as well:").."\n\n"..
 
+S("• TNT: Good old TNT. Blows things up in a radius of 3. Rank does not influence the blast radius or damage dealt by TNT").."\n"..
 S("• Dig arrow: Digs a node, handy in case you cannot reach some blocks you would like to dig or to remove nodes underneath enemies lol").."\n"..
 S("• Build arrow: Places a node (first one next to the arrow), for those places you cannot reach and in case you are too lazy building some scaffolding").."\n"..
 S("• Teleport arrow: Teleports you to the place where the arrow hits another block. Please note that the last arrow to hit a node counts, and be careful when shooting at a vertical drop that would kill you, although it would make for a great escape from falling as well!").."\n"..
 S("• Mines: Triggered by players (not mobs!) when stepping on one or when nearby. They will cause an explosion hurting or immediately killing the player that triggered it and any players nearby. You can make mines that look like dirt or grass and make an invisible minefield").."\n"..
-S("• Ball spawner: The basic machines ball spawner, shoots balls in a given direction, but only useful against other players (for now) and you need to program it to set the direction. Still good to make a trap with one of these by having it controlled by a detector. See also the basic machines article")
+S("• Ball spawner: The basic machines ball spawner, shoots balls in a given direction, but only useful against other players (for now) and you need to program it to set the direction. Still good to make a trap with one of these by having it controlled by a detector. See also the basic machines article").."\n\n"..
+
+S("Note: Some nodes are more or less resistant to TNT and TNT based weapons, e.g. obsidian and obsidian based construction materials deflects the blast of TNT arrows")
+
+}})
+
+doc.add_entry("beerarchy", "farming", {
+	name = S("Farming"),
+	data = { text =
+S("Before we get into the details of farming, we first dive into some specifics for this server:").."\n\n"..
+
+S("• Food is extremely scarce in this world. This applies to grass, crops, apples, etc.").."\n"..
+S("• Crops grow in groups, so good chance that if you find a crop there are others nearby").."\n"..
+S("• Crop yields are limited, so when you farm a crop you will only get a limited amount of food/ seeds").."\n"..
+S("• Melons are extremely rare, but have the highest yield. He who controls the melons controls the Beerarchy").."\n\n"..
+
+S("Basically, farming on the Beerarchy takes more effort but the biggest challenge is to find food in the first place. To farm crops, you need dirt, water, a hoe, light and of course some crops/ seeds").."\n\n"..
+
+S("• Make sure the dirt block is next to or close to a water source and that there is enough light").."\n"..
+S("• Use the hoe on the dirt. It will now change into soil. The soil is dry and light brown at first and then turns into the dark brown wet soil").."\n"..
+S("• Place the seeds or the crop on the soil").."\n"..
+S("• Wait until the crops are fully grown. If they are not growing, make sure nothing blocks the sunlight and that the soil is wet (dark brown)").."\n"..
+S("• When the crops are ready, dig them. Some crops (e.g. wheat, cocoa) yield seeds besides the food").."\n"..
+S("• For crops that yield seeds, replant the seeds. For crops that do not, replant the crop output").."\n"..
+S("• Rinse and repeat").."\n\n"..
+
+S("Some special considerations are:").."\n\n"..
+
+S("• The extremely rare melons grow between Y = 0 and 200 and near water. Melons are also gifted when you rank up to Chaos level").."\n"..
+S("• Some of the crops also grow under certain conditions such as elevation, biome, the type of node they grow on").."\n"..
+S("• Apple trees rarely have apples. Trees grown from saplings will have apples however").."\n"..
+S("• Mese lamps give enough light for growing crops under ground or in dark areas").."\n"..
+S("• As said before, make sure there is enough light and that water is nearby. Sometimes the float lands or mountain overhangs can block sunlight").."\n"..
+S("• Hemp can be used to craft rope and rope ladders, as well as doobies. They are not edible").."\n"..
+S("• Cocoa needs to be planted against jungle tree").."\n"..
+S("• Beans and grapes need talks in order to grow. Place beans under and grapes against these stalks")
+
+}})
+
+doc.add_entry("beerarchy", "mobs", {
+	name = S("Animals and Monsters"),
+	data = { text =
+S("As with crops, getting food from animals is more difficult as they do not always drop meat. Meat is however a very nutritious food. Eating meat raw is less nutritious and causes some damage. The following animals (passive mobs) exist on this world:").."\n\n"..
+
+S("• Bees: Can be found near flowers, can be captured and combined to create honey. When placing a beehive it will spawn many bees").."\n"..
+S("• Rats: Can be found underground near stone").."\n"..
+S("• Chicken: Can be found on grass, lays eggs, tameable using wheat seeds or cotton seeds").."\n"..
+S("• Bunny: Can be found on grass, tameable using carrots").."\n"..
+S("• Penguin: Can be found in snow biomes, tameable using fish").."\n"..
+S("• Sheep: Can be found on grass, tameable using wheat or (fully grown) grass. Use shears to get the wool from the sheep").."\n"..
+S("• Warthog: Can be found on grass, tameable using apples. Attack you when you attack it").."\n"..
+S("• Cow: Can be found on grass, tameable using wheat, source of leather. Attack you when you attack it").."\n"..
+S("• Horse: Can be found on grass, tameable using wheat, source of leather. Use a saddle on a horse in order to be able to ride it").."\n"..
+S("• Cash's World Feline Overlord: A.k.a. kitten, spawns near grass, needs tons and tons of fish to be tamed. Most powerful animal in the game. Extremely fast, deadly and shooting fireballs when turned aggressive by nearby monster or by being attacked by the player").."\n"..
+
+S("Monsters").."\n\n"..
+
+S("• Sand, stone and dirt monster, the easiest of the bunch").."\n"..
+S("• Oerkki, easy to kill but beware as they are fast and can hurt when you are unprepared").."\n"..
+S("• Spiders, such as the normal spiders and the giant spider which explode into lots of mini spiders when killed").."\n"..
+S("• Lava flan, which dwell in lava lakes but not much of a challenge").."\n"..
+S("• Golems, tough and dangerous. At least you can hear their heavy footsteps from far away. Sometimes they drop a golem stone which can be grown into a friendly golem").."\n"..
+S("• Mese monsters, easy to kill but shooting mese crystals rapidly which can quickly drain your HP").."\n"..
+S("• Dungeon master, dangerous fireball shooting monster that destroy nodes ").."\n\n"..
+
+S("Some special considerations are:").."\n\n"..
+
+S("• Mobs farther away have higher HP, armor, speed and difficulty").."\n"..
+S("• Some of the crops also grow under certain conditions such as elevation, biome, the type of node they grow on").."\n"..
+S("• Apple trees rarely have apples. Trees grown from saplings will have apples however").."\n"..
+S("• Mese lamps give enough light for growing crops under ground or in dark areas").."\n"..
+S("• As said before, make sure there is enough light and that water is nearby. Sometimes the float lands or mountain overhangs can block sunlight").."\n"..
+S("• Hemp can be used to craft rope and rope ladders, as well as doobies. They are not edible").."\n"..
+S("• Cocoa needs to be planted against jungle tree").."\n"..
+S("• Beans and grapes need talks in order to grow. Place beans under and grapes against these stalks")
 
 }})
 

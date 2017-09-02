@@ -52,6 +52,7 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 				if obj:get_luaentity().name ~= "throwing:arrow_admin_entity" and obj:get_luaentity().name ~= "__builtin:item" then
 					local blast = false
 					if throwing.playerArrows[self.object] then
+						minetest.log("action", "Admin Arrow fired by "..throwing.playerArrows[self.object].." at "..minetest.serialize(pos))
 						local player = minetest.get_player_by_name(throwing.playerArrows[self.object])
 						if player and player:get_player_control()["aux1"] then blast = true end
 					end
@@ -69,7 +70,7 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 						throwing.playerArrows[self.object] = nil
 						self.object:remove()
 
-						tnt.boom(pos, { radius = 8, damage_radius = 8, ignore_protection = false, ignore_on_blast = false })
+						tnt.boom(pos, { radius = 8, damage_radius = 8, ignore_protection = true, ignore_on_blast = false })
 					else
 						obj:punch(self.object, 1.0, {
 							full_punch_interval=1.0,
@@ -80,6 +81,7 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 			else
 				local blast = false
 				if throwing.playerArrows[self.object] then
+					minetest.log("action", "Admin Arrow fired by "..throwing.playerArrows[self.object].." at "..minetest.serialize(pos))
 					local player = minetest.get_player_by_name(throwing.playerArrows[self.object])
 					if player and player:get_player_control()["aux1"] then blast = true end
 				end
@@ -97,7 +99,7 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 					throwing.playerArrows[self.object] = nil
 					self.object:remove()
 
-					tnt.boom(pos, { radius = 8, damage_radius = 8, ignore_protection = false, ignore_on_blast = false })
+					tnt.boom(pos, { radius = 8, damage_radius = 8, ignore_protection = true, ignore_on_blast = false })
 				else
 					obj:punch(self.object, 1.0, {
 						full_punch_interval=1.0,
@@ -112,6 +114,7 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 		if node.name ~= "air" then
 			local blast = false
 			if throwing.playerArrows[self.object] then
+				minetest.log("action", "Admin Arrow fired by "..throwing.playerArrows[self.object].." at "..minetest.serialize(pos))
 				local player = minetest.get_player_by_name(throwing.playerArrows[self.object])
 				if player and player:get_player_control()["aux1"] then blast = true end
 			end

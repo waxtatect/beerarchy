@@ -40,6 +40,13 @@ local THROWING_ARROW_ENTITY={
 }
 
 local toughNodes = {}
+toughNodes["protector:protect"] = "protector:protect"
+toughNodes["protector:protect2"] = "protector:protect2"
+toughNodes["protector:chest"] = "protector:chest"
+toughNodes["protector:door_steel"] = "protector:door_steel"
+toughNodes["protector:door_wood"] = "protector:door_wood"
+toughNodes["protector:trapdoor"] = "protector:trapdoor"
+toughNodes["protector:trapdoor_steel"] = "protector:trapdoor_steel"
 toughNodes["default:obsidian"] = "default:obsidian"
 toughNodes["default:obsidian_block"] = "default:obsidian_block"
 toughNodes["default:obsidian_glass"] = "default:obsidian_glass"
@@ -126,7 +133,7 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 				throwing.playerArrows[self.object] = nil
 				self.object:remove()
 
-				tnt.boom(self.lastpos, { radius = 3, damage_radius = 3, ignore_protection = false, ignore_on_blast = true })
+				tnt.boom(self.lastpos, { radius = 3, damage_radius = 3, ignore_protection = false, ignore_on_blast = false })
 			else
 				local extra_damage = 0
 				local extra_radius = 0
