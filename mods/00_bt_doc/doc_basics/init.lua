@@ -23,7 +23,7 @@ doc.add_category("beerarchy",
 	name = S("The Beerarchy"),
 	description = S("Specific information about the Beerarchy server and game"),
 	sorting = "custom",
-	sorting_data = {"introduction", "start", "physics", "ranks", "subranks", "terrain", "armory", "farming", "mobs", "factions"},
+	sorting_data = {"introduction", "start", "physics", "ranks", "subranks", "terrain", "armory", "farming", "mobs", "special"},
 --	sorting_data = {"introduction", "start", "physics", "armory", "jgdfjshgskdhfsk"},
 	build_formspec = doc.entry_builders.text_and_gallery,
 })
@@ -270,26 +270,61 @@ S("• Cash's World Feline Overlord: A.k.a. kitten, spawns near grass, needs ton
 
 S("Monsters").."\n\n"..
 
-S("• Sand, stone and dirt monster, the easiest of the bunch").."\n"..
+S("• Sand, stone and dirt monster, the easiest of the bunch, only dangerous to n00bs").."\n"..
 S("• Oerkki, easy to kill but beware as they are fast and can hurt when you are unprepared").."\n"..
 S("• Spiders, such as the normal spiders and the giant spider which explode into lots of mini spiders when killed").."\n"..
+S("• Tree monster, always lurking in thick forest ready to jump you from above or behind").."\n"..
 S("• Lava flan, which dwell in lava lakes but not much of a challenge").."\n"..
 S("• Golems, tough and dangerous. At least you can hear their heavy footsteps from far away. Sometimes they drop a golem stone which can be grown into a friendly golem").."\n"..
-S("• Mese monsters, easy to kill but shooting mese crystals rapidly which can quickly drain your HP").."\n"..
-S("• Dungeon master, dangerous fireball shooting monster that destroy nodes ").."\n\n"..
+S("• Mese monsters, flying chunks of mese, easy to kill but shooting mese crystals rapidly which can quickly drain your HP").."\n"..
+S("• Dungeon master, dangerous fireball shooting monster that destroy nodes, so make sure that you protect important items with obsidian").."\n"..
+S("• Moth man, half moth half man, flying and shitting rainbows while attacking you in the air").."\n"..
+S("• Manticore, half scorpion half man, but looks more dangerous than it actually is").."\n"..
+S("• Hell baron, extremely tough demon that shoots fire balls punches hard").."\n"..
+S("• Cyber demon, biotechnically engineered and enhanced demon with rocket launchers that shoot exploding rockets").."\n"..
+S("• Various dragons, extremely rare and super dangerous, but tameable! Tame one of these babies and you can use a saddle to fly the dragon").."\n\n"..
 
 S("Some special considerations are:").."\n\n"..
 
+S("• Use the net to capture small animals, use the magic lasso to capture larger animals").."\n"..
+S("• Be careful riding tamed animals in water such as horses and dragons. They will get stuck in the water and may even die").."\n"..
 S("• Mobs farther away have higher HP, armor, speed and difficulty").."\n"..
-S("• Some of the crops also grow under certain conditions such as elevation, biome, the type of node they grow on").."\n"..
-S("• Apple trees rarely have apples. Trees grown from saplings will have apples however").."\n"..
-S("• Mese lamps give enough light for growing crops under ground or in dark areas").."\n"..
-S("• As said before, make sure there is enough light and that water is nearby. Sometimes the float lands or mountain overhangs can block sunlight").."\n"..
-S("• Hemp can be used to craft rope and rope ladders, as well as doobies. They are not edible").."\n"..
-S("• Cocoa needs to be planted against jungle tree").."\n"..
-S("• Beans and grapes need talks in order to grow. Place beans under and grapes against these stalks")
+S("• Dungeon master's fireballs cannot penetrate obsidian").."\n"..
+S("• The cyber demon's rocket have actual TNT explosions with a blast and damage radius. Stay away from those rockets!").."\n"..
+S("• You may want to kill giant spiders from a distance using arrows. It explodes into small spiders when it dies, something which can get you into a lot of trouble").."\n\n"..
+
+S("To tame a dragon:").."\n\n"..
+
+S("• Kill some dragons until you have a dragon egg and dragon gem").."\n"..
+S("• Create a nest which consists of one 3x3 layer of lava source blocks, with another layer on top with the dragon egg in the middle").."\n"..
+S("• Basically it should be a sort of bowl of lava with the lava all around the egg (below and on the sides)").."\n"..
+S("• Feed it a dragon gem until you see a message in chat stating that it took the gem. If nothing happens, wait and try again later").."\n"..
+S("• After feeding the gem, wait again until a dragon spawns. Be careful, sometimes the dragon gets stuck in the bowl -_-").."\n"..
+S("• Dragons are finicky, when you are having problems breeding one, ask around on the forums. After all, this server only hosts this mod created by someone else")
 
 }})
+
+doc.add_entry("beerarchy", "special", {
+	name = S("Special Topics"),
+	data = { text =
+S("Banners, armor banners and painted armor canvas:").."\n\n"..
+S("Banners can be used to make decorative flags and you can wear the banner as decoration on your shield and armor. There is no additional functionality associated with banners, i.e. there is no such thing as factions. Of course you can team up with other players and wear the same banner. The simplest form is the armor banner:").."\n\n"..
+S("• Craft paper in the shape of a shield with a wooden banner in the middle").."\n"..
+S("• Punch the banner in the air and start playing around with the banner user interface until you have a banner you like").."\n"..
+S("• Double click outside of the banner creation window (sorry this mod did not come with a close button -_-)").."\n"..
+S("• Place the armor banner in the (last) remaining free armor slot and the banner will be placed on your shield and chest plate").."\n\n"..
+
+S("If you feel a bit more creative, you can create a custom painted armor banner:").."\n\n"..
+
+S("• Craft an easel and one of the armor canvases (6x6, 12x12 or 24x24). Make sure it is *armor canvas*, normal canvas will NOT work properly").."\n"..
+S("• Craft brushes in the colors you want to use in your painted armor using sticks and dye").."\n"..
+S("• Left click with the brush in the color of choice to place a pixel on the canvas").."\n"..
+S("• Keep shift pressed while painting to draw lines").."\n"..
+S("• When ready, take the canvas by digging it on the side or the back (front does not work as that is the painting area). It will appear in the inventory as a painted canvas").."\n"..
+S("• Place the painted canvas in the (last) remaining free armor slot and the painting will be placed on your shield and chest plate")
+
+}})
+
 
 
 doc.add_entry("basics", "quick_start", {
