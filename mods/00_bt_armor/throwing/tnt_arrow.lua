@@ -81,10 +81,12 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 						end
 					end
 					local damage = 3 + extra_damage
-					obj:punch(self.object, 1.0, {
-						full_punch_interval=1.0,
-						damage_groups={fleshy=damage},
-					}, nil)
+					if not (obj:is_player() and minetest.get_player_privs(obj:get_player_name()).server) then
+						obj:punch(self.object, 1.0, {
+							full_punch_interval=1.0,
+							damage_groups={fleshy=damage},
+						}, nil)
+					end
 					tnt.boom(pos, { radius = 3 + extra_radius, damage_radius = 5 + extra_radius, ignore_protection = false, ignore_on_blast = false })
 					throwing.playerArrows[self.object] = nil
 					self.object:remove()
@@ -101,10 +103,12 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 					end
 				end
 				local damage = 5 + extra_damage
-				obj:punch(self.object, 1.0, {
-					full_punch_interval=1.0,
-					damage_groups={fleshy=damage},
-				}, nil)
+				if not (obj:is_player() and minetest.get_player_privs(obj:get_player_name()).server) then
+					obj:punch(self.object, 1.0, {
+						full_punch_interval=1.0,
+						damage_groups={fleshy=damage},
+					}, nil)
+				end
 				tnt.boom(pos, { radius = 3 + extra_radius, damage_radius = 5 + extra_radius, ignore_protection = false, ignore_on_blast = false })
 				throwing.playerArrows[self.object] = nil
 				self.object:remove()
@@ -124,10 +128,12 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 				local all_objects = minetest.get_objects_inside_radius({x=self.lastpos.x, y=self.lastpos.y, z=self.lastpos.z}, 3)
 				local _,obj
 				for _,obj in ipairs(all_objects) do
-					obj:punch(self.object, 1.0, {
-						full_punch_interval=1.0,
-						damage_groups={fleshy=damage},
-					}, nil)
+					if not (obj:is_player() and minetest.get_player_privs(obj:get_player_name()).server) then
+						obj:punch(self.object, 1.0, {
+							full_punch_interval=1.0,
+							damage_groups={fleshy=damage},
+						}, nil)
+					end
 				end
 
 				throwing.playerArrows[self.object] = nil
@@ -150,10 +156,12 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 				local all_objects = minetest.get_objects_inside_radius({x=self.lastpos.x, y=self.lastpos.y, z=self.lastpos.z}, 5 + extra_radius)
 				local _,obj
 				for _,obj in ipairs(all_objects) do
-					obj:punch(self.object, 1.0, {
-						full_punch_interval=1.0,
-						damage_groups={fleshy=damage},
-					}, nil)
+					if not (obj:is_player() and minetest.get_player_privs(obj:get_player_name()).server) then
+						obj:punch(self.object, 1.0, {
+							full_punch_interval=1.0,
+							damage_groups={fleshy=damage},
+						}, nil)
+					end
 				end
 
 				throwing.playerArrows[self.object] = nil

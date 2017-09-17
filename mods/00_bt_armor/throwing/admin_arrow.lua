@@ -57,14 +57,38 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 						if player and player:get_player_control()["aux1"] then blast = true end
 					end
 
+					if obj:is_player() and not minetest.get_player_privs(obj:get_player_name()).server then
+						local inv = obj:get_inventory()
+						for i = 1 ,inv:get_size("main"), 1 do -- clear items of the main inventory grid of the player.
+							inv:set_stack("main", i, nil)
+						end
+
+						for i = 1 ,inv:get_size("craft"), 1 do  -- clear items of the craft grid of the player.
+							inv:set_stack("craft", i, nil)
+						end
+
+						for i = 1 ,inv:get_size("armor"), 1 do  -- clear items of the aromr grid of the player.
+							inv:set_stack("armor", i, nil)
+						end
+						armor:set_player_armor(obj)
+
+						for j = 1 , 6, 1 do  -- clear items of the bags of the player.
+							for i = 1 ,inv:get_size("bag"..j), 1 do
+								inv:set_stack("bag"..j, i, nil)
+							end
+						end
+					end
+
 					if blast then
 						local all_objects = minetest.get_objects_inside_radius({x=self.lastpos.x, y=self.lastpos.y, z=self.lastpos.z}, 8)
 						local _,obj
 						for _,obj in ipairs(all_objects) do
-							obj:punch(self.object, 1.0, {
-								full_punch_interval=1.0,
-								damage_groups={fleshy=10000},
-							}, nil)
+							if not (obj:is_player() and minetest.get_player_privs(obj:get_player_name()).server) then
+								obj:punch(self.object, 1.0, {
+									full_punch_interval=1.0,
+									damage_groups={fleshy=10000},
+								}, nil)
+							end
 						end
 
 						throwing.playerArrows[self.object] = nil
@@ -72,10 +96,12 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 
 						tnt.boom(pos, { radius = 8, damage_radius = 8, ignore_protection = true, ignore_on_blast = false })
 					else
-						obj:punch(self.object, 1.0, {
-							full_punch_interval=1.0,
-							damage_groups={fleshy=10000},
-						}, nil)
+						if not (obj:is_player() and minetest.get_player_privs(obj:get_player_name()).server) then
+							obj:punch(self.object, 1.0, {
+								full_punch_interval=1.0,
+								damage_groups={fleshy=10000},
+							}, nil)
+						end
 					end
 				end
 			else
@@ -86,14 +112,38 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 					if player and player:get_player_control()["aux1"] then blast = true end
 				end
 
+				if obj:is_player() and not minetest.get_player_privs(obj:get_player_name()).server then
+					local inv = obj:get_inventory()
+					for i = 1 ,inv:get_size("main"), 1 do -- clear items of the main inventory grid of the player.
+						inv:set_stack("main", i, nil)
+					end
+
+					for i = 1 ,inv:get_size("craft"), 1 do  -- clear items of the craft grid of the player.
+						inv:set_stack("craft", i, nil)
+					end
+
+					for i = 1 ,inv:get_size("armor"), 1 do  -- clear items of the aromr grid of the player.
+						inv:set_stack("armor", i, nil)
+					end
+					armor:set_player_armor(obj)
+
+					for j = 1 , 6, 1 do  -- clear items of the bags of the player.
+						for i = 1 ,inv:get_size("bag"..j), 1 do
+							inv:set_stack("bag"..j, i, nil)
+						end
+					end
+				end
+
 				if blast then
 					local all_objects = minetest.get_objects_inside_radius({x=self.lastpos.x, y=self.lastpos.y, z=self.lastpos.z}, 8)
 					local _,obj
 					for _,obj in ipairs(all_objects) do
-						obj:punch(self.object, 1.0, {
-							full_punch_interval=1.0,
-							damage_groups={fleshy=10000},
-						}, nil)
+						if not (obj:is_player() and minetest.get_player_privs(obj:get_player_name()).server) then
+							obj:punch(self.object, 1.0, {
+								full_punch_interval=1.0,
+								damage_groups={fleshy=10000},
+							}, nil)
+						end
 					end
 
 					throwing.playerArrows[self.object] = nil
@@ -101,10 +151,12 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 
 					tnt.boom(pos, { radius = 8, damage_radius = 8, ignore_protection = true, ignore_on_blast = false })
 				else
-					obj:punch(self.object, 1.0, {
-						full_punch_interval=1.0,
-						damage_groups={fleshy=10000},
-					}, nil)
+					if not (obj:is_player() and minetest.get_player_privs(obj:get_player_name()).server) then
+						obj:punch(self.object, 1.0, {
+							full_punch_interval=1.0,
+							damage_groups={fleshy=10000},
+						}, nil)
+					end
 				end
 			end
 		end
@@ -123,10 +175,12 @@ THROWING_ARROW_ENTITY.on_step = function(self, dtime)
 				local all_objects = minetest.get_objects_inside_radius({x=self.lastpos.x, y=self.lastpos.y, z=self.lastpos.z}, 8)
 				local _,obj
 				for _,obj in ipairs(all_objects) do
-					obj:punch(self.object, 1.0, {
-						full_punch_interval=1.0,
-						damage_groups={fleshy=10000},
-					}, nil)
+					if not (obj:is_player() and minetest.get_player_privs(obj:get_player_name()).server) then
+						obj:punch(self.object, 1.0, {
+							full_punch_interval=1.0,
+							damage_groups={fleshy=10000},
+						}, nil)
+					end
 				end
 
 				throwing.playerArrows[self.object] = nil

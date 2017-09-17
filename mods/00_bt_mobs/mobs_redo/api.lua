@@ -1983,7 +1983,7 @@ local mob_punch = function(self, hitter, tflp, tool_capabilities, dir)
 	end
 
 	if weapon:get_definition()
-	and weapon:get_definition().tool_capabilities then
+	and weapon:get_definition().tool_capabilities and weapon:get_name() ~= "default:sword_admin" then
 
 		weapon:add_wear(floor((punch_interval / 75) * 9000))
 		hitter:set_wielded_item(weapon)

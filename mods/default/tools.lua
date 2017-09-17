@@ -393,6 +393,10 @@ minetest.register_tool("default:sword_admin", {
 		damage_groups = {fleshy=10000},
 	},
 	sound = {breaks = "default_tool_breaks"},
+	after_use = function(itemstack, user, node, digparams)
+--		itemstack:replace("default:sword_admin")
+		return itemstack
+	end
 })
 
 minetest.register_tool("default:key", {
