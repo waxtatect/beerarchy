@@ -146,10 +146,38 @@ if banners then
 
 end
 
+local function get_data(player, stack)
+	local data = minetest.deserialize(stack:get_metadata())
+	if not data or not (type(data.res) == "number" and data.res <= 24) then
+		local name, player_inv = armor:get_valid_player(player, "[paintedcanvas]")
+		if not name then
+			return
+		end
+		local drop = {}
+		for i = 1, player_inv:get_size("armor") do
+			local stack = player_inv:get_stack("armor", i)
+			if stack:get_count() > 0 and stack:get_name() == "painting:paintedcanvas" then
+				table.insert(drop, stack)
+				armor:set_inventory_stack(player, i, nil)
+			end
+		end
+		local inv = player:get_inventory()
+		for _, stack in ipairs(drop) do
+			if inv:room_for_item("main", stack) then
+				inv:add_item("main", stack)
+			else
+				armor.drop_armor(player:get_pos(), stack)
+			end
+		end
+		data = nil
+	end
+	return data
+end
+
 armor:register_on_equip(
 	function(player, index, stack)
 		if player then
-			if	stack:get_name() == "painting:paintedcanvas" or
+			if	stack:get_name() == "painting:paintedcanvas" and get_data(player, stack) or
 				stack:get_name() == "painted_3d_armor:banner_armor" or
 				stack:get_name() == "painted_3d_armor:image_armor"
 			then
@@ -207,8 +235,7 @@ end
 
 function set_painting(player, stack)
 	local name = player:get_player_name()
-	local data = stack:get_metadata()
-	data = minetest.deserialize(data)
+	local data = get_data(player, stack)
 
 	local chestplate_overlay = "^"..to_imagestring(data.grid, data.res, 21 * data.res / 6, 23 * data.res / 6, 1)
 	local chestplate_preview_overlay = "^"..to_imagestring(data.grid, data.res, 10 * data.res / 6, 22 * data.res / 6, 2)
