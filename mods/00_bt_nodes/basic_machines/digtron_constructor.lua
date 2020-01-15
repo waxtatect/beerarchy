@@ -218,7 +218,7 @@ local constructor_process = function(pos, player)
 			else
 				local owner = minetest.get_player_by_name(meta:get_string("owner"))
 				if owner then
-					ranking.increase_rank(player, "intelligence", 10)
+					ranking.increase_rank(owner, "intelligence", 10)
 				end
 			end
 
