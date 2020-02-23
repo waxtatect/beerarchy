@@ -98,8 +98,7 @@ local currentPlayerChannel = {}
 minetest.register_on_joinplayer(function(player)
 	local str = player:get_attribute("beerchat:channels")
 	if str and str ~= "" then
-		playersChannels[player:get_player_name()] = {}
-		playersChannels[player:get_player_name()] = minetest.parse_json(str)
+		playersChannels[player:get_player_name()] = minetest.parse_json(str) or {}
 	else
 		playersChannels[player:get_player_name()] = {}
 		playersChannels[player:get_player_name()][main_channel_name] = "joined"
@@ -112,7 +111,6 @@ minetest.register_on_joinplayer(function(player)
 	else
 		currentPlayerChannel[player:get_player_name()] = main_channel_name
 	end
-
 end)
 
 minetest.register_on_leaveplayer(function(player)
@@ -557,10 +555,16 @@ local me_override = {
 
 minetest.register_chatcommand("me", me_override)
 
+local function check_is_player(name)
+	local sender = minetest.get_player_by_name(name)
+	if sender and sender:is_player() then return true else return false end
+end
+
 -- # chat a.k.a. hash chat/ channel chat code, to send messages in chat channels using # e.g. #my channel: hello everyone in my channel!
 hashchat_lastrecv = {}
 
 minetest.register_on_chat_message(function(name, message)
+	if not check_is_player(name) then return false end
 	local channel_name, msg = string.match(message, "^#(.-): (.*)")
 	if not channels[channel_name] then
 		channel_name, msg = string.match(message, "^#(.-) (.*)")
@@ -634,6 +638,7 @@ end)
 
 -- $ chat a.k.a. dollar chat code, to whisper messages in chat to nearby players only using $, optionally supplying a radius e.g. $32 Hello
 minetest.register_on_chat_message(function(name, message)
+	if not check_is_player(name) then return false end
 	local dollar, sradius, msg = string.match(message, "^($)(.-) (.*)")
 	if dollar == "$" then
 		local radius = tonumber(sradius)
@@ -647,7 +652,7 @@ minetest.register_on_chat_message(function(name, message)
 			minetest.chat_send_player(name, "Please enter the message you would like to whisper to nearby players")
 		else
 			local pl = minetest.get_player_by_name(name)
-			local all_objects = minetest.get_objects_inside_radius({x=pl:getpos().x, y=pl:getpos().y, z=pl:getpos().z}, radius)
+			local all_objects = minetest.get_objects_inside_radius({x=pl:get_pos().x, y=pl:get_pos().y, z=pl:get_pos().z}, radius)
 
 			for _,player in ipairs(all_objects) do
 				if player:is_player() then
@@ -668,6 +673,7 @@ minetest.register_on_chat_message(function(name, message)
 end)
 
 minetest.register_on_chat_message(function(name, message)
+	if not check_is_player(name) then return false end
 	local msg = message
 	local channel_name = currentPlayerChannel[name]
 
