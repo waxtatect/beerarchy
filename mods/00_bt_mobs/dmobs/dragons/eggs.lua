@@ -1,17 +1,16 @@
 -- eggs from mobs_dragon --------------------------------------------------------------------------
-	
+
 local dragonpairs = {
-	fire = {colour="red",nest="default:lava_source"},
-	lightning = {colour="black",nest="default:obsidian"},
-	poison = {colour="green",nest="default:cactus"},
-	ice = {colour="black",nest="default:ice"},
-	great = {colour="great",nest=""},
+	fire = {colour="red", nest="default:lava_source"},
+	lightning = {colour="black", nest="default:obsidian"},
+	poison = {colour="green", nest="default:cactus"},
+	ice = {colour="black", nest="default:ice"},
+	great = {colour="great", nest=""},
 }
 
 local function egg_transform(pos, node, clicker, item, _)
 	local wield_item = clicker:get_wielded_item():get_name()
 	if wield_item == "dmobs:dragon_gem" then
-	
 		local p = {x = pos.x, y = pos.y - 1, z = pos.z}
 		local corner_name
 		for x1 = -1,1 do
@@ -33,7 +32,7 @@ local function egg_transform(pos, node, clicker, item, _)
 				end
 			end
 		end
-		
+
 		local dragon_type
 		for element,details in pairs(dragonpairs) do
 			if corner_name == details.nest then
@@ -41,16 +40,18 @@ local function egg_transform(pos, node, clicker, item, _)
 				break
 			end
 		end
-		
+
+		if dragon_type == nil then return end
+
 		minetest.chat_send_player(clicker:get_player_name()," ... something seems to be happening .... come back later?")
-		
+
 		minetest.after(dmobs.eggtimer,
 			function(pos, dragon, pname)
 				minetest.set_node(pos, {name="dmobs:dragon_egg_"..dragon_type})
 			end,
 			pos
 		)
-		
+
 		item:take_item()
 	end
 end
@@ -58,13 +59,13 @@ end
 local function egghatch(pos, node, clicker, item, _)
 	local wield_item = clicker:get_wielded_item():get_name()
 	local eggnode = minetest.get_node(pos).name
-	
+
 	for nature,details in pairs(dragonpairs) do
 		if ( wield_item == "dmobs:dragon_gem_"..nature and eggnode:find(nature) ) or
 		   ( wield_item == "dmobs:dragon_gem" and eggnode == "dmobs:dragon_egg_great" ) then -- special case... because inconsiderate/inconsistent naming
-		   
-		   	minetest.chat_send_player(clicker:get_player_name(), " ... it ... swallowed the gem...")
-		   	
+
+			minetest.chat_send_player(clicker:get_player_name(), " ... it ... swallowed the gem...")
+
 			minetest.after(dmobs.eggtimer,
 				function(pos, dragon, pname)
 					local neweggnode = minetest.get_node(pos).name
@@ -74,12 +75,12 @@ local function egghatch(pos, node, clicker, item, _)
 
 					local thedragon = "dmobs:dragon_"..details.colour
 					if eggnode == "dmobs:dragon_egg_great" then
-						thedragon = "dmobs:dragon_great"
+						thedragon = "dmobs:dragon_great_tame"
 					end
 
 					local ent = minetest.add_entity(pos, thedragon)
 					minetest.sound_play("dmobs_chirrup",{pos=pos,max_hear_distance=20})
-					
+
 					local obj = ent:get_luaentity()
 					if eggnode ~= "dmobs:dragon_egg_great" then
 						ent:set_properties({
@@ -98,7 +99,7 @@ local function egghatch(pos, node, clicker, item, _)
 	end -- for loop
 end
 
--- Egg form dfinitions -----------------------------------------
+-- Egg form definitions -----------------------------------------
 
 local base_egg = { -- base template for all dragon eggs
 	description = "Dragon Egg",
@@ -109,7 +110,7 @@ local base_egg = { -- base template for all dragon eggs
 	sunlight_propagates = true,
 	is_ground_content = false,
 	groups = {fleshy=3, dig_immediate=3},
-	sounds = default.node_sound_leaves_defaults(),	
+	sounds = default.node_sound_leaves_defaults(),
 	on_rightclick = egg_transform,
 }
 

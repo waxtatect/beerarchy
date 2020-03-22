@@ -9,13 +9,11 @@ mobs:register_mob("dmobs:nyan", {
 	collisionbox = {-0.2, 0, -0.2, 0.2, 0.6, 0.2},
 	visual = "mesh",
 	mesh = "nyancat.b3d",
-	textures = {
-		{"dmobs_nyancat.png"},
-	},
-   jump = true,
-   fly = true,
-   fall_speed = 0,
-   stepheight = 1.5,
+	textures = {"dmobs_nyancat.png"},
+	jump = true,
+	fly = true,
+	fall_speed = 0,
+	stepheight = 1.5,
 	blood_texture = "mobs_blood.png",
 	visual_size = {x=1, y=1},
 	makes_footstep_sound = true,
@@ -41,11 +39,10 @@ mobs:register_mob("dmobs:nyan", {
 		stand_end = 7,
 		run_start = 1,
 		run_end = 7,
-
 	},
-   do_custom = function(self)
-   local apos = self.object:getpos()
-		local vec = self.object:getvelocity()
+	do_custom = function(self)
+		local apos = self.object:get_pos()
+		local vec = self.object:get_velocity()
 		local part = minetest.add_particlespawner(
 			5, --amount
 			0.3, --time
@@ -64,7 +61,6 @@ mobs:register_mob("dmobs:nyan", {
 		)
    end,
 	on_rightclick = function(self, clicker)
-
 		if mobs:feed_tame(self, clicker, 8, true, true) then
 			return
 		end

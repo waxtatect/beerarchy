@@ -7,21 +7,21 @@ dmobs = {}
 dofile(minetest.get_modpath("dmobs").."/api.lua")
 
 -- Enable dragons (disable to remove tamed dragons and dragon bosses)
-dmobs.dragons = minetest.setting_getbool("dmobs.dragons")
+dmobs.dragons = minetest.settings:get_bool("dmobs.dragons")
 if dmobs.dragons == nil then
 dmobs.dragons = true
 end
-dmobs.regulars = minetest.setting_getbool("dmobs.regulars")
+dmobs.regulars = minetest.settings:get_bool("dmobs.regulars")
 if dmobs.regulars == nil then
 dmobs.regulars = true
 end
 
 
 -- Enable fireballs/explosions
-dmobs.destructive = minetest.setting_getbool("dmobs.destructive") or false
+dmobs.destructive = minetest.settings:get_bool("dmobs.destructive") or false
 
 -- Timer for the egg mechanics
-dmobs.eggtimer = tonumber(minetest.setting_get("dmobs.eggtimer") ) or 100
+dmobs.eggtimer = tonumber(minetest.settings:get("dmobs.eggtimer") ) or 100
 
 
 
