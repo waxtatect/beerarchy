@@ -1,0 +1,21 @@
+# textdomain: gps
+
+GPS=
+Destinations=
+Locate=
+Turn Off=
+Delete=
+New Destination=
+My Place=
+Save New Place=
+You need to be with the GPS to go to the destination.=
+GPS Active. @1 located.=
+No destination found. Set a new.=
+GPS turned off.=
+No name set to the place. Enter a name.=
+Limit is @1 destinations. Delete any of the already existing.=
+@1 has been recorded in your GPS.=
+Invalid characters. Try using only letters and numbers in the new name.=
+No name specified for the new place. Set the name of this place.=
+@1 has been deleted.=
+No destinations to delete.=

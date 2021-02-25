@@ -1,0 +1,190 @@
+# textdomain: fishing
+
+### baits.lua ###
+#Bait Corn=
+#Bait Bread=
+
+### baits.lua ###
+#Bait Ball=
+#Shark Bait Ball=
+
+### bobber.lua, bobber_shark.lua ###
+You didn't catch anything.=Du hast nichts gefangen.
+#The bait is still there.=
+Your fish escaped.=Dein Fisch ist entkommen.
+You caught a Fish.=Du hast einen Fisch gefangen.
+#You caught a Carp.=
+You caught a Northern Pike.=Du hast einen Hecht gefangen.
+#You caught a Perch.=
+#You caught a Catfish.=
+You caught a Clownfish.=Du hast einen Clownfisch gefangen.
+You caught a Bluewhite.=Du hast einen blau-weissen Fisch gefangen.
+#You caught an Exotic.=
+You caught a small Shark.=Du hast einen kleinen Hai gefangen.
+You caught some Seaweed.=Du hast etwas Seetang gefangen.
+You caught a String.=Du hast eine Schnur gefangen.
+You caught a Twig.=Du hast einen Zweig gefangen.
+You caught a Rat.=Du hast eine Ratte gefangen.
+You caught a Green Kelp.=Du hast etwas gruenen Kelp gefangen.
+You caught some very old Boots.=Du hast ein Paar sehr alte Schuhe gefangen.
+#You caught some very old Leggings.=
+#You caught some very old ChestPlate.=
+You caught an old Fishing Pole.=Du hast eine alte Angelrute gefangen.
+#You caught a Gold Coin.=
+#You caught a very old Helmet.=
+#You caught a very old Shield.=
+#You caught a very old Sword.=
+#You caught a tropical fish.=
+#Haha, Fishing is prohibited outside water!=
+
+### fishes.lua ###
+Fish=Fisch
+Roasted Fish=Gebratener Fisch
+Sushi (Hoso Maki)=Sushi (Hoso Maki)
+Clownfish=Clownfisch
+Bluewhite=blau-weisse Fisch
+#Exotic=
+#Carp=
+#Perch=
+#Catfish=
+Shark=Hai
+Roasted Shark=Gebratener Hai
+Northern Pike=Hecht
+Roasted Northern Pike=Gebratener Hecht
+
+### functions.lua ###
+#A fishing contest is in progress. (remaining time @1)=
+#Attention, Fishing contest start (duration @1)!!!=
+#End of fishing contest.=
+#Lucky @1, he caught the treasure, a mese block!=
+#Lucky @1, he caught the treasure, a nyan cat!=
+#Lucky @1, he caught the treasure, a diamond block!=
+#You caught the treasure, a mese block!=
+#You caught the treasure, a nyan cat!=
+#You caught the treasure, a diamond block!=
+#You win a new trophy, you have caught @1 Fish.=
+#You win a new trophy, you have caught @1 Carp.=
+#You win a new trophy, you have caught @1 Northern Pike.=
+#You win a new trophy, you have caught @1 Perch.=
+#You win a new trophy, you have caught @1 Catfish.=
+#You win a new trophy, you have caught @1 Clownfish.=
+#You win a new trophy, you have caught @1 Bluewhite.=
+#You win a new trophy, you have caught @1 Exotic.=
+#You win a new trophy, you have caught @1 Shark.=
+#Trophy of @1's @2th Fish=
+#Trophy of @1's @2th Carp=
+#Trophy of @1's @2th Perch=
+#Trophy of @1's @2th Catfish=
+#Trophy of @1's @2th Northern Pike=
+#Trophy of @1's @2th Clownfish=
+#Trophy of @1's @2th Bluewhite=
+#Trophy of @1's @2th Exotic=
+#Trophy of @1's @2th Shark=
+#Yeah, @1 caught a Fish.=
+#Yeah, @1 caught a Carp.=
+#Yeah, @1 caught a Northern Pike.=
+#Yeah, @1 caught a Perch.=
+#Yeah, @1 caught a Catfish.=
+#Yeah, @1 caught a Clownfish.=
+#Yeah, @1 caught a Bluewhite.=
+#Yeah, @1 caught an Exotic.=
+#Yeah, @1 caught a small Shark.=
+#Fishing Menu=
+#Contest rankings=
+#Contests=
+#Configuration=
+#Hunger info=
+#Close=
+#Fishing contest rankings=
+#No=
+#Name=
+#Fish Total=
+#Fishing contest=
+#Duration (in sec)=
+#Bobber number limit=
+#Enable contest=
+#Enable planned contests=
+#Reset rankings=
+#Abort=
+#Ok=
+#Fishing configuration=
+#Fish chance=
+#Shark chance=
+#Treasure chance=
+#Worm chance=
+#Escape chance=
+#Bobbers view range=
+#Display messages in chat=
+#Simple pole deco=
+#Poles wearout=
+#Enable treasure=
+#New worms source (reboot)=
+#Worm is a mob (reboot)=
+#Fishing Info Center=
+#Chance to fish : @1%=
+#WARNING, Fishing contest will finish in 30 seconds.=
+#Duration in seconds=
+#Start contest (admin only)=
+#Contest already in progress.=
+#Contest started, duration: @1 sec.=
+#Stop contest (admin only)=
+#No contest in progress.=
+#Contest finished.=
+#Wday Hours Minutes duration (in sec) (ex: 1 15 40 3600)=
+#Add contest (admin only)=
+#Invalid usage, see /help contest_add.=
+#Invalid argument wday, 0-7 (0@=all 1@=Sunday).=
+#Invalid argument hours, 0-23.=
+#Invalid argument minutes, 0-59.=
+#New contest registered @1 @2:@3, duration @4 sec.=
+#List number (shown by contest_show command)=
+#Delete planned contest (admin only)=
+#Invalid usage, see /help contest_del.=
+#Contest not found.=
+#Contest deleted.=
+#Display planned contests (admin only)=
+#@1 wday:@2 hour:@3 min:@4, duration @5 sec.@n=
+#Show fishing menu (admin only)=
+#Reset player fishes count@nWARNING, once reset, if prizes trophies are replaced, displayed message will be updated consequently=
+#Fishes count has been reset.=
+#Display classement=
+
+### poles.lua ###
+Fishing Pole=Angelrute
+#Perfect Fishing Pole=
+#Sorry, there is another bobber!=
+#You don't have mores @1 bobbers!=
+#You don't fishing in a bottle!=
+
+### trophies.lua ###
+Fish Trophy=Fisch-Trophaee
+#Carp Trophy=
+#Perch Trophy=
+#Catfish Trophy=
+Northern Pike Trophy=Hecht-Trophaee
+Clownfish Trophy=Clownfisch-Trophaee
+Bluewhite Trophy=Blau-weisser-Fisch-Trophaee
+#Exotic Trophy=
+Shark Trophy=Hai-Trophaee
+This Huge Fish was caught by the Famous Angler @1 !=Dieser riesige Fisch wurde vom beruehmten Angler @1 gefangen!
+#This Huge Carp was caught by the Famous Angler @1 !=
+#This Huge Perch was caught by the Famous Angler @1 !=
+#This Huge Catfish was caught by the Famous Angler @1 !=
+This Huge Northern Pike was caught by the Famous Angler @1 !=Dieser riesige Hecht wurde vom beruehmten Angler @1 gefangen!
+This Huge Clownfish was caught by the Famous Angler @1 !=Dieser riesige Clownfisch wurde vom beruehmten Angler @1 gefangen!
+This Huge Bluewhite was caught by the Famous Angler @1 !=Dieser riesige blau-weisse Fisch wurde vom beruehmten Angler @1 gefangen!
+#This Huge Exotic was caught by the Famous Angler @1 !=
+This Huge Shark was caught by the Famous Angler @1 !=Dieser riesige Hai wurde vom beruehmten Angler @1 gefangen!
+#@1th Fish of @2=
+#@1th Carp of @2=
+#@1th Perch of @2=
+#@1th Catfish of @2=
+#@1th Northern Pike of @2=
+#@1th Clownfish of @2=
+#@1th Bluewhite of @2=
+#@1th Exotic of @2=
+#@1th Shark of @2=
+
+### worms.lua ###
+Worm=Wurm
+Dirt=Erde

@@ -1,3 +1,0 @@
-Encyclopedia =
-Allows you to access the help. =
-Wield it, then leftclick to access the help. =

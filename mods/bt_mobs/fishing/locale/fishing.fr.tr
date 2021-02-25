@@ -1,0 +1,190 @@
+# textdomain: fishing
+
+### baits.lua ###
+Bait Corn=Appât au maïs
+Bait Bread=Appât au pain
+
+### baits.lua ###
+Bait Ball=Boule de pâte
+Shark Bait Ball=Broumé
+
+### bobber.lua, bobber_shark.lua ###
+You didn't catch anything.=Vous n'avez rien attrapé.
+The bait is still there.=L'appât est toujours là.
+Your fish escaped.=Le poisson s'est échappé.
+You caught a Fish.=Vous avez attrapé un poisson.
+You caught a Carp.=Vous avez attrapé une carpe.
+You caught a Northern Pike.=Vous avez attrapé un brochet.
+You caught a Perch.=Vous avez attrapé une perche.
+You caught a Catfish.=Vous avez attrapé un poisson chat.
+You caught a Clownfish.=Vous avez attrapé un poisson clown.
+You caught a Bluewhite.=Vous avez attrapé un poisson bleu.
+You caught an Exotic.=Vous avez attrapé un poisson exotic.
+You caught a small Shark.=Vous avez attrapé un petit requin.
+You caught some Seaweed.=Vous avez attrapé des algues.
+You caught a String.=Vous avez attrapé une ficelle.
+You caught a Twig.=Vous avez attrapé une brindille.
+You caught a Rat.=Vous avez attrapé un rat.
+You caught a Green Kelp.=Vous avez attrapé une algue verte.
+You caught some very old Boots.=Vous avez attrapé de très vieilles bottes.
+You caught some very old Leggings.=Vous avez attrapé de très vieilles jambières.
+You caught some very old ChestPlate.=Vous avez attrapé de très vieilles cuirasses.
+You caught an old Fishing Pole.=Vous avez attrapé une vielle canne à pêche.
+You caught a Gold Coin.=Vous avez attrapé une pièce en or.
+You caught a very old Helmet.=Vous avez attrapé un casque très vieux.
+You caught a very old Shield.=Vous avez attrapé un bouclier très vieux.
+You caught a very old Sword.=Vous avez attrapé une épée très ancienne.
+You caught a tropical fish.=Vous avez attrapé un poisson tropical.
+Haha, Fishing is prohibited outside water!=Haha, pêcher est interdit en dehors de l'eau!
+
+### fishes.lua ###
+Fish=Poisson
+Roasted Fish=Poisson grillé
+Sushi (Hoso Maki)=Sushi (Hoso Maki)
+Clownfish=Poisson clown
+Bluewhite=Poisson bleu
+Exotic=Poisson exotique
+Carp=Carpe
+Perch=Perche
+Catfish=Poisson chat
+Shark=Requin
+Roasted Shark=Requin grillé
+Northern Pike=Brochet
+Roasted Northern Pike=Brochet grillé
+
+### functions.lua ###
+A fishing contest is in progress. (remaining time @1)=Un concours de pêche est en cours. (temps restant @1)
+Attention, Fishing contest start (duration @1)!!!=Attention, un concours de pêche vient de commencer (durée @1)!!!
+End of fishing contest.=Fin du concours de pêche.
+Lucky @1, he caught the treasure, a mese block!=@1 a de la chance, Il a attrapé le trésor, un bloc de mese!
+Lucky @1, he caught the treasure, a nyan cat!=@1 a de la chance, Il a attrapé le trésor, un nyan cat!
+Lucky @1, he caught the treasure, a diamond block!=@1 a de la chance, Il a attrapé le trésor, bloc de diamant!
+You caught the treasure, a mese block!=Vous avez attrapé le trésor, un bloc de mese!
+You caught the treasure, a nyan cat!=Vous avez attrapé le trésor, un nyan cat!
+You caught the treasure, a diamond block!=Vous avez attrapé le trésor, bloc de diamant!
+You win a new trophy, you have caught @1 Fish.=Vous gagnez un trophée, vous avez attrapé @1 poissons.
+You win a new trophy, you have caught @1 Carp.=Vous gagnez un trophée, vous avez attrapé @1 carpes.
+You win a new trophy, you have caught @1 Northern Pike.=Vous gagnez un trophée, vous avez attrapé @1 brochets.
+You win a new trophy, you have caught @1 Perch.=Vous gagnez un trophée, vous avez attrapé @1 perches.
+You win a new trophy, you have caught @1 Catfish.=Vous gagnez un trophée, vous avez attrapé @1 poissons chat.
+You win a new trophy, you have caught @1 Clownfish.=Vous gagnez un trophée, vous avez attrapé @1 poissons clown.
+You win a new trophy, you have caught @1 Bluewhite.=Vous gagnez un trophée, vous avez attrapé @1 poissons bleu.
+You win a new trophy, you have caught @1 Exotic.=Vous gagnez un trophée, vous avez attrapé @1 poissons exotique.
+You win a new trophy, you have caught @1 Shark.=Vous gagnez un trophée, vous avez attrapé @1 requins.
+Trophy of @1's @2th Fish=Trophée du @2e poisson de @1
+Trophy of @1's @2th Carp=Trophée du @2e carpe de @1
+Trophy of @1's @2th Perch=Trophée du @2e perche de @1
+Trophy of @1's @2th Catfish=Trophée du @2e poisson chat de @1
+Trophy of @1's @2th Northern Pike=Trophée du @2e brochet de @1
+Trophy of @1's @2th Clownfish=Trophée du @2e poisson clown de @1
+Trophy of @1's @2th Bluewhite=Trophée du @2e poisson bleu de @1
+Trophy of @1's @2th Exotic=Trophée du @2e poisson exotique de @1
+Trophy of @1's @2th Shark=Trophée du @2e requin de @1
+Yeah, @1 caught a Fish.=Wouah, @1 a attrapé un poisson.
+Yeah, @1 caught a Carp.=Wouah, @1 a attrapé une carpe.
+Yeah, @1 caught a Northern Pike.=Wouah, @1 a attrapé un brochet.
+Yeah, @1 caught a Perch.=Wouah, @1 a attrapé une perche.
+Yeah, @1 caught a Catfish.=Wouah, @1 a attrapé un poisson chat.
+Yeah, @1 caught a Clownfish.=Wouah, @1 a attrapé un poisson clown.
+Yeah, @1 caught a Bluewhite.=Wouah, @1 a attrapé un poisson bleu.
+Yeah, @1 caught an Exotic.=Wouah, @1 a attrapé un poisson exotique.
+Yeah, @1 caught a small Shark.=Wouah, @1 a attrapé un requin.
+Fishing Menu=Menu de pêche
+Contest rankings=Classement du concours
+Contests=Concours
+Configuration=Configuration
+Hunger info=Info sur la faim
+Close=Fermer
+Fishing contest rankings=Classement du concours de pêche
+No=No
+Name=Nom
+Fish Total=Total de poissons
+Fishing contest=Concours de pêche
+Duration (in sec)=Durée (en sec)
+Bobber number limit=Limite du nombre de flotteurs
+Enable contest=Activer le concours
+Enable planned contests=Activer les concours planifiés
+Reset rankings=Réinitialiser le classement
+Abort=Annuler
+Ok=Ok
+Fishing configuration=Configuration de la pêche
+Fish chance=Poisson chance
+Shark chance=Requin chance
+Treasure chance=Trésor chance
+Worm chance=Ver chance
+Escape chance=Chance d'échapper
+Bobbers view range=Limite de vue des flotteurs
+Display messages in chat=Envoyer messages dans le tchat
+Simple pole deco=Canne simple déco
+Poles wearout=Usure des cannes
+Enable treasure=Activer trésor
+New worms source (reboot)=Nouvelle source de vers (redémarrage)
+Worm is a mob (reboot)=Ver est un mob (redémarrage)
+Fishing Info Center=Centre d'info sur la pêche
+Chance to fish : @1%=Chance de pêcher : @1%
+WARNING, Fishing contest will finish in 30 seconds.=Attention, le concours de pêche se termine dans 30 secondes.
+Duration in seconds=Durée en secondes
+Start contest (admin only)=Lancer le concours (administrateur uniquement)
+Contest already in progress.=Concours déjà en cours.
+Contest started, duration: @1 sec.=Concours commencé, durée: @1 sec.
+Stop contest (admin only)=Arrêter le concours (administrateur uniquement)
+No contest in progress.=Pas de concours en cours.
+Contest finished.=Concours terminé.
+Wday Hours Minutes duration (in sec) (ex: 1 15 40 3600)=Sjour Heures Minutes durée (en sec) (ex: 1 15 40 3600)
+Add contest (admin only)=Ajouter un concours (administrateur uniquement)
+Invalid usage, see /help contest_add.= Usage invalide, voir /help contest_add.
+Invalid argument wday, 0-7 (0@=all 1@=Sunday).=Argument invalide wday, 0-7 (0@=tous 1@=dimanche).
+Invalid argument hours, 0-23.=Argument invalide hours, 0-23.
+Invalid argument minutes, 0-59.=Argument invalide minutes, 0-59.
+New contest registered @1 @2:@3, duration @4 sec.=Nouveau concours enregistré @1 @2:@3, durée @4 sec.
+List number (shown by contest_show command)=Numéro de liste (affiché par la commande contest_show)
+Delete planned contest (admin only)=Supprimer le concours planifié (administrateur uniquement)
+Invalid usage, see /help contest_del.=Usage invalide, voir /help contest_del.
+Contest not found.=Concours introuvable.
+Contest deleted.=Concours supprimé.
+Display planned contests (admin only)=Afficher les concours planifiés (administrateur uniquement)
+@1 wday:@2 hour:@3 min:@4, duration @5 sec.@n=@1 jour:@2 heure:@3 min:@4, durée @5 sec.@n
+Show fishing menu (admin only)=Afficher le menu de pêche (administrateur uniquement)
+Reset player fishes count@nWARNING, once reset, if prizes trophies are replaced, displayed message will be updated consequently=Réinitialisez le nombre de poissons du joueur@nATTENTION, une fois réinitialisé, si les trophées des prix sont replacés, le message affiché sera mis à jour en conséquence
+Fishes count has been reset.=Le compte de poissons a été réinitialisé.
+Display classement=Afficher le classement
+
+### poles.lua ###
+Fishing Pole=Canne à pêche
+Perfect Fishing Pole=Canne à pêche parfaite
+Sorry, there is another bobber!=Désolé, il y a un autre flotteur!
+You don't have mores @1 bobbers!=Vous ne pouvez pas avoir plus de @1 flotteurs!
+You don't fishing in a bottle!=Vous ne pouvez pas pécher dans une bouteille!
+
+### trophies.lua ###
+Fish Trophy=Trophée poisson
+Carp Trophy=Trophée carpe
+Perch Trophy=Trophée perche
+Catfish Trophy=Trophée poisson chat
+Northern Pike Trophy=Trophée brochet
+Clownfish Trophy=Trophée poisson clown
+Bluewhite Trophy=Trophée poisson bleu
+Exotic Trophy=Trophée poisson exotique
+Shark Trophy=Trophée requin
+This Huge Fish was caught by the Famous Angler @1 !=Cet énorme poisson a été attrapé par le célèbre pêcheur @1 !
+This Huge Carp was caught by the Famous Angler @1 !=Cet énorme carpe a été attrapé par le célèbre pêcheur @1 !
+This Huge Perch was caught by the Famous Angler @1 !=Cet énorme perche a été attrapé par le célèbre pêcheur @1 !
+This Huge Catfish was caught by the Famous Angler @1 !=Cet énorme poisson chat a été attrapé par le célèbre pêcheur @1 !
+This Huge Northern Pike was caught by the Famous Angler @1 !=Cet énorme brochet a été attrapé par le célèbre pêcheur @1 !
+This Huge Clownfish was caught by the Famous Angler @1 !=Cet énorme poisson clown a été attrapé par le célèbre pêcheur @1 !
+This Huge Bluewhite was caught by the Famous Angler @1 !=Cet énorme poisson bleu a été attrapé par le célèbre pêcheur @1 !
+This Huge Exotic was caught by the Famous Angler @1 !=Cet énorme poisson exotique a été attrapé par le célèbre pêcheur @1 !
+This Huge Shark was caught by the Famous Angler @1 !=Cet énorme requin a été attrapé par le célèbre pêcheur @1 !
+@1th Fish of @2=@1e poisson de @2
+@1th Carp of @2=@1e carpe de @2
+@1th Perch of @2=@1e perche de @2
+@1th Catfish of @2=@1e poisson chat de @2
+@1th Northern Pike of @2=@1e brochet de @2
+@1th Clownfish of @2=@1e poisson clown de @2
+@1th Bluewhite of @2=@1e poisson bleu de @2
+@1th Exotic of @2=@1e poisson exotique de @2
+@1th Shark of @2=@1e requin de @2
+
+### worms.lua ###
+Worm=Ver
+Dirt=Terre

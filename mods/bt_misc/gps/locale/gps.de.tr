@@ -1,0 +1,21 @@
+# textdomain: gps
+
+GPS=GPS
+Destinations=Zielpunkte
+Locate=Orten
+Turn Off=Ausschalten
+Delete=Löschen
+New Destination=Neuer Zielpunkt
+My Place=Mein Ort
+Save New Place=Speichere neuen Ort
+You need to be with the GPS to go to the destination.=Du musst das GPS dabei haben um zum Zielpunkt zu gehen.
+GPS Active. @1 located.=GPS eingeschaltet. @1 georted.
+No destination found. Set a new.=Kein Zielpunkt gefunden. Setze einen neuen!
+GPS turned off.=GPS ausgeschaltet.
+No name set to the place. Enter a name.=Der Ort hat keinen Namen. Benenne ihn!
+Limit is @1 destinations. Delete any of the already existing.=Das Limit sind @1 Zielort(e). Lösche einen der Existierenden!
+@1 has been recorded in your GPS.=@1 wurde in deinem GPS registriert.
+Invalid characters. Try using only letters and numbers in the new name.=Ungültige Zeichen. Versuche nur Buchstaben und Nummern im neuen namen!
+No name specified for the new place. Set the name of this place.=Es wurde Kein Name für den neuenb Ort festgelegt. Benenne diesen Ort!
+@1 has been deleted.=@1 wurde gelöscht.
+No destinations to delete.=Es gibt keine Zielpunkte zum löschen.

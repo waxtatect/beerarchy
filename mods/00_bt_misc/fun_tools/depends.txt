@@ -1,5 +1,0 @@
-default
-elixirs?
-fun_caves?
-inspire?
-tnt?
